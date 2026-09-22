@@ -16,7 +16,11 @@ export function DiscoverScreen() {
   const upNextName = useAppStore((s) => s.upNextName());
   const decide = useAppStore((s) => s.decide);
   const toggleLike = useAppStore((s) => s.toggleLike);
-  const isLiked = useAppStore((s) => s.isLiked);
+  const currentLiked = useAppStore((s) => {
+    const id = s.pinnedQueue[0] ?? s.queue[0];
+    if (!id) return false;
+    return s.decisions.get(id)?.liked ?? s.pendingLikes.has(id);
+  });
   const undo = useAppStore((s) => s.undo);
   const canUndo = useAppStore((s) => s.canUndo());
   const lastRejectionPromptNameId = useAppStore((s) => s.lastRejectionPromptNameId);
@@ -94,7 +98,7 @@ export function DiscoverScreen() {
               key={currentName.id}
               babyName={currentName}
               isTop
-              liked={isLiked(currentName.id)}
+              liked={currentLiked}
               swipeRightMeansYes={swipeRightMeansYes}
               reducedMotion={settings.reducedMotion}
               onDecide={handleDecide}

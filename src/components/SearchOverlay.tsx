@@ -20,7 +20,7 @@ const DISPOSITION_LABEL: Record<string, string> = {
 export function SearchOverlay({ onClose, onGoToDiscover }: SearchOverlayProps) {
   const [query, setQuery] = useState("");
   const decisions = useAppStore((s) => s.decisions);
-  const isLiked = useAppStore((s) => s.isLiked);
+  const pendingLikes = useAppStore((s) => s.pendingLikes);
   const reviewNow = useAppStore((s) => s.reviewNow);
   const [detail, setDetail] = useState<BabyName | null>(null);
 
@@ -80,7 +80,7 @@ export function SearchOverlay({ onClose, onGoToDiscover }: SearchOverlayProps) {
         <div className="flex flex-col gap-2">
           {results.map((n) => {
             const decision = decisions.get(n.id);
-            const liked = isLiked(n.id);
+            const liked = decision?.liked ?? pendingLikes.has(n.id);
             return (
               <button
                 key={n.id}

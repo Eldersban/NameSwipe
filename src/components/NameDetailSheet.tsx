@@ -13,17 +13,16 @@ interface NameDetailSheetProps {
 }
 
 export function NameDetailSheet({ babyName, onClose, hideDecisionButtons }: NameDetailSheetProps) {
-  const isLiked = useAppStore((s) => s.isLiked);
   const toggleLike = useAppStore((s) => s.toggleLike);
   const decide = useAppStore((s) => s.decide);
   const decision = useAppStore((s) => s.decisions.get(babyName.id));
+  const liked = useAppStore((s) => s.decisions.get(babyName.id)?.liked ?? s.pendingLikes.has(babyName.id));
   const showMoreLikeThis = useAppStore((s) => s.showMoreLikeThis);
   const reviewNow = useAppStore((s) => s.reviewNow);
   const updateNote = useAppStore((s) => s.updateNote);
   const surname = useAppStore((s) => s.settings.surname);
 
   const [note, setNote] = useState(decision?.note ?? "");
-  const liked = isLiked(babyName.id);
 
   const similarNames = babyName.similarNameIds
     .map((id) => getNameById(id))

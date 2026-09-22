@@ -85,6 +85,10 @@ export function SwipeCard({
   }
 
   function handlePointerDown(e: React.PointerEvent) {
+    if ((e.target as HTMLElement).closest("[data-card-interactive]")) {
+      pointerStart.current = null;
+      return;
+    }
     pointerStart.current = { x: e.clientX, y: e.clientY };
   }
 
@@ -146,6 +150,7 @@ export function SwipeCard({
         </span>
         <button
           type="button"
+          data-card-interactive
           aria-label={liked ? "Unlike this name" : "Like this name"}
           onClick={(e) => {
             e.stopPropagation();
