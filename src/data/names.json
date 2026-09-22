@@ -1,0 +1,8197 @@
+[
+  {
+    "id": "william",
+    "name": "William",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Will"
+      },
+      {
+        "name": "Liam"
+      },
+      {
+        "name": "Billy"
+      },
+      {
+        "name": "Bill"
+      },
+      {
+        "name": "Willy"
+      }
+    ],
+    "origins": [
+      "English",
+      "German"
+    ],
+    "meaning": "Resolute protector",
+    "syllables": 2,
+    "firstLetter": "W",
+    "lastLetter": "m",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established",
+      "strong"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "james",
+      "robert",
+      "michael",
+      "henry",
+      "charles"
+    ]
+  },
+  {
+    "id": "james",
+    "name": "James",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Jamie"
+      },
+      {
+        "name": "Jim"
+      },
+      {
+        "name": "Jimmy"
+      },
+      {
+        "name": "Jem"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Supplanter",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "s",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established",
+      "strong"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "william",
+      "robert",
+      "michael",
+      "joseph",
+      "jacob"
+    ]
+  },
+  {
+    "id": "henry",
+    "name": "Henry",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Hank"
+      },
+      {
+        "name": "Harry"
+      },
+      {
+        "name": "Hal"
+      },
+      {
+        "name": "Ry"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Estate ruler",
+    "syllables": 2,
+    "firstLetter": "H",
+    "lastLetter": "y",
+    "styles": [
+      "classic",
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "established",
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "arthur",
+      "theodore",
+      "edward",
+      "leonard",
+      "frederick"
+    ]
+  },
+  {
+    "id": "charles",
+    "name": "Charles",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Charlie"
+      },
+      {
+        "name": "Chuck"
+      },
+      {
+        "name": "Chaz"
+      },
+      {
+        "name": "Chas"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Free man",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "s",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "william",
+      "james",
+      "henry",
+      "thomas",
+      "edward"
+    ]
+  },
+  {
+    "id": "george",
+    "name": "George",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Georgie"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Farmer",
+    "syllables": 1,
+    "firstLetter": "G",
+    "lastLetter": "e",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established",
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "henry",
+      "arthur",
+      "theodore",
+      "leo",
+      "ryan"
+    ]
+  },
+  {
+    "id": "thomas",
+    "name": "Thomas",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Tom"
+      },
+      {
+        "name": "Tommy"
+      },
+      {
+        "name": "Tam"
+      }
+    ],
+    "origins": [
+      "Aramaic"
+    ],
+    "meaning": "Twin",
+    "syllables": 2,
+    "firstLetter": "T",
+    "lastLetter": "s",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "theodore",
+      "william",
+      "james",
+      "henry",
+      "charles"
+    ]
+  },
+  {
+    "id": "edward",
+    "name": "Edward",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Ed"
+      },
+      {
+        "name": "Eddie"
+      },
+      {
+        "name": "Ned"
+      },
+      {
+        "name": "Teddy"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Wealthy guardian",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "d",
+    "styles": [
+      "classic",
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "henry",
+      "arthur",
+      "theodore",
+      "leonard",
+      "raymond"
+    ]
+  },
+  {
+    "id": "robert",
+    "name": "Robert",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Rob"
+      },
+      {
+        "name": "Robbie"
+      },
+      {
+        "name": "Bob"
+      },
+      {
+        "name": "Bobby"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Bright fame",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "t",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established",
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "william",
+      "james",
+      "michael",
+      "richard",
+      "henry"
+    ]
+  },
+  {
+    "id": "richard",
+    "name": "Richard",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Rich"
+      },
+      {
+        "name": "Richie"
+      },
+      {
+        "name": "Rick"
+      },
+      {
+        "name": "Ricky"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Brave ruler",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "d",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "robert",
+      "william",
+      "james",
+      "michael",
+      "lewis"
+    ]
+  },
+  {
+    "id": "david",
+    "name": "David",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Dave"
+      },
+      {
+        "name": "Davy"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Beloved",
+    "syllables": 2,
+    "firstLetter": "D",
+    "lastLetter": "d",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "daniel",
+      "michael",
+      "matthew",
+      "andrew",
+      "peter"
+    ]
+  },
+  {
+    "id": "michael",
+    "name": "Michael",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Mike"
+      },
+      {
+        "name": "Mikey"
+      },
+      {
+        "name": "Mick"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Who is like God",
+    "syllables": 2,
+    "firstLetter": "M",
+    "lastLetter": "l",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established",
+      "strong"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "matthew",
+      "david",
+      "daniel",
+      "andrew",
+      "peter"
+    ]
+  },
+  {
+    "id": "daniel",
+    "name": "Daniel",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Dan"
+      },
+      {
+        "name": "Danny"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "God is my judge",
+    "syllables": 2,
+    "firstLetter": "D",
+    "lastLetter": "l",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "david",
+      "michael",
+      "matthew",
+      "andrew",
+      "peter"
+    ]
+  },
+  {
+    "id": "matthew",
+    "name": "Matthew",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Matt"
+      },
+      {
+        "name": "Matty"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Gift of God",
+    "syllables": 2,
+    "firstLetter": "M",
+    "lastLetter": "w",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "michael",
+      "david",
+      "daniel",
+      "andrew",
+      "peter"
+    ]
+  },
+  {
+    "id": "andrew",
+    "name": "Andrew",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Andy"
+      },
+      {
+        "name": "Drew"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Manly, brave",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "w",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "david",
+      "michael",
+      "daniel",
+      "matthew",
+      "peter"
+    ]
+  },
+  {
+    "id": "peter",
+    "name": "Peter",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Pete"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Rock",
+    "syllables": 2,
+    "firstLetter": "P",
+    "lastLetter": "r",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "david",
+      "michael",
+      "daniel",
+      "matthew",
+      "andrew"
+    ]
+  },
+  {
+    "id": "paul",
+    "name": "Paul",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Small",
+    "syllables": 1,
+    "firstLetter": "P",
+    "lastLetter": "l",
+    "styles": [
+      "classic",
+      "biblical",
+      "short-punchy"
+    ],
+    "traits": [
+      "traditional"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "peter",
+      "david",
+      "michael",
+      "daniel",
+      "matthew"
+    ]
+  },
+  {
+    "id": "frank",
+    "name": "Frank",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Frankie"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Free man",
+    "syllables": 1,
+    "firstLetter": "F",
+    "lastLetter": "k",
+    "styles": [
+      "classic",
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "henry",
+      "edward",
+      "arthur",
+      "theodore",
+      "leonard"
+    ]
+  },
+  {
+    "id": "walter",
+    "name": "Walter",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Walt"
+      },
+      {
+        "name": "Wally"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Ruler of the army",
+    "syllables": 2,
+    "firstLetter": "W",
+    "lastLetter": "r",
+    "styles": [
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "soft"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "henry",
+      "albert",
+      "arthur",
+      "theodore",
+      "leonard"
+    ]
+  },
+  {
+    "id": "albert",
+    "name": "Albert",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Al"
+      },
+      {
+        "name": "Bertie"
+      },
+      {
+        "name": "Bert"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Noble and bright",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "t",
+    "styles": [
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "soft"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "arthur",
+      "henry",
+      "walter",
+      "theodore",
+      "leonard"
+    ]
+  },
+  {
+    "id": "arthur",
+    "name": "Arthur",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Art"
+      },
+      {
+        "name": "Artie"
+      }
+    ],
+    "origins": [
+      "Celtic"
+    ],
+    "meaning": "Bear, noble",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "r",
+    "styles": [
+      "classic",
+      "vintage",
+      "literary"
+    ],
+    "traits": [
+      "traditional",
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "theodore",
+      "henry",
+      "edward",
+      "elliot",
+      "leonard"
+    ]
+  },
+  {
+    "id": "theodore",
+    "name": "Theodore",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Theo"
+      },
+      {
+        "name": "Teddy"
+      },
+      {
+        "name": "Ted"
+      },
+      {
+        "name": "Teo"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Gift of God",
+    "syllables": 2,
+    "firstLetter": "T",
+    "lastLetter": "e",
+    "styles": [
+      "classic",
+      "vintage",
+      "literary"
+    ],
+    "traits": [
+      "traditional",
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "arthur",
+      "henry",
+      "edward",
+      "elliot",
+      "leonard"
+    ]
+  },
+  {
+    "id": "frederick",
+    "name": "Frederick",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Freddie"
+      },
+      {
+        "name": "Fred"
+      },
+      {
+        "name": "Fritz"
+      },
+      {
+        "name": "Rick"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Peaceful ruler",
+    "syllables": 3,
+    "firstLetter": "F",
+    "lastLetter": "k",
+    "styles": [
+      "vintage",
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "henry",
+      "arthur",
+      "theodore",
+      "leonard",
+      "oliver"
+    ]
+  },
+  {
+    "id": "oliver",
+    "name": "Oliver",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Ollie"
+      },
+      {
+        "name": "Ol"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Olive tree",
+    "syllables": 3,
+    "firstLetter": "O",
+    "lastLetter": "r",
+    "styles": [
+      "classic",
+      "vintage"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "henry",
+      "arthur",
+      "theodore",
+      "frederick",
+      "edward"
+    ]
+  },
+  {
+    "id": "sebastian",
+    "name": "Sebastian",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Seb"
+      },
+      {
+        "name": "Bash"
+      },
+      {
+        "name": "Bastian"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Revered",
+    "syllables": 3,
+    "firstLetter": "S",
+    "lastLetter": "n",
+    "styles": [
+      "classic",
+      "international"
+    ],
+    "traits": [
+      "elegant",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "elias",
+      "lorenzo",
+      "julian",
+      "adrian",
+      "lucian"
+    ]
+  },
+  {
+    "id": "julian",
+    "name": "Julian",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Jules"
+      },
+      {
+        "name": "Jude"
+      },
+      {
+        "name": "Juli"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Youthful, downy",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "n",
+    "styles": [
+      "classic",
+      "international"
+    ],
+    "traits": [
+      "elegant",
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "adrian",
+      "lucian",
+      "elias",
+      "sebastian",
+      "luca"
+    ]
+  },
+  {
+    "id": "benjamin",
+    "name": "Benjamin",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Ben"
+      },
+      {
+        "name": "Benji"
+      },
+      {
+        "name": "Benny"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Son of the right hand",
+    "syllables": 3,
+    "firstLetter": "B",
+    "lastLetter": "n",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "nathaniel",
+      "zachary",
+      "solomon",
+      "david",
+      "michael"
+    ]
+  },
+  {
+    "id": "samuel",
+    "name": "Samuel",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Sam"
+      },
+      {
+        "name": "Sammy"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "God has heard",
+    "syllables": 2,
+    "firstLetter": "S",
+    "lastLetter": "l",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "silas",
+      "david",
+      "michael",
+      "daniel",
+      "matthew"
+    ]
+  },
+  {
+    "id": "nathaniel",
+    "name": "Nathaniel",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Nate"
+      },
+      {
+        "name": "Nathan"
+      },
+      {
+        "name": "Nat"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Gift of God",
+    "syllables": 3,
+    "firstLetter": "N",
+    "lastLetter": "l",
+    "styles": [
+      "classic",
+      "biblical",
+      "literary"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "benjamin",
+      "zachary",
+      "solomon",
+      "nathan",
+      "david"
+    ]
+  },
+  {
+    "id": "alexander",
+    "name": "Alexander",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Alex"
+      },
+      {
+        "name": "Xander"
+      },
+      {
+        "name": "Alec"
+      },
+      {
+        "name": "Lex"
+      },
+      {
+        "name": "Sasha"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Defender of the people",
+    "syllables": 4,
+    "firstLetter": "A",
+    "lastLetter": "r",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "strong",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "harrison",
+      "william",
+      "james",
+      "robert",
+      "michael"
+    ]
+  },
+  {
+    "id": "adrian",
+    "name": "Adrian",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Ade"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "From Hadria",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "n",
+    "styles": [
+      "classic",
+      "international"
+    ],
+    "traits": [
+      "elegant"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "julian",
+      "lucian",
+      "elias",
+      "sebastian",
+      "lorenzo"
+    ]
+  },
+  {
+    "id": "roman",
+    "name": "Roman",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Citizen of Rome",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "n",
+    "styles": [
+      "classic",
+      "strong",
+      "short-punchy"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "marcus",
+      "victor",
+      "rex",
+      "bear",
+      "duke"
+    ]
+  },
+  {
+    "id": "lucian",
+    "name": "Lucian",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Luca"
+      },
+      {
+        "name": "Luc"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Light",
+    "syllables": 2,
+    "firstLetter": "L",
+    "lastLetter": "n",
+    "styles": [
+      "classic",
+      "literary",
+      "international"
+    ],
+    "traits": [
+      "elegant"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "julian",
+      "adrian",
+      "elias",
+      "lorenzo",
+      "sebastian"
+    ]
+  },
+  {
+    "id": "elliot",
+    "name": "Elliot",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Eli"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "The Lord is my God",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "t",
+    "styles": [
+      "classic",
+      "literary"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "elliott",
+      "arthur",
+      "theodore",
+      "henry",
+      "nathaniel"
+    ]
+  },
+  {
+    "id": "augustine",
+    "name": "Augustine",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Gus"
+      },
+      {
+        "name": "Augie"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Great, magnificent",
+    "syllables": 3,
+    "firstLetter": "A",
+    "lastLetter": "e",
+    "styles": [
+      "vintage",
+      "literary"
+    ],
+    "traits": [
+      "elegant",
+      "rare"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "arthur",
+      "atticus",
+      "theodore",
+      "ignatius",
+      "peregrine"
+    ]
+  },
+  {
+    "id": "august",
+    "name": "August",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Gus"
+      },
+      {
+        "name": "Auggie"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Great, magnificent",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "t",
+    "styles": [
+      "vintage",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "ezra",
+      "amos",
+      "emmett",
+      "milo",
+      "otto"
+    ]
+  },
+  {
+    "id": "emmett",
+    "name": "Emmett",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Em"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Universal",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "t",
+    "styles": [
+      "vintage",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "ezra",
+      "august",
+      "milo",
+      "otto",
+      "amos"
+    ]
+  },
+  {
+    "id": "wallace",
+    "name": "Wallace",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Wally"
+      }
+    ],
+    "origins": [
+      "Scottish"
+    ],
+    "meaning": "Foreigner, Welshman",
+    "syllables": 2,
+    "firstLetter": "W",
+    "lastLetter": "e",
+    "styles": [
+      "vintage"
+    ],
+    "traits": [
+      "soft",
+      "rare"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "walter",
+      "henry",
+      "albert",
+      "arthur",
+      "theodore"
+    ]
+  },
+  {
+    "id": "cyrus",
+    "name": "Cyrus",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Cy"
+      }
+    ],
+    "origins": [
+      "Persian"
+    ],
+    "meaning": "Sun, throne",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "s",
+    "styles": [
+      "vintage",
+      "biblical"
+    ],
+    "traits": [
+      "strong",
+      "rare"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "ezra",
+      "amos",
+      "reuben",
+      "clarence",
+      "michael"
+    ]
+  },
+  {
+    "id": "silas",
+    "name": "Silas",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Latin",
+      "Biblical"
+    ],
+    "meaning": "Forest, woods",
+    "syllables": 2,
+    "firstLetter": "S",
+    "lastLetter": "s",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "samuel",
+      "david",
+      "michael",
+      "daniel",
+      "matthew"
+    ]
+  },
+  {
+    "id": "elias",
+    "name": "Elias",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Eli"
+      }
+    ],
+    "origins": [
+      "Greek",
+      "Hebrew"
+    ],
+    "meaning": "The Lord is my God",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "s",
+    "styles": [
+      "classic",
+      "biblical",
+      "international"
+    ],
+    "traits": [
+      "elegant",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "gabriel",
+      "sebastian",
+      "david",
+      "michael",
+      "daniel"
+    ]
+  },
+  {
+    "id": "noah",
+    "name": "Noah",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Rest, comfort",
+    "syllables": 1,
+    "firstLetter": "N",
+    "lastLetter": "h",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "jude",
+      "ezra",
+      "josiah",
+      "levi",
+      "asher"
+    ]
+  },
+  {
+    "id": "joseph",
+    "name": "Joseph",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Joe"
+      },
+      {
+        "name": "Joey"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "God will increase",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "h",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "jacob",
+      "david",
+      "michael",
+      "daniel",
+      "matthew"
+    ]
+  },
+  {
+    "id": "isaac",
+    "name": "Isaac",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Ike"
+      },
+      {
+        "name": "Zac"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "He will laugh",
+    "syllables": 2,
+    "firstLetter": "I",
+    "lastLetter": "c",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "david",
+      "michael",
+      "daniel",
+      "matthew",
+      "andrew"
+    ]
+  },
+  {
+    "id": "jacob",
+    "name": "Jacob",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Jake"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Supplanter",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "b",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "joseph",
+      "david",
+      "michael",
+      "daniel",
+      "matthew"
+    ]
+  },
+  {
+    "id": "gabriel",
+    "name": "Gabriel",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Gabe"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "God is my strength",
+    "syllables": 2,
+    "firstLetter": "G",
+    "lastLetter": "l",
+    "styles": [
+      "classic",
+      "biblical"
+    ],
+    "traits": [
+      "elegant",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "elias",
+      "david",
+      "michael",
+      "daniel",
+      "matthew"
+    ]
+  },
+  {
+    "id": "ezra",
+    "name": "Ezra",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Help",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "a",
+    "styles": [
+      "biblical",
+      "vintage",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "amos",
+      "august",
+      "levi",
+      "jude",
+      "emmett"
+    ]
+  },
+  {
+    "id": "elijah",
+    "name": "Elijah",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Eli"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "The Lord is my God",
+    "syllables": 3,
+    "firstLetter": "E",
+    "lastLetter": "h",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "benjamin",
+      "nathaniel",
+      "zachary",
+      "solomon",
+      "jeremiah"
+    ]
+  },
+  {
+    "id": "josiah",
+    "name": "Josiah",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Joe"
+      },
+      {
+        "name": "Jos"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "The Lord supports",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "h",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "ezra",
+      "levi",
+      "asher",
+      "jude",
+      "noah"
+    ]
+  },
+  {
+    "id": "levi",
+    "name": "Levi",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Joined, attached",
+    "syllables": 2,
+    "firstLetter": "L",
+    "lastLetter": "i",
+    "styles": [
+      "biblical",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "ezra",
+      "jude",
+      "amos",
+      "abel",
+      "august"
+    ]
+  },
+  {
+    "id": "caleb",
+    "name": "Caleb",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Cal"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Faithful, devotion",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "b",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "david",
+      "michael",
+      "daniel",
+      "matthew",
+      "andrew"
+    ]
+  },
+  {
+    "id": "aaron",
+    "name": "Aaron",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Mountain of strength",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "n",
+    "styles": [
+      "biblical",
+      "classic"
+    ],
+    "traits": [
+      "traditional"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "andrew",
+      "david",
+      "michael",
+      "daniel",
+      "matthew"
+    ]
+  },
+  {
+    "id": "jonah",
+    "name": "Jonah",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Dove",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "h",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "josiah",
+      "ezra",
+      "levi",
+      "micah",
+      "asher"
+    ]
+  },
+  {
+    "id": "micah",
+    "name": "Micah",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Who is like the Lord",
+    "syllables": 2,
+    "firstLetter": "M",
+    "lastLetter": "h",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "ezra",
+      "josiah",
+      "levi",
+      "jonah",
+      "asher"
+    ]
+  },
+  {
+    "id": "asher",
+    "name": "Asher",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Ash"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Happy, blessed",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "r",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "ezra",
+      "josiah",
+      "levi",
+      "noah",
+      "jude"
+    ]
+  },
+  {
+    "id": "simon",
+    "name": "Simon",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Si"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "He has heard",
+    "syllables": 2,
+    "firstLetter": "S",
+    "lastLetter": "n",
+    "styles": [
+      "biblical",
+      "classic"
+    ],
+    "traits": [
+      "traditional"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "samuel",
+      "silas",
+      "david",
+      "michael",
+      "daniel"
+    ]
+  },
+  {
+    "id": "zachary",
+    "name": "Zachary",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Zach"
+      },
+      {
+        "name": "Zac"
+      },
+      {
+        "name": "Zack"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "The Lord remembers",
+    "syllables": 3,
+    "firstLetter": "Z",
+    "lastLetter": "y",
+    "styles": [
+      "biblical",
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "benjamin",
+      "nathaniel",
+      "solomon",
+      "david",
+      "michael"
+    ]
+  },
+  {
+    "id": "nathan",
+    "name": "Nathan",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Nate"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "He gave",
+    "syllables": 2,
+    "firstLetter": "N",
+    "lastLetter": "n",
+    "styles": [
+      "biblical",
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "david",
+      "michael",
+      "daniel",
+      "matthew",
+      "andrew"
+    ]
+  },
+  {
+    "id": "timothy",
+    "name": "Timothy",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Tim"
+      },
+      {
+        "name": "Timmy"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Honoring God",
+    "syllables": 3,
+    "firstLetter": "T",
+    "lastLetter": "y",
+    "styles": [
+      "biblical",
+      "classic"
+    ],
+    "traits": [
+      "traditional"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "benjamin",
+      "nathaniel",
+      "zachary",
+      "solomon",
+      "david"
+    ]
+  },
+  {
+    "id": "malachi",
+    "name": "Malachi",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Mal"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "My messenger",
+    "syllables": 3,
+    "firstLetter": "M",
+    "lastLetter": "i",
+    "styles": [
+      "biblical",
+      "rare"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "balthazar",
+      "thaddeus",
+      "ezekiel",
+      "alaric",
+      "enoch"
+    ]
+  },
+  {
+    "id": "ezekiel",
+    "name": "Ezekiel",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Zeke"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "God strengthens",
+    "syllables": 3,
+    "firstLetter": "E",
+    "lastLetter": "l",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "strong",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "ethan",
+      "michael",
+      "judah",
+      "elijah",
+      "benjamin"
+    ]
+  },
+  {
+    "id": "liam",
+    "name": "Liam",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Irish"
+    ],
+    "meaning": "Resolute protector",
+    "syllables": 1,
+    "firstLetter": "L",
+    "lastLetter": "m",
+    "styles": [
+      "modern"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "ryan",
+      "lucas",
+      "owen",
+      "aiden",
+      "brooks"
+    ]
+  },
+  {
+    "id": "mason",
+    "name": "Mason",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Stoneworker",
+    "syllables": 2,
+    "firstLetter": "M",
+    "lastLetter": "n",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "logan",
+      "carter",
+      "hunter",
+      "jackson",
+      "grayson"
+    ]
+  },
+  {
+    "id": "logan",
+    "name": "Logan",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Scottish"
+    ],
+    "meaning": "Small hollow",
+    "syllables": 2,
+    "firstLetter": "L",
+    "lastLetter": "n",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "mason",
+      "carter",
+      "hunter",
+      "jackson",
+      "grayson"
+    ]
+  },
+  {
+    "id": "lucas",
+    "name": "Lucas",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Luke"
+      },
+      {
+        "name": "Luc"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Light-giving",
+    "syllables": 2,
+    "firstLetter": "L",
+    "lastLetter": "s",
+    "styles": [
+      "modern",
+      "classic"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "owen",
+      "ryan",
+      "brandon",
+      "justin",
+      "henry"
+    ]
+  },
+  {
+    "id": "ethan",
+    "name": "Ethan",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Strong, firm",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "n",
+    "styles": [
+      "modern",
+      "biblical"
+    ],
+    "traits": [
+      "strong",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "michael",
+      "jackson",
+      "zion",
+      "judah",
+      "ezekiel"
+    ]
+  },
+  {
+    "id": "owen",
+    "name": "Owen",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Welsh"
+    ],
+    "meaning": "Young warrior",
+    "syllables": 2,
+    "firstLetter": "O",
+    "lastLetter": "n",
+    "styles": [
+      "modern",
+      "classic"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "lucas",
+      "ryan",
+      "brandon",
+      "justin",
+      "henry"
+    ]
+  },
+  {
+    "id": "wyatt",
+    "name": "Wyatt",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Brave in war",
+    "syllables": 1,
+    "firstLetter": "W",
+    "lastLetter": "t",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "mason",
+      "logan",
+      "carter",
+      "hunter",
+      "jackson"
+    ]
+  },
+  {
+    "id": "carter",
+    "name": "Carter",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Cart driver",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "r",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "cooper",
+      "colton",
+      "mason",
+      "logan",
+      "hunter"
+    ]
+  },
+  {
+    "id": "hunter",
+    "name": "Hunter",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "One who hunts",
+    "syllables": 2,
+    "firstLetter": "H",
+    "lastLetter": "r",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "mason",
+      "logan",
+      "carter",
+      "jackson",
+      "grayson"
+    ]
+  },
+  {
+    "id": "jackson",
+    "name": "Jackson",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Jack"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Son of Jack",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "n",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "strong",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "mason",
+      "logan",
+      "carter",
+      "hunter",
+      "grayson"
+    ]
+  },
+  {
+    "id": "grayson",
+    "name": "Grayson",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Gray"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Son of the steward",
+    "syllables": 2,
+    "firstLetter": "G",
+    "lastLetter": "n",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "mason",
+      "logan",
+      "carter",
+      "hunter",
+      "jackson"
+    ]
+  },
+  {
+    "id": "landon",
+    "name": "Landon",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Long hill",
+    "syllables": 2,
+    "firstLetter": "L",
+    "lastLetter": "n",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "easton",
+      "weston",
+      "parker",
+      "brooks",
+      "logan"
+    ]
+  },
+  {
+    "id": "cooper",
+    "name": "Cooper",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Barrel maker",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "r",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "carter",
+      "colton",
+      "mason",
+      "logan",
+      "hunter"
+    ]
+  },
+  {
+    "id": "colton",
+    "name": "Colton",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Colt"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Coal town",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "n",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "carter",
+      "cooper",
+      "mason",
+      "logan",
+      "hunter"
+    ]
+  },
+  {
+    "id": "easton",
+    "name": "Easton",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "East-facing place",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "n",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "landon",
+      "weston",
+      "parker",
+      "brooks",
+      "mason"
+    ]
+  },
+  {
+    "id": "bentley",
+    "name": "Bentley",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Ben"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Meadow of coarse grass",
+    "syllables": 2,
+    "firstLetter": "B",
+    "lastLetter": "y",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "mason",
+      "logan",
+      "carter",
+      "hunter",
+      "jackson"
+    ]
+  },
+  {
+    "id": "weston",
+    "name": "Weston",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "West"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Western town",
+    "syllables": 2,
+    "firstLetter": "W",
+    "lastLetter": "n",
+    "styles": [
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "landon",
+      "easton",
+      "parker",
+      "brooks",
+      "mason"
+    ]
+  },
+  {
+    "id": "brooks",
+    "name": "Brooks",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Near the stream",
+    "syllables": 1,
+    "firstLetter": "B",
+    "lastLetter": "s",
+    "styles": [
+      "modern",
+      "surname-style",
+      "nature"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "kai",
+      "landon",
+      "easton",
+      "weston",
+      "river"
+    ]
+  },
+  {
+    "id": "kai",
+    "name": "Kai",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hawaiian"
+    ],
+    "meaning": "Sea",
+    "syllables": 1,
+    "firstLetter": "K",
+    "lastLetter": "i",
+    "styles": [
+      "modern",
+      "short-punchy",
+      "nature"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "brooks",
+      "wren",
+      "fox",
+      "sage",
+      "reed"
+    ]
+  },
+  {
+    "id": "jaxon",
+    "name": "Jaxon",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Jax"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Son of Jack (respelled)",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "n",
+    "styles": [
+      "invented",
+      "modern"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "justice",
+      "ryker",
+      "legend",
+      "phoenix",
+      "kingston"
+    ]
+  },
+  {
+    "id": "brayden",
+    "name": "Brayden",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Bray"
+      }
+    ],
+    "origins": [
+      "Irish"
+    ],
+    "meaning": "Broad hill (respelled)",
+    "syllables": 2,
+    "firstLetter": "B",
+    "lastLetter": "n",
+    "styles": [
+      "invented",
+      "modern"
+    ],
+    "traits": [
+      "unusual"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "jaxon",
+      "ryker",
+      "zayden",
+      "kayden",
+      "grayden"
+    ]
+  },
+  {
+    "id": "ryker",
+    "name": "Ryker",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Ry"
+      }
+    ],
+    "origins": [
+      "Danish"
+    ],
+    "meaning": "Rich",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "r",
+    "styles": [
+      "invented",
+      "modern",
+      "strong"
+    ],
+    "traits": [
+      "unusual",
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "maverick",
+      "ranger",
+      "rowdy",
+      "jaxon",
+      "legend"
+    ]
+  },
+  {
+    "id": "zayden",
+    "name": "Zayden",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Zay"
+      }
+    ],
+    "origins": [
+      "Invented"
+    ],
+    "meaning": "Modern coinage",
+    "syllables": 2,
+    "firstLetter": "Z",
+    "lastLetter": "n",
+    "styles": [
+      "invented",
+      "modern"
+    ],
+    "traits": [
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "jaxon",
+      "brayden",
+      "ryker",
+      "kayden",
+      "grayden"
+    ]
+  },
+  {
+    "id": "maverick",
+    "name": "Maverick",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Mav"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Independent, nonconformist",
+    "syllables": 3,
+    "firstLetter": "M",
+    "lastLetter": "k",
+    "styles": [
+      "invented",
+      "modern",
+      "strong"
+    ],
+    "traits": [
+      "unusual",
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "ryker",
+      "remington",
+      "jaxon",
+      "ranger",
+      "legend"
+    ]
+  },
+  {
+    "id": "kayden",
+    "name": "Kayden",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Kay"
+      }
+    ],
+    "origins": [
+      "Invented"
+    ],
+    "meaning": "Modern coinage",
+    "syllables": 2,
+    "firstLetter": "K",
+    "lastLetter": "n",
+    "styles": [
+      "invented",
+      "modern"
+    ],
+    "traits": [
+      "unusual"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "kingston",
+      "jaxon",
+      "brayden",
+      "ryker",
+      "zayden"
+    ]
+  },
+  {
+    "id": "aiden",
+    "name": "Aiden",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Aid"
+      }
+    ],
+    "origins": [
+      "Irish"
+    ],
+    "meaning": "Little fire",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "n",
+    "styles": [
+      "modern"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "lucas",
+      "owen",
+      "liam",
+      "ryan",
+      "ethan"
+    ]
+  },
+  {
+    "id": "grayden",
+    "name": "Grayden",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Invented"
+    ],
+    "meaning": "Modern coinage",
+    "syllables": 2,
+    "firstLetter": "G",
+    "lastLetter": "n",
+    "styles": [
+      "invented",
+      "modern"
+    ],
+    "traits": [
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "jaxon",
+      "brayden",
+      "ryker",
+      "zayden",
+      "kayden"
+    ]
+  },
+  {
+    "id": "axel",
+    "name": "Axel",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Scandinavian"
+    ],
+    "meaning": "Father of peace",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "l",
+    "styles": [
+      "strong",
+      "modern"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "ryker",
+      "gunner",
+      "maverick",
+      "aksel",
+      "atlas"
+    ]
+  },
+  {
+    "id": "bear",
+    "name": "Bear",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Bear",
+    "syllables": 1,
+    "firstLetter": "B",
+    "lastLetter": "r",
+    "styles": [
+      "strong",
+      "nature",
+      "short-punchy"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "wolf",
+      "stone",
+      "hawk",
+      "duke",
+      "storm"
+    ]
+  },
+  {
+    "id": "blaze",
+    "name": "Blaze",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Fire",
+    "syllables": 1,
+    "firstLetter": "B",
+    "lastLetter": "e",
+    "styles": [
+      "strong",
+      "invented"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "steel",
+      "ryker",
+      "ranger",
+      "maverick",
+      "bear"
+    ]
+  },
+  {
+    "id": "rex",
+    "name": "Rex",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "King",
+    "syllables": 1,
+    "firstLetter": "R",
+    "lastLetter": "x",
+    "styles": [
+      "strong",
+      "short-punchy",
+      "vintage"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "bear",
+      "duke",
+      "knox",
+      "wolf",
+      "stone"
+    ]
+  },
+  {
+    "id": "duke",
+    "name": "Duke",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Leader",
+    "syllables": 1,
+    "firstLetter": "D",
+    "lastLetter": "e",
+    "styles": [
+      "strong",
+      "short-punchy"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "bear",
+      "wolf",
+      "stone",
+      "hawk",
+      "rex"
+    ]
+  },
+  {
+    "id": "knox",
+    "name": "Knox",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Scottish"
+    ],
+    "meaning": "Round hill",
+    "syllables": 1,
+    "firstLetter": "K",
+    "lastLetter": "x",
+    "styles": [
+      "strong",
+      "surname-style",
+      "short-punchy"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "kent",
+      "bear",
+      "rex",
+      "duke",
+      "wolf"
+    ]
+  },
+  {
+    "id": "ranger",
+    "name": "Ranger",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Forest guardian",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "r",
+    "styles": [
+      "strong",
+      "nature",
+      "invented"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "ryker",
+      "orion",
+      "falcon",
+      "phoenix",
+      "maverick"
+    ]
+  },
+  {
+    "id": "titan",
+    "name": "Titan",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Giant",
+    "syllables": 2,
+    "firstLetter": "T",
+    "lastLetter": "n",
+    "styles": [
+      "strong",
+      "rare"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "orion",
+      "atlas",
+      "alaric",
+      "thaddeus",
+      "ryker"
+    ]
+  },
+  {
+    "id": "steel",
+    "name": "Steel",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Steel",
+    "syllables": 1,
+    "firstLetter": "S",
+    "lastLetter": "l",
+    "styles": [
+      "strong",
+      "invented"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "blaze",
+      "ryker",
+      "ranger",
+      "maverick",
+      "stone"
+    ]
+  },
+  {
+    "id": "wolf",
+    "name": "Wolf",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Wolf",
+    "syllables": 1,
+    "firstLetter": "W",
+    "lastLetter": "f",
+    "styles": [
+      "strong",
+      "nature",
+      "short-punchy"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "bear",
+      "stone",
+      "hawk",
+      "duke",
+      "storm"
+    ]
+  },
+  {
+    "id": "bronson",
+    "name": "Bronson",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Bron"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Son of the brown-haired one",
+    "syllables": 2,
+    "firstLetter": "B",
+    "lastLetter": "n",
+    "styles": [
+      "strong",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "sawyer",
+      "rhodes",
+      "sterling",
+      "marshall",
+      "knox"
+    ]
+  },
+  {
+    "id": "sawyer",
+    "name": "Sawyer",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Woodcutter",
+    "syllables": 2,
+    "firstLetter": "S",
+    "lastLetter": "r",
+    "styles": [
+      "strong",
+      "surname-style",
+      "literary"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "sterling",
+      "bronson",
+      "rhodes",
+      "atlas",
+      "marshall"
+    ]
+  },
+  {
+    "id": "gunner",
+    "name": "Gunner",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Gunn"
+      }
+    ],
+    "origins": [
+      "Scandinavian"
+    ],
+    "meaning": "Bold warrior",
+    "syllables": 2,
+    "firstLetter": "G",
+    "lastLetter": "r",
+    "styles": [
+      "strong",
+      "modern"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "ryker",
+      "axel",
+      "maverick",
+      "grayson",
+      "roman"
+    ]
+  },
+  {
+    "id": "rhodes",
+    "name": "Rhodes",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Where roses grow",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "s",
+    "styles": [
+      "strong",
+      "surname-style"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "bronson",
+      "sawyer",
+      "sterling",
+      "marshall",
+      "ryker"
+    ]
+  },
+  {
+    "id": "sterling",
+    "name": "Sterling",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Stern"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Of high quality",
+    "syllables": 2,
+    "firstLetter": "S",
+    "lastLetter": "g",
+    "styles": [
+      "strong",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "sawyer",
+      "bronson",
+      "rhodes",
+      "marshall",
+      "knox"
+    ]
+  },
+  {
+    "id": "milo",
+    "name": "Milo",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Soldier, merciful",
+    "syllables": 2,
+    "firstLetter": "M",
+    "lastLetter": "o",
+    "styles": [
+      "soft",
+      "vintage",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "otto",
+      "felix",
+      "bodhi",
+      "amos",
+      "wren"
+    ]
+  },
+  {
+    "id": "leo",
+    "name": "Leo",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Lion",
+    "syllables": 1,
+    "firstLetter": "L",
+    "lastLetter": "o",
+    "styles": [
+      "soft",
+      "classic",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "finn",
+      "miles",
+      "wren",
+      "fox",
+      "rhys"
+    ]
+  },
+  {
+    "id": "felix",
+    "name": "Felix",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Happy, fortunate",
+    "syllables": 2,
+    "firstLetter": "F",
+    "lastLetter": "x",
+    "styles": [
+      "soft",
+      "vintage"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "milo",
+      "otto",
+      "hugo",
+      "jasper",
+      "bodhi"
+    ]
+  },
+  {
+    "id": "hugo",
+    "name": "Hugo",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Mind, intellect",
+    "syllables": 2,
+    "firstLetter": "H",
+    "lastLetter": "o",
+    "styles": [
+      "soft",
+      "international",
+      "vintage"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "milo",
+      "felix",
+      "otto",
+      "remy",
+      "jasper"
+    ]
+  },
+  {
+    "id": "otto",
+    "name": "Otto",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Wealth, prosperity",
+    "syllables": 2,
+    "firstLetter": "O",
+    "lastLetter": "o",
+    "styles": [
+      "soft",
+      "vintage",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "milo",
+      "felix",
+      "bodhi",
+      "amos",
+      "wren"
+    ]
+  },
+  {
+    "id": "wren",
+    "name": "Wren",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Small bird",
+    "syllables": 1,
+    "firstLetter": "W",
+    "lastLetter": "n",
+    "styles": [
+      "soft",
+      "nature",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "fox",
+      "sage",
+      "rhys",
+      "rio",
+      "beau"
+    ]
+  },
+  {
+    "id": "fox",
+    "name": "Fox",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Fox",
+    "syllables": 1,
+    "firstLetter": "F",
+    "lastLetter": "x",
+    "styles": [
+      "soft",
+      "nature",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "wren",
+      "sage",
+      "rhys",
+      "rio",
+      "beau"
+    ]
+  },
+  {
+    "id": "remy",
+    "name": "Remy",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "French"
+    ],
+    "meaning": "Oarsman",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "y",
+    "styles": [
+      "soft",
+      "international",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "rhys",
+      "milo",
+      "hugo",
+      "otto",
+      "bodhi"
+    ]
+  },
+  {
+    "id": "finn",
+    "name": "Finn",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Irish"
+    ],
+    "meaning": "Fair, white",
+    "syllables": 1,
+    "firstLetter": "F",
+    "lastLetter": "n",
+    "styles": [
+      "soft",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "leo",
+      "fox",
+      "wren",
+      "rhys",
+      "sage"
+    ]
+  },
+  {
+    "id": "miles",
+    "name": "Miles",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Soldier",
+    "syllables": 2,
+    "firstLetter": "M",
+    "lastLetter": "s",
+    "styles": [
+      "soft",
+      "classic"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "leo",
+      "henry",
+      "arthur",
+      "theodore",
+      "elliot"
+    ]
+  },
+  {
+    "id": "jasper",
+    "name": "Jasper",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Jas"
+      }
+    ],
+    "origins": [
+      "Persian"
+    ],
+    "meaning": "Treasurer",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "r",
+    "styles": [
+      "soft",
+      "vintage"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "milo",
+      "felix",
+      "hugo",
+      "otto",
+      "henry"
+    ]
+  },
+  {
+    "id": "rhys",
+    "name": "Rhys",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Welsh"
+    ],
+    "meaning": "Ardor, enthusiasm",
+    "syllables": 1,
+    "firstLetter": "R",
+    "lastLetter": "s",
+    "styles": [
+      "soft",
+      "international",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "remy",
+      "rio",
+      "wren",
+      "fox",
+      "sage"
+    ]
+  },
+  {
+    "id": "sage",
+    "name": "Sage",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Wise one",
+    "syllables": 1,
+    "firstLetter": "S",
+    "lastLetter": "e",
+    "styles": [
+      "soft",
+      "nature",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "wren",
+      "fox",
+      "rhys",
+      "rio",
+      "beau"
+    ]
+  },
+  {
+    "id": "bodhi",
+    "name": "Bodhi",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Sanskrit"
+    ],
+    "meaning": "Awakening",
+    "syllables": 2,
+    "firstLetter": "B",
+    "lastLetter": "i",
+    "styles": [
+      "soft",
+      "rare",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "milo",
+      "otto",
+      "beau",
+      "wren",
+      "fox"
+    ]
+  },
+  {
+    "id": "ellis",
+    "name": "Ellis",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Welsh"
+    ],
+    "meaning": "Benevolent",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "s",
+    "styles": [
+      "soft",
+      "surname-style"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "easton",
+      "landon",
+      "weston",
+      "milo",
+      "felix"
+    ]
+  },
+  {
+    "id": "river",
+    "name": "River",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Flowing water",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "r",
+    "styles": [
+      "nature",
+      "modern"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "wilder",
+      "phoenix",
+      "brooks",
+      "kai",
+      "forest"
+    ]
+  },
+  {
+    "id": "forest",
+    "name": "Forest",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Forrest"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Woodland",
+    "syllables": 2,
+    "firstLetter": "F",
+    "lastLetter": "t",
+    "styles": [
+      "nature"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "river",
+      "cedar",
+      "fox",
+      "wren",
+      "sage"
+    ]
+  },
+  {
+    "id": "cedar",
+    "name": "Cedar",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Cedar tree",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "r",
+    "styles": [
+      "nature",
+      "rare"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "orion",
+      "bodhi",
+      "river",
+      "forest",
+      "kofi"
+    ]
+  },
+  {
+    "id": "stone",
+    "name": "Stone",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Stone",
+    "syllables": 1,
+    "firstLetter": "S",
+    "lastLetter": "e",
+    "styles": [
+      "nature",
+      "strong",
+      "short-punchy"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "bear",
+      "wolf",
+      "hawk",
+      "storm",
+      "duke"
+    ]
+  },
+  {
+    "id": "reed",
+    "name": "Reed",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Red-haired, reed",
+    "syllables": 1,
+    "firstLetter": "R",
+    "lastLetter": "d",
+    "styles": [
+      "nature",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "rio",
+      "kai",
+      "wren",
+      "fox",
+      "sage"
+    ]
+  },
+  {
+    "id": "orion",
+    "name": "Orion",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "The hunter, constellation",
+    "syllables": 2,
+    "firstLetter": "O",
+    "lastLetter": "n",
+    "styles": [
+      "nature",
+      "rare",
+      "strong"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "ranger",
+      "titan",
+      "falcon",
+      "atlas",
+      "bear"
+    ]
+  },
+  {
+    "id": "storm",
+    "name": "Storm",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Tempest",
+    "syllables": 1,
+    "firstLetter": "S",
+    "lastLetter": "m",
+    "styles": [
+      "nature",
+      "strong"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "stone",
+      "bear",
+      "wolf",
+      "hawk",
+      "ranger"
+    ]
+  },
+  {
+    "id": "falcon",
+    "name": "Falcon",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Falcon",
+    "syllables": 2,
+    "firstLetter": "F",
+    "lastLetter": "n",
+    "styles": [
+      "nature",
+      "strong"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "ranger",
+      "orion",
+      "bear",
+      "wolf",
+      "stone"
+    ]
+  },
+  {
+    "id": "hawk",
+    "name": "Hawk",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Hawk",
+    "syllables": 1,
+    "firstLetter": "H",
+    "lastLetter": "k",
+    "styles": [
+      "nature",
+      "strong",
+      "short-punchy"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "bear",
+      "wolf",
+      "stone",
+      "duke",
+      "storm"
+    ]
+  },
+  {
+    "id": "wilder",
+    "name": "Wilder",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Wild, untamed",
+    "syllables": 2,
+    "firstLetter": "W",
+    "lastLetter": "r",
+    "styles": [
+      "nature",
+      "modern"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "phoenix",
+      "river",
+      "jaxon",
+      "ryker",
+      "ranger"
+    ]
+  },
+  {
+    "id": "matteo",
+    "name": "Matteo",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Teo"
+      }
+    ],
+    "origins": [
+      "Italian"
+    ],
+    "meaning": "Gift of God",
+    "syllables": 2,
+    "firstLetter": "M",
+    "lastLetter": "o",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "elegant"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "mateo",
+      "julian",
+      "adrian",
+      "lucian",
+      "elias"
+    ]
+  },
+  {
+    "id": "luca",
+    "name": "Luca",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Italian"
+    ],
+    "meaning": "Man from Lucania",
+    "syllables": 2,
+    "firstLetter": "L",
+    "lastLetter": "a",
+    "styles": [
+      "international",
+      "short-punchy"
+    ],
+    "traits": [
+      "elegant",
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "remy",
+      "enzo",
+      "niko",
+      "elio",
+      "julian"
+    ]
+  },
+  {
+    "id": "enzo",
+    "name": "Enzo",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Italian"
+    ],
+    "meaning": "Ruler of the home",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "o",
+    "styles": [
+      "international",
+      "short-punchy"
+    ],
+    "traits": [
+      "elegant"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "luca",
+      "elio",
+      "remy",
+      "niko",
+      "elias"
+    ]
+  },
+  {
+    "id": "diego",
+    "name": "Diego",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Spanish"
+    ],
+    "meaning": "Supplanter",
+    "syllables": 2,
+    "firstLetter": "D",
+    "lastLetter": "o",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "elegant"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "julian",
+      "adrian",
+      "lucian",
+      "elias",
+      "matteo"
+    ]
+  },
+  {
+    "id": "mateo",
+    "name": "Mateo",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Spanish"
+    ],
+    "meaning": "Gift of God",
+    "syllables": 2,
+    "firstLetter": "M",
+    "lastLetter": "o",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "elegant"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "matteo",
+      "julian",
+      "adrian",
+      "lucian",
+      "elias"
+    ]
+  },
+  {
+    "id": "santiago",
+    "name": "Santiago",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Santi"
+      },
+      {
+        "name": "Iago"
+      }
+    ],
+    "origins": [
+      "Spanish"
+    ],
+    "meaning": "Saint James",
+    "syllables": 3,
+    "firstLetter": "S",
+    "lastLetter": "o",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "elegant"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "sebastian",
+      "lorenzo",
+      "dimitri",
+      "casimir",
+      "julian"
+    ]
+  },
+  {
+    "id": "emiliano",
+    "name": "Emiliano",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Emi"
+      }
+    ],
+    "origins": [
+      "Italian",
+      "Spanish"
+    ],
+    "meaning": "Rival",
+    "syllables": 4,
+    "firstLetter": "E",
+    "lastLetter": "o",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "elegant"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "sebastian",
+      "santiago",
+      "lorenzo",
+      "dimitri",
+      "casimir"
+    ]
+  },
+  {
+    "id": "lorenzo",
+    "name": "Lorenzo",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Enzo"
+      },
+      {
+        "name": "Renzo"
+      }
+    ],
+    "origins": [
+      "Italian"
+    ],
+    "meaning": "From Laurentum",
+    "syllables": 3,
+    "firstLetter": "L",
+    "lastLetter": "o",
+    "styles": [
+      "international",
+      "classic"
+    ],
+    "traits": [
+      "elegant"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "sebastian",
+      "lucian",
+      "julian",
+      "adrian",
+      "elias"
+    ]
+  },
+  {
+    "id": "rafael",
+    "name": "Rafael",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Rafa"
+      }
+    ],
+    "origins": [
+      "Hebrew",
+      "Spanish"
+    ],
+    "meaning": "God has healed",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "l",
+    "styles": [
+      "international",
+      "biblical"
+    ],
+    "traits": [
+      "elegant"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "elias",
+      "julian",
+      "adrian",
+      "lucian",
+      "gabriel"
+    ]
+  },
+  {
+    "id": "emil",
+    "name": "Emil",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "German",
+      "Scandinavian"
+    ],
+    "meaning": "Rival, eager",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "l",
+    "styles": [
+      "international",
+      "vintage"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "hugo",
+      "emmett",
+      "ezra",
+      "elio",
+      "henry"
+    ]
+  },
+  {
+    "id": "anders",
+    "name": "Anders",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Scandinavian"
+    ],
+    "meaning": "Manly, brave",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "s",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "aksel",
+      "amir",
+      "arjun",
+      "omar",
+      "andre"
+    ]
+  },
+  {
+    "id": "aksel",
+    "name": "Aksel",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Scandinavian"
+    ],
+    "meaning": "Father of peace",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "l",
+    "styles": [
+      "international",
+      "strong"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "atlas",
+      "ryker",
+      "ranger",
+      "titan",
+      "rhodes"
+    ]
+  },
+  {
+    "id": "niko",
+    "name": "Niko",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Victory of the people",
+    "syllables": 2,
+    "firstLetter": "N",
+    "lastLetter": "o",
+    "styles": [
+      "international",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "remy",
+      "luca",
+      "elio",
+      "rhys",
+      "rio"
+    ]
+  },
+  {
+    "id": "dimitri",
+    "name": "Dimitri",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Mitri"
+      }
+    ],
+    "origins": [
+      "Russian",
+      "Greek"
+    ],
+    "meaning": "Follower of Demeter",
+    "syllables": 3,
+    "firstLetter": "D",
+    "lastLetter": "i",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "elegant",
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "amir",
+      "sebastian",
+      "santiago",
+      "lorenzo",
+      "casimir"
+    ]
+  },
+  {
+    "id": "amos",
+    "name": "Amos",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Carried by God",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "s",
+    "styles": [
+      "biblical",
+      "vintage",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "ezra",
+      "milo",
+      "otto",
+      "gus",
+      "august"
+    ]
+  },
+  {
+    "id": "kofi",
+    "name": "Kofi",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Akan/Ghanaian"
+    ],
+    "meaning": "Born on Friday",
+    "syllables": 2,
+    "firstLetter": "K",
+    "lastLetter": "i",
+    "styles": [
+      "international",
+      "rare"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "idris",
+      "bodhi",
+      "cedar",
+      "elio",
+      "casimir"
+    ]
+  },
+  {
+    "id": "kenji",
+    "name": "Kenji",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Japanese"
+    ],
+    "meaning": "Intelligent second son",
+    "syllables": 2,
+    "firstLetter": "K",
+    "lastLetter": "i",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "idris",
+      "casimir",
+      "kofi",
+      "julian",
+      "adrian"
+    ]
+  },
+  {
+    "id": "idris",
+    "name": "Idris",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Welsh",
+      "Arabic"
+    ],
+    "meaning": "Ardent lord, interpreter",
+    "syllables": 2,
+    "firstLetter": "I",
+    "lastLetter": "s",
+    "styles": [
+      "international",
+      "rare"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "casimir",
+      "kofi",
+      "kenji",
+      "leopold",
+      "ambrose"
+    ]
+  },
+  {
+    "id": "amir",
+    "name": "Amir",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Arabic"
+    ],
+    "meaning": "Prince, commander",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "r",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "strong",
+      "elegant"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "dimitri",
+      "adrian",
+      "anders",
+      "aksel",
+      "arjun"
+    ]
+  },
+  {
+    "id": "omar",
+    "name": "Omar",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Arabic"
+    ],
+    "meaning": "Flourishing, long-lived",
+    "syllables": 2,
+    "firstLetter": "O",
+    "lastLetter": "r",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "anders",
+      "aksel",
+      "amir",
+      "arjun",
+      "dimitri"
+    ]
+  },
+  {
+    "id": "rio",
+    "name": "Rio",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Spanish"
+    ],
+    "meaning": "River",
+    "syllables": 1,
+    "firstLetter": "R",
+    "lastLetter": "o",
+    "styles": [
+      "international",
+      "short-punchy",
+      "nature"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "rhys",
+      "wren",
+      "fox",
+      "sage",
+      "elio"
+    ]
+  },
+  {
+    "id": "aarav",
+    "name": "Aarav",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Sanskrit"
+    ],
+    "meaning": "Peaceful",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "v",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "julian",
+      "hugo",
+      "remy",
+      "luca",
+      "emil"
+    ]
+  },
+  {
+    "id": "arjun",
+    "name": "Arjun",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Sanskrit"
+    ],
+    "meaning": "Bright, shining",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "n",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "anders",
+      "aksel",
+      "amir",
+      "omar",
+      "andre"
+    ]
+  },
+  {
+    "id": "kian",
+    "name": "Kian",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Persian",
+      "Irish"
+    ],
+    "meaning": "King, ancient",
+    "syllables": 1,
+    "firstLetter": "K",
+    "lastLetter": "n",
+    "styles": [
+      "international",
+      "modern"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "wyatt",
+      "zion",
+      "andre",
+      "zane",
+      "chase"
+    ]
+  },
+  {
+    "id": "zion",
+    "name": "Zion",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Highest point, promised land",
+    "syllables": 1,
+    "firstLetter": "Z",
+    "lastLetter": "n",
+    "styles": [
+      "biblical",
+      "modern"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "zane",
+      "ethan",
+      "cash",
+      "ace",
+      "jaxon"
+    ]
+  },
+  {
+    "id": "elio",
+    "name": "Elio",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Italian"
+    ],
+    "meaning": "The sun",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "o",
+    "styles": [
+      "international",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "rhys",
+      "rio",
+      "remy",
+      "luca",
+      "niko"
+    ]
+  },
+  {
+    "id": "pablo",
+    "name": "Pablo",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Spanish"
+    ],
+    "meaning": "Small",
+    "syllables": 2,
+    "firstLetter": "P",
+    "lastLetter": "o",
+    "styles": [
+      "international"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "julian",
+      "hugo",
+      "remy",
+      "luca",
+      "emil"
+    ]
+  },
+  {
+    "id": "andre",
+    "name": "Andre",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Dre"
+      }
+    ],
+    "origins": [
+      "French"
+    ],
+    "meaning": "Manly, brave",
+    "syllables": 1,
+    "firstLetter": "A",
+    "lastLetter": "e",
+    "styles": [
+      "international",
+      "classic"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "adrian",
+      "frank",
+      "julian",
+      "lucian",
+      "elias"
+    ]
+  },
+  {
+    "id": "jack",
+    "name": "Jack",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "God is gracious",
+    "syllables": 1,
+    "firstLetter": "J",
+    "lastLetter": "k",
+    "styles": [
+      "short-punchy",
+      "classic"
+    ],
+    "traits": [
+      "strong",
+      "established"
+    ],
+    "popularityTier": "very-common",
+    "similarNameIds": [
+      "max",
+      "leo",
+      "grant",
+      "neil",
+      "craig"
+    ]
+  },
+  {
+    "id": "max",
+    "name": "Max",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Greatest",
+    "syllables": 1,
+    "firstLetter": "M",
+    "lastLetter": "x",
+    "styles": [
+      "short-punchy",
+      "classic"
+    ],
+    "traits": [
+      "strong",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "jack",
+      "leo",
+      "grant",
+      "neil",
+      "craig"
+    ]
+  },
+  {
+    "id": "cole",
+    "name": "Cole",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Charcoal, dark",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "e",
+    "styles": [
+      "short-punchy",
+      "modern"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "chase",
+      "cash",
+      "zane",
+      "ace",
+      "carter"
+    ]
+  },
+  {
+    "id": "beau",
+    "name": "Beau",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "French"
+    ],
+    "meaning": "Handsome",
+    "syllables": 1,
+    "firstLetter": "B",
+    "lastLetter": "u",
+    "styles": [
+      "short-punchy",
+      "soft"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "wren",
+      "fox",
+      "rhys",
+      "sage",
+      "bodhi"
+    ]
+  },
+  {
+    "id": "jude",
+    "name": "Jude",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Praised",
+    "syllables": 1,
+    "firstLetter": "J",
+    "lastLetter": "e",
+    "styles": [
+      "short-punchy",
+      "biblical"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "ezra",
+      "levi",
+      "noah",
+      "leo",
+      "finn"
+    ]
+  },
+  {
+    "id": "gus",
+    "name": "Gus",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Great, magnificent",
+    "syllables": 1,
+    "firstLetter": "G",
+    "lastLetter": "s",
+    "styles": [
+      "short-punchy",
+      "vintage"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "milo",
+      "otto",
+      "amos",
+      "ray",
+      "august"
+    ]
+  },
+  {
+    "id": "ray",
+    "name": "Ray",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "French"
+    ],
+    "meaning": "Counsel, protection",
+    "syllables": 1,
+    "firstLetter": "R",
+    "lastLetter": "y",
+    "styles": [
+      "short-punchy",
+      "vintage"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "gus",
+      "august",
+      "emmett",
+      "ezra",
+      "milo"
+    ]
+  },
+  {
+    "id": "zane",
+    "name": "Zane",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "God is gracious",
+    "syllables": 1,
+    "firstLetter": "Z",
+    "lastLetter": "e",
+    "styles": [
+      "short-punchy",
+      "modern"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "cash",
+      "ace",
+      "chase",
+      "bodie",
+      "zion"
+    ]
+  },
+  {
+    "id": "nash",
+    "name": "Nash",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "By the ash tree",
+    "syllables": 1,
+    "firstLetter": "N",
+    "lastLetter": "h",
+    "styles": [
+      "short-punchy",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "knox",
+      "kent",
+      "lane",
+      "neil",
+      "wyatt"
+    ]
+  },
+  {
+    "id": "grant",
+    "name": "Grant",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Great, large",
+    "syllables": 1,
+    "firstLetter": "G",
+    "lastLetter": "t",
+    "styles": [
+      "short-punchy",
+      "classic"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "jack",
+      "max",
+      "neil",
+      "craig",
+      "roman"
+    ]
+  },
+  {
+    "id": "chase",
+    "name": "Chase",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Hunter",
+    "syllables": 1,
+    "firstLetter": "C",
+    "lastLetter": "e",
+    "styles": [
+      "short-punchy",
+      "modern"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "cash",
+      "zane",
+      "ace",
+      "cole",
+      "kai"
+    ]
+  },
+  {
+    "id": "dean",
+    "name": "Dean",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Valley",
+    "syllables": 1,
+    "firstLetter": "D",
+    "lastLetter": "n",
+    "styles": [
+      "short-punchy",
+      "vintage"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "rex",
+      "gus",
+      "ray",
+      "duke",
+      "frank"
+    ]
+  },
+  {
+    "id": "shane",
+    "name": "Shane",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Irish"
+    ],
+    "meaning": "God is gracious",
+    "syllables": 1,
+    "firstLetter": "S",
+    "lastLetter": "e",
+    "styles": [
+      "short-punchy"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "stone",
+      "bear",
+      "rex",
+      "duke",
+      "knox"
+    ]
+  },
+  {
+    "id": "kent",
+    "name": "Kent",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Edge, border",
+    "syllables": 1,
+    "firstLetter": "K",
+    "lastLetter": "t",
+    "styles": [
+      "short-punchy",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "knox",
+      "nash",
+      "lane",
+      "wyatt",
+      "bear"
+    ]
+  },
+  {
+    "id": "lane",
+    "name": "Lane",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Path, roadway",
+    "syllables": 1,
+    "firstLetter": "L",
+    "lastLetter": "e",
+    "styles": [
+      "short-punchy",
+      "surname-style"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "knox",
+      "nash",
+      "kent",
+      "leo",
+      "brooks"
+    ]
+  },
+  {
+    "id": "emerson",
+    "name": "Emerson",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Emery"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Son of Emery",
+    "syllables": 3,
+    "firstLetter": "E",
+    "lastLetter": "n",
+    "styles": [
+      "surname-style",
+      "literary"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "beckett",
+      "holden",
+      "whitman",
+      "huxley",
+      "darcy"
+    ]
+  },
+  {
+    "id": "anderson",
+    "name": "Anderson",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Andy"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Son of Andrew",
+    "syllables": 3,
+    "firstLetter": "A",
+    "lastLetter": "n",
+    "styles": [
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "harrison",
+      "remington",
+      "mason",
+      "logan",
+      "carter"
+    ]
+  },
+  {
+    "id": "harrison",
+    "name": "Harrison",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Harry"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Son of Harry",
+    "syllables": 3,
+    "firstLetter": "H",
+    "lastLetter": "n",
+    "styles": [
+      "surname-style",
+      "classic"
+    ],
+    "traits": [
+      "strong",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "bennett",
+      "graham",
+      "william",
+      "james",
+      "robert"
+    ]
+  },
+  {
+    "id": "bennett",
+    "name": "Bennett",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Ben"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Blessed",
+    "syllables": 2,
+    "firstLetter": "B",
+    "lastLetter": "t",
+    "styles": [
+      "surname-style",
+      "classic"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "spencer",
+      "henry",
+      "arthur",
+      "theodore",
+      "elliot"
+    ]
+  },
+  {
+    "id": "beckett",
+    "name": "Beckett",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Beck"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Bee cottage",
+    "syllables": 2,
+    "firstLetter": "B",
+    "lastLetter": "t",
+    "styles": [
+      "surname-style",
+      "literary"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "whitman",
+      "huxley",
+      "darcy",
+      "holden",
+      "emerson"
+    ]
+  },
+  {
+    "id": "sullivan",
+    "name": "Sullivan",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Sully"
+      }
+    ],
+    "origins": [
+      "Irish"
+    ],
+    "meaning": "Dark-eyed",
+    "syllables": 3,
+    "firstLetter": "S",
+    "lastLetter": "n",
+    "styles": [
+      "surname-style"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "emerson",
+      "sutton",
+      "spencer",
+      "landon",
+      "easton"
+    ]
+  },
+  {
+    "id": "sutton",
+    "name": "Sutton",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Southern town",
+    "syllables": 2,
+    "firstLetter": "S",
+    "lastLetter": "n",
+    "styles": [
+      "surname-style"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "beckett",
+      "crosby",
+      "whitman",
+      "huxley",
+      "darcy"
+    ]
+  },
+  {
+    "id": "tanner",
+    "name": "Tanner",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Leather worker",
+    "syllables": 2,
+    "firstLetter": "T",
+    "lastLetter": "r",
+    "styles": [
+      "surname-style",
+      "modern"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "mason",
+      "logan",
+      "carter",
+      "hunter",
+      "jackson"
+    ]
+  },
+  {
+    "id": "parker",
+    "name": "Parker",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Park keeper",
+    "syllables": 2,
+    "firstLetter": "P",
+    "lastLetter": "r",
+    "styles": [
+      "surname-style",
+      "modern"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "landon",
+      "easton",
+      "weston",
+      "brooks",
+      "mason"
+    ]
+  },
+  {
+    "id": "spencer",
+    "name": "Spencer",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Spence"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Steward, dispenser",
+    "syllables": 2,
+    "firstLetter": "S",
+    "lastLetter": "r",
+    "styles": [
+      "surname-style",
+      "classic"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "bennett",
+      "graham",
+      "sutton",
+      "henry",
+      "arthur"
+    ]
+  },
+  {
+    "id": "preston",
+    "name": "Preston",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Priest's town",
+    "syllables": 2,
+    "firstLetter": "P",
+    "lastLetter": "n",
+    "styles": [
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "mason",
+      "logan",
+      "carter",
+      "hunter",
+      "jackson"
+    ]
+  },
+  {
+    "id": "holden",
+    "name": "Holden",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Deep valley",
+    "syllables": 2,
+    "firstLetter": "H",
+    "lastLetter": "n",
+    "styles": [
+      "surname-style",
+      "literary"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "huxley",
+      "beckett",
+      "whitman",
+      "darcy",
+      "emerson"
+    ]
+  },
+  {
+    "id": "barrett",
+    "name": "Barrett",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Strong as a bear",
+    "syllables": 2,
+    "firstLetter": "B",
+    "lastLetter": "t",
+    "styles": [
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "bentley",
+      "bronson",
+      "mason",
+      "logan",
+      "carter"
+    ]
+  },
+  {
+    "id": "crosby",
+    "name": "Crosby",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Scandinavian"
+    ],
+    "meaning": "Village with crosses",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "y",
+    "styles": [
+      "surname-style"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "beckett",
+      "sutton",
+      "whitman",
+      "huxley",
+      "darcy"
+    ]
+  },
+  {
+    "id": "whitman",
+    "name": "Whitman",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Whit"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "White-headed man",
+    "syllables": 2,
+    "firstLetter": "W",
+    "lastLetter": "n",
+    "styles": [
+      "surname-style",
+      "literary"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "beckett",
+      "huxley",
+      "darcy",
+      "holden",
+      "emerson"
+    ]
+  },
+  {
+    "id": "atticus",
+    "name": "Atticus",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Man of Attica",
+    "syllables": 3,
+    "firstLetter": "A",
+    "lastLetter": "s",
+    "styles": [
+      "rare",
+      "literary"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "percival",
+      "aldous",
+      "caspian",
+      "dashiell",
+      "fitzgerald"
+    ]
+  },
+  {
+    "id": "ignatius",
+    "name": "Ignatius",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Iggy"
+      },
+      {
+        "name": "Nate"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Fiery one",
+    "syllables": 3,
+    "firstLetter": "I",
+    "lastLetter": "s",
+    "styles": [
+      "rare",
+      "vintage"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "peregrine",
+      "cornelius",
+      "octavian",
+      "leopold",
+      "ambrose"
+    ]
+  },
+  {
+    "id": "barnaby",
+    "name": "Barnaby",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Barney"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Son of encouragement",
+    "syllables": 3,
+    "firstLetter": "B",
+    "lastLetter": "y",
+    "styles": [
+      "rare",
+      "vintage"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "ignatius",
+      "peregrine",
+      "cornelius",
+      "octavian",
+      "leopold"
+    ]
+  },
+  {
+    "id": "peregrine",
+    "name": "Peregrine",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Perry"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Traveler, wanderer",
+    "syllables": 3,
+    "firstLetter": "P",
+    "lastLetter": "e",
+    "styles": [
+      "rare",
+      "vintage"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "ignatius",
+      "cornelius",
+      "octavian",
+      "leopold",
+      "ambrose"
+    ]
+  },
+  {
+    "id": "thaddeus",
+    "name": "Thaddeus",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Thad"
+      },
+      {
+        "name": "Teddy"
+      }
+    ],
+    "origins": [
+      "Aramaic"
+    ],
+    "meaning": "Courageous heart",
+    "syllables": 2,
+    "firstLetter": "T",
+    "lastLetter": "s",
+    "styles": [
+      "rare",
+      "biblical"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "balthazar",
+      "enoch",
+      "titan",
+      "malachi",
+      "orion"
+    ]
+  },
+  {
+    "id": "cornelius",
+    "name": "Cornelius",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Neil"
+      },
+      {
+        "name": "Cory"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Horn",
+    "syllables": 3,
+    "firstLetter": "C",
+    "lastLetter": "s",
+    "styles": [
+      "rare",
+      "vintage"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "ignatius",
+      "peregrine",
+      "octavian",
+      "leopold",
+      "ambrose"
+    ]
+  },
+  {
+    "id": "percival",
+    "name": "Percival",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Percy"
+      }
+    ],
+    "origins": [
+      "French"
+    ],
+    "meaning": "Pierce the valley",
+    "syllables": 3,
+    "firstLetter": "P",
+    "lastLetter": "l",
+    "styles": [
+      "rare",
+      "literary"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "atticus",
+      "caspian",
+      "dashiell",
+      "aldous",
+      "fitzgerald"
+    ]
+  },
+  {
+    "id": "montgomery",
+    "name": "Montgomery",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Monty"
+      }
+    ],
+    "origins": [
+      "French"
+    ],
+    "meaning": "Mountain of the ruler",
+    "syllables": 4,
+    "firstLetter": "M",
+    "lastLetter": "y",
+    "styles": [
+      "rare",
+      "surname-style"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "fitzgerald",
+      "alaric",
+      "balthazar",
+      "remington",
+      "titan"
+    ]
+  },
+  {
+    "id": "octavian",
+    "name": "Octavian",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Tavi"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Eighth",
+    "syllables": 3,
+    "firstLetter": "O",
+    "lastLetter": "n",
+    "styles": [
+      "rare",
+      "vintage"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "ignatius",
+      "peregrine",
+      "cornelius",
+      "leopold",
+      "ambrose"
+    ]
+  },
+  {
+    "id": "alaric",
+    "name": "Alaric",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Ruler of all",
+    "syllables": 3,
+    "firstLetter": "A",
+    "lastLetter": "c",
+    "styles": [
+      "rare",
+      "strong"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "atlas",
+      "titan",
+      "orion",
+      "maverick",
+      "balthazar"
+    ]
+  },
+  {
+    "id": "casimir",
+    "name": "Casimir",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Caz"
+      },
+      {
+        "name": "Kazik"
+      }
+    ],
+    "origins": [
+      "Polish"
+    ],
+    "meaning": "Proclaims peace",
+    "syllables": 3,
+    "firstLetter": "C",
+    "lastLetter": "r",
+    "styles": [
+      "rare",
+      "international"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "idris",
+      "cornelius",
+      "kofi",
+      "atticus",
+      "ignatius"
+    ]
+  },
+  {
+    "id": "leopold",
+    "name": "Leopold",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Leo"
+      },
+      {
+        "name": "Leopoldo"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Bold people",
+    "syllables": 2,
+    "firstLetter": "L",
+    "lastLetter": "d",
+    "styles": [
+      "rare",
+      "vintage"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "ambrose",
+      "ignatius",
+      "peregrine",
+      "cornelius",
+      "octavian"
+    ]
+  },
+  {
+    "id": "balthazar",
+    "name": "Balthazar",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Baz"
+      }
+    ],
+    "origins": [
+      "Babylonian"
+    ],
+    "meaning": "Protect the king",
+    "syllables": 3,
+    "firstLetter": "B",
+    "lastLetter": "r",
+    "styles": [
+      "rare",
+      "biblical"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "thaddeus",
+      "malachi",
+      "alaric",
+      "enoch",
+      "titan"
+    ]
+  },
+  {
+    "id": "ambrose",
+    "name": "Ambrose",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Bram"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Immortal",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "e",
+    "styles": [
+      "rare",
+      "vintage"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "leopold",
+      "ignatius",
+      "peregrine",
+      "cornelius",
+      "octavian"
+    ]
+  },
+  {
+    "id": "caspian",
+    "name": "Caspian",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Cas"
+      }
+    ],
+    "origins": [
+      "Literary"
+    ],
+    "meaning": "From the Caspian Sea",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "n",
+    "styles": [
+      "rare",
+      "literary"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "dashiell",
+      "aldous",
+      "atticus",
+      "percival",
+      "atlas"
+    ]
+  },
+  {
+    "id": "atlas",
+    "name": "Atlas",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Enduring, bearer of the heavens",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "s",
+    "styles": [
+      "literary",
+      "strong",
+      "rare"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "titan",
+      "orion",
+      "heathcliff",
+      "alaric",
+      "aldous"
+    ]
+  },
+  {
+    "id": "dashiell",
+    "name": "Dashiell",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Dash"
+      }
+    ],
+    "origins": [
+      "French"
+    ],
+    "meaning": "Page boy",
+    "syllables": 2,
+    "firstLetter": "D",
+    "lastLetter": "l",
+    "styles": [
+      "literary",
+      "rare"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "caspian",
+      "aldous",
+      "atticus",
+      "percival",
+      "atlas"
+    ]
+  },
+  {
+    "id": "gatsby",
+    "name": "Gatsby",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Literary"
+    ],
+    "meaning": "Literary namesake",
+    "syllables": 2,
+    "firstLetter": "G",
+    "lastLetter": "y",
+    "styles": [
+      "literary",
+      "rare",
+      "invented"
+    ],
+    "traits": [
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "caspian",
+      "atlas",
+      "dashiell",
+      "heathcliff",
+      "sherlock"
+    ]
+  },
+  {
+    "id": "huxley",
+    "name": "Huxley",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Hux"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Inhospitable place",
+    "syllables": 2,
+    "firstLetter": "H",
+    "lastLetter": "y",
+    "styles": [
+      "literary",
+      "surname-style"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "beckett",
+      "whitman",
+      "darcy",
+      "holden",
+      "emerson"
+    ]
+  },
+  {
+    "id": "fitzgerald",
+    "name": "Fitzgerald",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Fitz"
+      }
+    ],
+    "origins": [
+      "Irish"
+    ],
+    "meaning": "Son of Gerald",
+    "syllables": 3,
+    "firstLetter": "F",
+    "lastLetter": "d",
+    "styles": [
+      "literary",
+      "surname-style",
+      "rare"
+    ],
+    "traits": [
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "atticus",
+      "percival",
+      "beckett",
+      "whitman",
+      "montgomery"
+    ]
+  },
+  {
+    "id": "darcy",
+    "name": "Darcy",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "French"
+    ],
+    "meaning": "From Arcy",
+    "syllables": 2,
+    "firstLetter": "D",
+    "lastLetter": "y",
+    "styles": [
+      "literary",
+      "surname-style"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "beckett",
+      "whitman",
+      "huxley",
+      "holden",
+      "emerson"
+    ]
+  },
+  {
+    "id": "heathcliff",
+    "name": "Heathcliff",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Heath"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Cliff near the heath",
+    "syllables": 2,
+    "firstLetter": "H",
+    "lastLetter": "f",
+    "styles": [
+      "literary",
+      "rare"
+    ],
+    "traits": [
+      "strong",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "atlas",
+      "caspian",
+      "dashiell",
+      "gatsby",
+      "sherlock"
+    ]
+  },
+  {
+    "id": "sherlock",
+    "name": "Sherlock",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Bright hair",
+    "syllables": 2,
+    "firstLetter": "S",
+    "lastLetter": "k",
+    "styles": [
+      "literary",
+      "rare"
+    ],
+    "traits": [
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "caspian",
+      "atlas",
+      "dashiell",
+      "gatsby",
+      "heathcliff"
+    ]
+  },
+  {
+    "id": "wilde",
+    "name": "Wilde",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Wild",
+    "syllables": 1,
+    "firstLetter": "W",
+    "lastLetter": "e",
+    "styles": [
+      "literary",
+      "rare",
+      "short-punchy"
+    ],
+    "traits": [
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "bodhi",
+      "caspian",
+      "atlas",
+      "dashiell",
+      "gatsby"
+    ]
+  },
+  {
+    "id": "aldous",
+    "name": "Aldous",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Old, wise",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "s",
+    "styles": [
+      "literary",
+      "rare"
+    ],
+    "traits": [
+      "elegant",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "caspian",
+      "dashiell",
+      "atticus",
+      "percival",
+      "atlas"
+    ]
+  },
+  {
+    "id": "christopher",
+    "name": "Christopher",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Chris"
+      },
+      {
+        "name": "Topher"
+      },
+      {
+        "name": "Kit"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Bearer of Christ",
+    "syllables": 3,
+    "firstLetter": "C",
+    "lastLetter": "r",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "benjamin",
+      "nathaniel",
+      "zachary",
+      "anthony",
+      "nicholas"
+    ]
+  },
+  {
+    "id": "anthony",
+    "name": "Anthony",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Tony"
+      },
+      {
+        "name": "Ant"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Priceless one",
+    "syllables": 3,
+    "firstLetter": "A",
+    "lastLetter": "y",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "benjamin",
+      "nathaniel",
+      "zachary",
+      "christopher",
+      "nicholas"
+    ]
+  },
+  {
+    "id": "nicholas",
+    "name": "Nicholas",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Nick"
+      },
+      {
+        "name": "Nico"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Victory of the people",
+    "syllables": 3,
+    "firstLetter": "N",
+    "lastLetter": "s",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "nathaniel",
+      "benjamin",
+      "zachary",
+      "christopher",
+      "anthony"
+    ]
+  },
+  {
+    "id": "patrick",
+    "name": "Patrick",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Pat"
+      },
+      {
+        "name": "Paddy"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Nobleman",
+    "syllables": 2,
+    "firstLetter": "P",
+    "lastLetter": "k",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "traditional"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "peter",
+      "william",
+      "james",
+      "henry",
+      "charles"
+    ]
+  },
+  {
+    "id": "sean",
+    "name": "Sean",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Shawn"
+      }
+    ],
+    "origins": [
+      "Irish"
+    ],
+    "meaning": "God is gracious",
+    "syllables": 1,
+    "firstLetter": "S",
+    "lastLetter": "n",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "george",
+      "leo",
+      "ryan",
+      "spencer",
+      "henry"
+    ]
+  },
+  {
+    "id": "ryan",
+    "name": "Ryan",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Irish"
+    ],
+    "meaning": "Little king",
+    "syllables": 1,
+    "firstLetter": "R",
+    "lastLetter": "n",
+    "styles": [
+      "classic",
+      "modern"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "lucas",
+      "owen",
+      "george",
+      "liam",
+      "leo"
+    ]
+  },
+  {
+    "id": "brandon",
+    "name": "Brandon",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Bran"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Broom-covered hill",
+    "syllables": 2,
+    "firstLetter": "B",
+    "lastLetter": "n",
+    "styles": [
+      "classic",
+      "modern"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "lucas",
+      "owen",
+      "justin",
+      "ryan",
+      "bennett"
+    ]
+  },
+  {
+    "id": "justin",
+    "name": "Justin",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Just, righteous",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "n",
+    "styles": [
+      "classic",
+      "modern"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "lucas",
+      "owen",
+      "brandon",
+      "ryan",
+      "julian"
+    ]
+  },
+  {
+    "id": "vincent",
+    "name": "Vincent",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Vince"
+      },
+      {
+        "name": "Vinny"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Conquering",
+    "syllables": 2,
+    "firstLetter": "V",
+    "lastLetter": "t",
+    "styles": [
+      "classic",
+      "vintage"
+    ],
+    "traits": [
+      "elegant"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "henry",
+      "edward",
+      "arthur",
+      "theodore",
+      "leonard"
+    ]
+  },
+  {
+    "id": "marcus",
+    "name": "Marcus",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Marc"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Dedicated to Mars",
+    "syllables": 2,
+    "firstLetter": "M",
+    "lastLetter": "s",
+    "styles": [
+      "classic",
+      "strong"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "roman",
+      "victor",
+      "michael",
+      "marshall",
+      "william"
+    ]
+  },
+  {
+    "id": "victor",
+    "name": "Victor",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Vic"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Conqueror",
+    "syllables": 2,
+    "firstLetter": "V",
+    "lastLetter": "r",
+    "styles": [
+      "classic",
+      "strong"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "roman",
+      "marcus",
+      "william",
+      "james",
+      "robert"
+    ]
+  },
+  {
+    "id": "leonard",
+    "name": "Leonard",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Leo"
+      },
+      {
+        "name": "Len"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Brave lion",
+    "syllables": 2,
+    "firstLetter": "L",
+    "lastLetter": "d",
+    "styles": [
+      "vintage",
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "soft"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "henry",
+      "arthur",
+      "theodore",
+      "frederick",
+      "edward"
+    ]
+  },
+  {
+    "id": "raymond",
+    "name": "Raymond",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Ray"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Wise protector",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "d",
+    "styles": [
+      "vintage",
+      "classic"
+    ],
+    "traits": [
+      "traditional"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "henry",
+      "edward",
+      "arthur",
+      "theodore",
+      "leonard"
+    ]
+  },
+  {
+    "id": "bernard",
+    "name": "Bernard",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Bernie"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Brave as a bear",
+    "syllables": 2,
+    "firstLetter": "B",
+    "lastLetter": "d",
+    "styles": [
+      "vintage"
+    ],
+    "traits": [
+      "traditional"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "henry",
+      "edward",
+      "walter",
+      "albert",
+      "arthur"
+    ]
+  },
+  {
+    "id": "herbert",
+    "name": "Herbert",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Herb"
+      },
+      {
+        "name": "Bertie"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Glorious army",
+    "syllables": 2,
+    "firstLetter": "H",
+    "lastLetter": "t",
+    "styles": [
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "rare"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "harold",
+      "clarence",
+      "eugene",
+      "norman",
+      "henry"
+    ]
+  },
+  {
+    "id": "clarence",
+    "name": "Clarence",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Clare"
+      }
+    ],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Clear, bright",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "e",
+    "styles": [
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "rare"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "herbert",
+      "eugene",
+      "harold",
+      "norman",
+      "cyrus"
+    ]
+  },
+  {
+    "id": "eugene",
+    "name": "Eugene",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Gene"
+      }
+    ],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Well-born",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "e",
+    "styles": [
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "rare"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "herbert",
+      "clarence",
+      "harold",
+      "norman",
+      "edward"
+    ]
+  },
+  {
+    "id": "harold",
+    "name": "Harold",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Harry"
+      },
+      {
+        "name": "Hal"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Army ruler",
+    "syllables": 2,
+    "firstLetter": "H",
+    "lastLetter": "d",
+    "styles": [
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "rare"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "herbert",
+      "clarence",
+      "eugene",
+      "norman",
+      "henry"
+    ]
+  },
+  {
+    "id": "norman",
+    "name": "Norman",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Norm"
+      }
+    ],
+    "origins": [
+      "German"
+    ],
+    "meaning": "Northman",
+    "syllables": 2,
+    "firstLetter": "N",
+    "lastLetter": "n",
+    "styles": [
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "rare"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "herbert",
+      "clarence",
+      "eugene",
+      "harold",
+      "henry"
+    ]
+  },
+  {
+    "id": "stanley",
+    "name": "Stanley",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Stan"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Stony meadow",
+    "syllables": 2,
+    "firstLetter": "S",
+    "lastLetter": "y",
+    "styles": [
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "henry",
+      "walter",
+      "albert",
+      "arthur",
+      "theodore"
+    ]
+  },
+  {
+    "id": "elliott",
+    "name": "Elliott",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Eli"
+      },
+      {
+        "name": "El"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "The Lord is my God",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "t",
+    "styles": [
+      "classic",
+      "literary"
+    ],
+    "traits": [
+      "soft",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "elliot",
+      "arthur",
+      "theodore",
+      "henry",
+      "nathaniel"
+    ]
+  },
+  {
+    "id": "graham",
+    "name": "Graham",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Gravel homestead",
+    "syllables": 2,
+    "firstLetter": "G",
+    "lastLetter": "m",
+    "styles": [
+      "classic",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "harrison",
+      "bennett",
+      "spencer",
+      "grayson",
+      "gordon"
+    ]
+  },
+  {
+    "id": "colin",
+    "name": "Colin",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Irish"
+    ],
+    "meaning": "Young cub",
+    "syllables": 2,
+    "firstLetter": "C",
+    "lastLetter": "n",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "henry",
+      "arthur",
+      "theodore",
+      "julian",
+      "elliot"
+    ]
+  },
+  {
+    "id": "bruce",
+    "name": "Bruce",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Scottish"
+    ],
+    "meaning": "From the brushwood thicket",
+    "syllables": 1,
+    "firstLetter": "B",
+    "lastLetter": "e",
+    "styles": [
+      "vintage",
+      "strong"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "rex",
+      "bear",
+      "blaze",
+      "frank",
+      "duke"
+    ]
+  },
+  {
+    "id": "neil",
+    "name": "Neil",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Irish"
+    ],
+    "meaning": "Champion",
+    "syllables": 1,
+    "firstLetter": "N",
+    "lastLetter": "l",
+    "styles": [
+      "classic",
+      "short-punchy"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "jack",
+      "max",
+      "grant",
+      "craig",
+      "roman"
+    ]
+  },
+  {
+    "id": "craig",
+    "name": "Craig",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Scottish"
+    ],
+    "meaning": "Rock, crag",
+    "syllables": 1,
+    "firstLetter": "C",
+    "lastLetter": "g",
+    "styles": [
+      "classic",
+      "short-punchy"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "jack",
+      "max",
+      "grant",
+      "neil",
+      "roman"
+    ]
+  },
+  {
+    "id": "douglas",
+    "name": "Douglas",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Doug"
+      }
+    ],
+    "origins": [
+      "Scottish"
+    ],
+    "meaning": "Dark river",
+    "syllables": 2,
+    "firstLetter": "D",
+    "lastLetter": "s",
+    "styles": [
+      "vintage",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "gordon",
+      "cyrus",
+      "mason",
+      "logan",
+      "carter"
+    ]
+  },
+  {
+    "id": "gordon",
+    "name": "Gordon",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Gordie"
+      }
+    ],
+    "origins": [
+      "Scottish"
+    ],
+    "meaning": "Great hill",
+    "syllables": 2,
+    "firstLetter": "G",
+    "lastLetter": "n",
+    "styles": [
+      "vintage",
+      "surname-style"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "douglas",
+      "grayson",
+      "graham",
+      "cyrus",
+      "mason"
+    ]
+  },
+  {
+    "id": "lewis",
+    "name": "Lewis",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Lew"
+      }
+    ],
+    "origins": [
+      "Welsh"
+    ],
+    "meaning": "Renowned warrior",
+    "syllables": 2,
+    "firstLetter": "L",
+    "lastLetter": "s",
+    "styles": [
+      "classic"
+    ],
+    "traits": [
+      "strong",
+      "traditional"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "william",
+      "james",
+      "robert",
+      "richard",
+      "michael"
+    ]
+  },
+  {
+    "id": "marshall",
+    "name": "Marshall",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Marsh"
+      }
+    ],
+    "origins": [
+      "French"
+    ],
+    "meaning": "Steward, caretaker of horses",
+    "syllables": 2,
+    "firstLetter": "M",
+    "lastLetter": "l",
+    "styles": [
+      "surname-style",
+      "strong"
+    ],
+    "traits": [
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "bronson",
+      "sawyer",
+      "rhodes",
+      "sterling",
+      "knox"
+    ]
+  },
+  {
+    "id": "legend",
+    "name": "Legend",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Legendary",
+    "syllables": 2,
+    "firstLetter": "L",
+    "lastLetter": "d",
+    "styles": [
+      "invented",
+      "modern"
+    ],
+    "traits": [
+      "unusual",
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "jaxon",
+      "ryker",
+      "phoenix",
+      "kingston",
+      "rowdy"
+    ]
+  },
+  {
+    "id": "phoenix",
+    "name": "Phoenix",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Greek"
+    ],
+    "meaning": "Mythical firebird",
+    "syllables": 2,
+    "firstLetter": "P",
+    "lastLetter": "x",
+    "styles": [
+      "invented",
+      "modern",
+      "nature"
+    ],
+    "traits": [
+      "unusual",
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "jaxon",
+      "ryker",
+      "ranger",
+      "wilder",
+      "legend"
+    ]
+  },
+  {
+    "id": "kingston",
+    "name": "Kingston",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "King"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "King's town",
+    "syllables": 2,
+    "firstLetter": "K",
+    "lastLetter": "n",
+    "styles": [
+      "invented",
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "unusual",
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "remington",
+      "jaxon",
+      "ryker",
+      "legend",
+      "phoenix"
+    ]
+  },
+  {
+    "id": "bodie",
+    "name": "Bodie",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Dweller near a channel",
+    "syllables": 1,
+    "firstLetter": "B",
+    "lastLetter": "e",
+    "styles": [
+      "invented",
+      "modern",
+      "short-punchy"
+    ],
+    "traits": [
+      "unusual"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "cash",
+      "ace",
+      "zane",
+      "zeke",
+      "brayden"
+    ]
+  },
+  {
+    "id": "cash",
+    "name": "Cash",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Wealthy",
+    "syllables": 1,
+    "firstLetter": "C",
+    "lastLetter": "h",
+    "styles": [
+      "invented",
+      "modern",
+      "short-punchy"
+    ],
+    "traits": [
+      "unusual",
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "ace",
+      "bodie",
+      "zane",
+      "zeke",
+      "jaxon"
+    ]
+  },
+  {
+    "id": "rowdy",
+    "name": "Rowdy",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Rowdy, boisterous",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "y",
+    "styles": [
+      "invented",
+      "modern"
+    ],
+    "traits": [
+      "unusual",
+      "strong"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "ryker",
+      "jaxon",
+      "legend",
+      "phoenix",
+      "kingston"
+    ]
+  },
+  {
+    "id": "justice",
+    "name": "Justice",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Justice",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "e",
+    "styles": [
+      "invented",
+      "modern"
+    ],
+    "traits": [
+      "unusual",
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "jaxon",
+      "ryker",
+      "legend",
+      "phoenix",
+      "kingston"
+    ]
+  },
+  {
+    "id": "remington",
+    "name": "Remington",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Remy"
+      }
+    ],
+    "origins": [
+      "English"
+    ],
+    "meaning": "Raven settlement",
+    "syllables": 3,
+    "firstLetter": "R",
+    "lastLetter": "n",
+    "styles": [
+      "invented",
+      "modern",
+      "surname-style"
+    ],
+    "traits": [
+      "unusual",
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "kingston",
+      "maverick",
+      "ryker",
+      "rowdy",
+      "jaxon"
+    ]
+  },
+  {
+    "id": "ace",
+    "name": "Ace",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Latin"
+    ],
+    "meaning": "Unity, one",
+    "syllables": 1,
+    "firstLetter": "A",
+    "lastLetter": "e",
+    "styles": [
+      "invented",
+      "modern",
+      "short-punchy"
+    ],
+    "traits": [
+      "unusual",
+      "strong"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "cash",
+      "bodie",
+      "zane",
+      "zeke",
+      "jaxon"
+    ]
+  },
+  {
+    "id": "zeke",
+    "name": "Zeke",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "God strengthens",
+    "syllables": 1,
+    "firstLetter": "Z",
+    "lastLetter": "e",
+    "styles": [
+      "invented",
+      "short-punchy"
+    ],
+    "traits": [
+      "unusual",
+      "strong"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "cash",
+      "ace",
+      "bodie",
+      "zane",
+      "bear"
+    ]
+  },
+  {
+    "id": "reuben",
+    "name": "Reuben",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Ben"
+      },
+      {
+        "name": "Rube"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Behold, a son",
+    "syllables": 2,
+    "firstLetter": "R",
+    "lastLetter": "n",
+    "styles": [
+      "biblical",
+      "vintage"
+    ],
+    "traits": [
+      "traditional",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "amos",
+      "cyrus",
+      "ezra",
+      "raymond",
+      "henry"
+    ]
+  },
+  {
+    "id": "solomon",
+    "name": "Solomon",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Sol"
+      },
+      {
+        "name": "Solly"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Peace",
+    "syllables": 3,
+    "firstLetter": "S",
+    "lastLetter": "n",
+    "styles": [
+      "biblical",
+      "classic"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "benjamin",
+      "nathaniel",
+      "zachary",
+      "samuel",
+      "silas"
+    ]
+  },
+  {
+    "id": "abel",
+    "name": "Abel",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Breath",
+    "syllables": 2,
+    "firstLetter": "A",
+    "lastLetter": "l",
+    "styles": [
+      "biblical",
+      "short-punchy"
+    ],
+    "traits": [
+      "soft"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "amos",
+      "ezra",
+      "levi",
+      "jude",
+      "august"
+    ]
+  },
+  {
+    "id": "elisha",
+    "name": "Elisha",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Eli"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "God is salvation",
+    "syllables": 3,
+    "firstLetter": "E",
+    "lastLetter": "a",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "enoch",
+      "amos",
+      "balthazar",
+      "ezra",
+      "josiah"
+    ]
+  },
+  {
+    "id": "jeremiah",
+    "name": "Jeremiah",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Jerry"
+      },
+      {
+        "name": "Remy"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "God will exalt",
+    "syllables": 3,
+    "firstLetter": "J",
+    "lastLetter": "h",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "benjamin",
+      "nathaniel",
+      "elijah",
+      "zachary",
+      "solomon"
+    ]
+  },
+  {
+    "id": "isaiah",
+    "name": "Isaiah",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Zay"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "God is salvation",
+    "syllables": 2,
+    "firstLetter": "I",
+    "lastLetter": "h",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "isaac",
+      "david",
+      "michael",
+      "daniel",
+      "matthew"
+    ]
+  },
+  {
+    "id": "emmanuel",
+    "name": "Emmanuel",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Manny"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "God is with us",
+    "syllables": 3,
+    "firstLetter": "E",
+    "lastLetter": "l",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "traditional",
+      "elegant"
+    ],
+    "popularityTier": "uncommon",
+    "similarNameIds": [
+      "elijah",
+      "benjamin",
+      "nathaniel",
+      "zachary",
+      "timothy"
+    ]
+  },
+  {
+    "id": "judah",
+    "name": "Judah",
+    "gender": "boy",
+    "nicknames": [
+      {
+        "name": "Jude"
+      }
+    ],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Praised",
+    "syllables": 2,
+    "firstLetter": "J",
+    "lastLetter": "h",
+    "styles": [
+      "biblical"
+    ],
+    "traits": [
+      "strong",
+      "established"
+    ],
+    "popularityTier": "common",
+    "similarNameIds": [
+      "michael",
+      "ethan",
+      "ezekiel",
+      "joseph",
+      "jacob"
+    ]
+  },
+  {
+    "id": "enoch",
+    "name": "Enoch",
+    "gender": "boy",
+    "nicknames": [],
+    "origins": [
+      "Hebrew"
+    ],
+    "meaning": "Dedicated, trained",
+    "syllables": 2,
+    "firstLetter": "E",
+    "lastLetter": "h",
+    "styles": [
+      "biblical",
+      "rare"
+    ],
+    "traits": [
+      "soft",
+      "unusual"
+    ],
+    "popularityTier": "rare",
+    "similarNameIds": [
+      "thaddeus",
+      "bodhi",
+      "cedar",
+      "amos",
+      "kofi"
+    ]
+  }
+]
