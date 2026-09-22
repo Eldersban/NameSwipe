@@ -17,27 +17,27 @@ export default defineConfig({
         background_color: '#f5f1e8',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/',
-        scope: '/',
+        start_url: '.',
+        scope: '.',
         icons: [
           {
-            src: '/icons/icon-192.png',
+            src: 'icons/icon-192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/icons/icon-512.png',
+            src: 'icons/icon-512.png',
             sizes: '512x512',
             type: 'image/png',
           },
           {
-            src: '/icons/icon-512-maskable.png',
+            src: 'icons/icon-512-maskable.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
           },
           {
-            src: '/icons/icon-180.png',
+            src: 'icons/icon-180.png',
             sizes: '180x180',
             type: 'image/png',
             purpose: 'any',
@@ -48,7 +48,6 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2,json}'],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
         cleanupOutdatedCaches: true,
-        navigateFallback: '/index.html',
         runtimeCaching: [
           {
             urlPattern: ({ request }) =>
