@@ -30,7 +30,7 @@ const REQUEUE_THRESHOLD = 5;
 interface UndoEntry {
   nameId: string;
   previous: UserNameState | undefined;
-  wasFromPinned: boolean;
+  queueOrigin: "pinned" | "queue" | "none";
 }
 
 interface AppState {
@@ -192,14 +192,15 @@ export const useAppStore = create<AppState>((set, get) => ({
     const decisions = new Map(state.decisions);
     decisions.set(nameId, newState);
 
-    const wasFromPinned = state.pinnedQueue[0] === nameId;
-    const pinnedQueue = wasFromPinned ? state.pinnedQueue.slice(1) : state.pinnedQueue;
-    const queue = wasFromPinned ? state.queue : state.queue.slice(1);
+    const queueOrigin: UndoEntry["queueOrigin"] =
+      state.pinnedQueue[0] === nameId ? "pinned" : state.queue[0] === nameId ? "queue" : "none";
+    const pinnedQueue = queueOrigin === "pinned" ? state.pinnedQueue.slice(1) : state.pinnedQueue;
+    const queue = queueOrigin === "queue" ? state.queue.slice(1) : state.queue;
 
     const pendingLikes = new Set(state.pendingLikes);
     pendingLikes.delete(nameId);
 
-    const undoStack = [...state.undoStack, { nameId, previous: existing, wasFromPinned }].slice(
+    const undoStack = [...state.undoStack, { nameId, previous: existing, queueOrigin }].slice(
       -UNDO_LIMIT
     );
 
@@ -289,10 +290,9 @@ export const useAppStore = create<AppState>((set, get) => ({
       void deleteDecision(entry.nameId);
     }
 
-    const pinnedQueue = entry.wasFromPinned
-      ? [entry.nameId, ...state.pinnedQueue]
-      : state.pinnedQueue;
-    const queue = entry.wasFromPinned ? state.queue : [entry.nameId, ...state.queue];
+    const pinnedQueue =
+      entry.queueOrigin === "pinned" ? [entry.nameId, ...state.pinnedQueue] : state.pinnedQueue;
+    const queue = entry.queueOrigin === "queue" ? [entry.nameId, ...state.queue] : state.queue;
 
     const gamification: GamificationState = {
       ...state.gamification,
