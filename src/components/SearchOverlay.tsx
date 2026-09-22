@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { NAMES } from "../data/names";
 import { useAppStore } from "../store/useAppStore";
@@ -22,13 +22,22 @@ export function SearchOverlay({ onClose, onGoToDiscover }: SearchOverlayProps) {
   const decisions = useAppStore((s) => s.decisions);
   const pendingLikes = useAppStore((s) => s.pendingLikes);
   const reviewNow = useAppStore((s) => s.reviewNow);
+  const recordSearch = useAppStore((s) => s.recordSearch);
   const [detail, setDetail] = useState<BabyName | null>(null);
+  const hasRecordedRef = useRef(false);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return [];
     return NAMES.filter((n) => n.name.toLowerCase().includes(q)).slice(0, 40);
   }, [query]);
+
+  useEffect(() => {
+    if (query.trim() && !hasRecordedRef.current) {
+      hasRecordedRef.current = true;
+      recordSearch();
+    }
+  }, [query, recordSearch]);
 
   function handleReviewNow(id: string) {
     reviewNow(id);

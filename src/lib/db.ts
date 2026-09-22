@@ -94,10 +94,52 @@ export async function savePendingLikes(ids: string[]): Promise<void> {
   await db.put("meta", ids, "pendingLikes");
 }
 
+export interface GamificationState {
+  unlocked: [string, string][];
+  unlockedThemes: string[];
+  activeTheme: string;
+  streak: {
+    lastActiveDate: string | null;
+    currentStreak: number;
+    longestStreak: number;
+  };
+  counters: {
+    undoCount: number;
+    moreLikeThisCount: number;
+    searchCount: number;
+  };
+  flags: {
+    nightOwl: boolean;
+    earlyBird: boolean;
+  };
+}
+
+export function defaultGamificationState(): GamificationState {
+  return {
+    unlocked: [],
+    unlockedThemes: ["sage"],
+    activeTheme: "sage",
+    streak: { lastActiveDate: null, currentStreak: 0, longestStreak: 0 },
+    counters: { undoCount: 0, moreLikeThisCount: 0, searchCount: 0 },
+    flags: { nightOwl: false, earlyBird: false },
+  };
+}
+
+export async function loadGamification(): Promise<GamificationState | undefined> {
+  const db = await getDB();
+  return db.get("meta", "gamification") as Promise<GamificationState | undefined>;
+}
+
+export async function saveGamification(state: GamificationState): Promise<void> {
+  const db = await getDB();
+  await db.put("meta", state, "gamification");
+}
+
 export async function exportBackup(): Promise<string> {
-  const [decisions, settings] = await Promise.all([
+  const [decisions, settings, gamification] = await Promise.all([
     loadAllDecisions(),
     loadSettings(),
+    loadGamification(),
   ]);
   return JSON.stringify(
     {
@@ -105,6 +147,7 @@ export async function exportBackup(): Promise<string> {
       exportedAt: new Date().toISOString(),
       decisions,
       settings,
+      gamification,
     },
     null,
     2
@@ -115,6 +158,7 @@ interface BackupPayload {
   version: number;
   decisions: UserNameState[];
   settings?: AppSettings;
+  gamification?: GamificationState;
 }
 
 export async function importBackup(json: string): Promise<BackupPayload> {
@@ -128,6 +172,9 @@ export async function importBackup(json: string): Promise<BackupPayload> {
   await tx.done;
   if (parsed.settings) {
     await saveSettings(parsed.settings);
+  }
+  if (parsed.gamification) {
+    await saveGamification(parsed.gamification);
   }
   return parsed;
 }

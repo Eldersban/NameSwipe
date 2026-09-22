@@ -4,7 +4,7 @@ import { useAppStore } from "../store/useAppStore";
 import { SwipeCard } from "../components/SwipeCard";
 import { RejectionChip } from "../components/RejectionChip";
 import { NameDetailSheet } from "../components/NameDetailSheet";
-import { CelebrationToast } from "../components/CelebrationToast";
+import { AchievementToast } from "../components/AchievementToast";
 import { IconUndo } from "../components/Icons";
 import { fireHaptic } from "../lib/haptics";
 import { NAMES } from "../data/names";
@@ -27,8 +27,8 @@ export function DiscoverScreen() {
   const dismissRejectionPrompt = useAppStore((s) => s.dismissRejectionPrompt);
   const setRejectionReason = useAppStore((s) => s.setRejectionReason);
   const settings = useAppStore((s) => s.settings);
-  const celebrationName = useAppStore((s) => s.celebrationName);
-  const dismissCelebration = useAppStore((s) => s.dismissCelebration);
+  const achievementToast = useAppStore((s) => s.achievementToastQueue[0]);
+  const dismissAchievementToast = useAppStore((s) => s.dismissAchievementToast);
 
   const [detailsOpen, setDetailsOpen] = useState(false);
 
@@ -175,8 +175,8 @@ export function DiscoverScreen() {
       </AnimatePresence>
 
       <AnimatePresence>
-        {celebrationName && (
-          <CelebrationToast name={celebrationName} onDone={dismissCelebration} />
+        {achievementToast && (
+          <AchievementToast key={achievementToast.id} achievement={achievementToast} onDone={dismissAchievementToast} />
         )}
       </AnimatePresence>
     </div>

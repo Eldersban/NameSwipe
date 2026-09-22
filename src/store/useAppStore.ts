@@ -14,7 +14,13 @@ import {
   loadPendingLikes,
   savePendingLikes,
   clearAllDecisions,
+  loadGamification,
+  saveGamification,
+  defaultGamificationState,
+  type GamificationState,
 } from "../lib/db";
+import { bumpStreak, computeStats, currentHourFlags } from "../lib/gamification";
+import { ACHIEVEMENTS, evaluateStats, type Achievement, type AccentTheme } from "../types/gamification";
 import type { BabyName, Disposition, RejectionReason, UserNameState } from "../types/name";
 import { DEFAULT_SETTINGS, type AppSettings } from "../types/settings";
 
@@ -36,7 +42,8 @@ interface AppState {
   undoStack: UndoEntry[];
   settings: AppSettings;
   lastRejectionPromptNameId: string | null;
-  celebrationName: string | null;
+  gamification: GamificationState;
+  achievementToastQueue: Achievement[];
 
   init: () => Promise<void>;
   currentNameId: () => string | undefined;
@@ -53,16 +60,55 @@ interface AppState {
 
   reviewNow: (nameId: string) => void;
   showMoreLikeThis: (nameId: string) => void;
+  recordSearch: () => void;
 
   updateNote: (nameId: string, note: string) => void;
   updateSettings: (partial: Partial<AppSettings>) => void;
+  setAccentTheme: (theme: AccentTheme) => void;
 
   resetAllData: () => Promise<void>;
-  dismissCelebration: () => void;
+  dismissAchievementToast: () => void;
 }
 
 function regenerateQueue(decisions: Map<string, UserNameState>): string[] {
   return buildQueue(NAMES, decisions);
+}
+
+/** Compares current stats against unlocked achievements and pushes any newly-earned ones onto the toast queue. */
+function checkAchievements(
+  get: () => AppState,
+  set: (partial: Partial<AppState>) => void
+): void {
+  const state = get();
+  const stats = computeStats(NAMES, NAMES_BY_ID, state.decisions, state.gamification);
+  const unlockedMap = new Map(state.gamification.unlocked);
+  const results = evaluateStats(stats);
+
+  const newlyUnlocked: Achievement[] = [];
+  for (const achievement of ACHIEVEMENTS) {
+    if (results[achievement.id] && !unlockedMap.has(achievement.id)) {
+      unlockedMap.set(achievement.id, new Date().toISOString());
+      newlyUnlocked.push(achievement);
+    }
+  }
+  if (newlyUnlocked.length === 0) return;
+
+  const unlockedThemes = new Set(state.gamification.unlockedThemes);
+  for (const achievement of newlyUnlocked) {
+    if (achievement.themeUnlock) unlockedThemes.add(achievement.themeUnlock);
+  }
+
+  const gamification: GamificationState = {
+    ...state.gamification,
+    unlocked: [...unlockedMap.entries()],
+    unlockedThemes: [...unlockedThemes],
+  };
+
+  set({
+    gamification,
+    achievementToastQueue: [...state.achievementToastQueue, ...newlyUnlocked],
+  });
+  void saveGamification(gamification);
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -74,15 +120,17 @@ export const useAppStore = create<AppState>((set, get) => ({
   undoStack: [],
   settings: DEFAULT_SETTINGS,
   lastRejectionPromptNameId: null,
-  celebrationName: null,
+  gamification: defaultGamificationState(),
+  achievementToastQueue: [],
 
   init: async () => {
-    const [decisionsList, settings, queueOrder, pinnedQueue, pendingLikes] = await Promise.all([
+    const [decisionsList, settings, queueOrder, pinnedQueue, pendingLikes, gamification] = await Promise.all([
       loadAllDecisions(),
       loadSettings(),
       loadQueueState(),
       loadPinnedQueue(),
       loadPendingLikes(),
+      loadGamification(),
     ]);
 
     const decisions = new Map(decisionsList.map((d) => [d.nameId, d]));
@@ -104,7 +152,9 @@ export const useAppStore = create<AppState>((set, get) => ({
       pinnedQueue: validPinned,
       pendingLikes: validLikes,
       settings: settings ?? DEFAULT_SETTINGS,
+      gamification: gamification ?? defaultGamificationState(),
     });
+    checkAchievements(get, set);
   },
 
   currentNameId: () => {
@@ -158,10 +208,15 @@ export const useAppStore = create<AppState>((set, get) => ({
       nextQueue = regenerateQueue(decisions);
     }
 
-    const name = getNameById(nameId);
-    const isFirstYes =
-      disposition === "yes" &&
-      ![...state.decisions.values()].some((d) => d.disposition === "yes");
+    const { isNightOwl, isEarlyBird } = currentHourFlags();
+    const gamification: GamificationState = {
+      ...state.gamification,
+      streak: bumpStreak(state.gamification.streak),
+      flags: {
+        nightOwl: state.gamification.flags.nightOwl || isNightOwl,
+        earlyBird: state.gamification.flags.earlyBird || isEarlyBird,
+      },
+    };
 
     set({
       decisions,
@@ -170,13 +225,15 @@ export const useAppStore = create<AppState>((set, get) => ({
       pendingLikes,
       undoStack,
       lastRejectionPromptNameId: disposition === "no" && !rejectionReason ? nameId : null,
-      celebrationName: isFirstYes && name ? name.name : null,
+      gamification,
     });
 
     void saveDecision(newState);
     void saveQueueState(nextQueue);
     void savePinnedQueue(pinnedQueue);
     void savePendingLikes([...pendingLikes]);
+    void saveGamification(gamification);
+    checkAchievements(get, set);
   },
 
   setRejectionReason: (nameId, reason) => {
@@ -201,6 +258,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       decisions.set(nameId, updated);
       set({ decisions });
       void saveDecision(updated);
+      checkAchievements(get, set);
     } else {
       const pendingLikes = new Set(state.pendingLikes);
       if (pendingLikes.has(nameId)) pendingLikes.delete(nameId);
@@ -236,16 +294,24 @@ export const useAppStore = create<AppState>((set, get) => ({
       : state.pinnedQueue;
     const queue = entry.wasFromPinned ? state.queue : [entry.nameId, ...state.queue];
 
+    const gamification: GamificationState = {
+      ...state.gamification,
+      counters: { ...state.gamification.counters, undoCount: state.gamification.counters.undoCount + 1 },
+    };
+
     set({
       decisions,
       pinnedQueue,
       queue,
       undoStack: state.undoStack.slice(0, -1),
       lastRejectionPromptNameId: null,
+      gamification,
     });
 
     void saveQueueState(queue);
     void savePinnedQueue(pinnedQueue);
+    void saveGamification(gamification);
+    checkAchievements(get, set);
   },
 
   reviewNow: (nameId) => {
@@ -266,8 +332,25 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (!target) return;
     const similar = moreLikeThis(target, NAMES, state.decisions, 8);
     const pinnedQueue = [...similar.filter((id) => !state.pinnedQueue.includes(id)), ...state.pinnedQueue];
-    set({ pinnedQueue });
+    const gamification: GamificationState = {
+      ...state.gamification,
+      counters: { ...state.gamification.counters, moreLikeThisCount: state.gamification.counters.moreLikeThisCount + 1 },
+    };
+    set({ pinnedQueue, gamification });
     void savePinnedQueue(pinnedQueue);
+    void saveGamification(gamification);
+    checkAchievements(get, set);
+  },
+
+  recordSearch: () => {
+    const state = get();
+    const gamification: GamificationState = {
+      ...state.gamification,
+      counters: { ...state.gamification.counters, searchCount: state.gamification.counters.searchCount + 1 },
+    };
+    set({ gamification });
+    void saveGamification(gamification);
+    checkAchievements(get, set);
   },
 
   updateNote: (nameId, note) => {
@@ -287,9 +370,18 @@ export const useAppStore = create<AppState>((set, get) => ({
     void persistSettings(settings);
   },
 
+  setAccentTheme: (theme) => {
+    const state = get();
+    if (!state.gamification.unlockedThemes.includes(theme)) return;
+    const gamification: GamificationState = { ...state.gamification, activeTheme: theme };
+    set({ gamification });
+    void saveGamification(gamification);
+  },
+
   resetAllData: async () => {
     await clearAllDecisions();
     const queue = regenerateQueue(new Map());
+    const gamification = defaultGamificationState();
     set({
       decisions: new Map(),
       queue,
@@ -297,11 +389,17 @@ export const useAppStore = create<AppState>((set, get) => ({
       pendingLikes: new Set(),
       undoStack: [],
       lastRejectionPromptNameId: null,
+      gamification,
+      achievementToastQueue: [],
     });
     void saveQueueState(queue);
     void savePinnedQueue([]);
     void savePendingLikes([]);
+    void saveGamification(gamification);
   },
 
-  dismissCelebration: () => set({ celebrationName: null }),
+  dismissAchievementToast: () => {
+    const state = get();
+    set({ achievementToastQueue: state.achievementToastQueue.slice(1) });
+  },
 }));

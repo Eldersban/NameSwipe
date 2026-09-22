@@ -148,6 +148,33 @@ export function IconTrash(props: IconProps) {
   );
 }
 
+export function IconFlame(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 21c-4 0-6.5-2.7-6.5-6 0-2.6 1.6-4.3 2.3-6 .4 1.3 1.2 2.1 2 2.1-.3-2.6.7-5.3 3-7.1.2 2 1 3.4 2.3 4.8 1.6 1.7 3 3.4 3 6.2 0 3.3-2.6 6-6.1 6z" />
+    </svg>
+  );
+}
+
+export function IconSun(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <circle cx="12" cy="12" r="4.2" />
+      <path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7" />
+    </svg>
+  );
+}
+
+export function IconTrophy(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M7 4h10v5a5 5 0 01-10 0z" />
+      <path d="M7 5H4a3 3 0 003 5M17 5h3a3 3 0 01-3 5" />
+      <path d="M12 14v3M9 21h6M9.5 21c0-2 1-3 2.5-3s2.5 1 2.5 3" />
+    </svg>
+  );
+}
+
 export function IconArrowLeft(props: IconProps) {
   return (
     <svg {...base} {...props}>

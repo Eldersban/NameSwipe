@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useAppStore } from "./store/useAppStore";
 import { useTheme } from "./hooks/useTheme";
-import { IconDiscover, IconList, IconInsights, IconSettings, IconSearch } from "./components/Icons";
+import { IconDiscover, IconList, IconInsights, IconSettings, IconSearch, IconTrophy } from "./components/Icons";
 import { DiscoverScreen } from "./screens/DiscoverScreen";
 import { MyNamesScreen } from "./screens/MyNamesScreen";
 import { InsightsScreen } from "./screens/InsightsScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
 import { SearchOverlay } from "./components/SearchOverlay";
 import { OnboardingFlow } from "./components/OnboardingFlow";
+import { AchievementsOverlay } from "./components/AchievementsOverlay";
+import { useAccentTheme } from "./hooks/useAccentTheme";
 
 type Tab = "discover" | "names" | "insights" | "settings";
 
@@ -26,6 +28,7 @@ export default function App() {
   const init = useAppStore((s) => s.init);
   const [tab, setTab] = useState<Tab>("discover");
   const [searchOpen, setSearchOpen] = useState(false);
+  const [achievementsOpen, setAchievementsOpen] = useState(false);
   const [onboarded, setOnboarded] = useState(() => {
     try {
       return localStorage.getItem(ONBOARDING_KEY) === "1";
@@ -35,6 +38,7 @@ export default function App() {
   });
 
   useTheme();
+  useAccentTheme();
 
   useEffect(() => {
     void init();
@@ -70,19 +74,34 @@ export default function App() {
         <span className="text-[16px] font-extrabold tracking-tight pointer-events-auto select-none">
           NameSwipe
         </span>
-        <button
-          type="button"
-          aria-label="Search names"
-          onClick={() => setSearchOpen(true)}
-          className="pointer-events-auto grid h-[42px] w-[42px] place-items-center rounded-full border"
-          style={{
-            borderColor: "var(--line)",
-            background: "var(--surface)",
-            backdropFilter: "blur(18px)",
-          }}
-        >
-          <IconSearch width={19} height={19} />
-        </button>
+        <div className="pointer-events-auto flex gap-2">
+          <button
+            type="button"
+            aria-label="Achievements"
+            onClick={() => setAchievementsOpen(true)}
+            className="grid h-[42px] w-[42px] place-items-center rounded-full border"
+            style={{
+              borderColor: "var(--line)",
+              background: "var(--surface)",
+              backdropFilter: "blur(18px)",
+            }}
+          >
+            <IconTrophy width={19} height={19} />
+          </button>
+          <button
+            type="button"
+            aria-label="Search names"
+            onClick={() => setSearchOpen(true)}
+            className="grid h-[42px] w-[42px] place-items-center rounded-full border"
+            style={{
+              borderColor: "var(--line)",
+              background: "var(--surface)",
+              backdropFilter: "blur(18px)",
+            }}
+          >
+            <IconSearch width={19} height={19} />
+          </button>
+        </div>
       </header>
 
       <main className="relative h-full w-full overflow-hidden">
@@ -137,6 +156,10 @@ export default function App() {
 
       <AnimatePresence>
         {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} onGoToDiscover={() => setTab("discover")} />}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {achievementsOpen && <AchievementsOverlay onClose={() => setAchievementsOpen(false)} />}
       </AnimatePresence>
     </div>
   );

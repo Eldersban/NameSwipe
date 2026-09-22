@@ -99,6 +99,27 @@
   }
 }
 
+/* Unlockable accent themes (gamification rewards) — override --accent only. */
+:root[data-accent="blush"] { --accent: #b04462; }
+:root[data-accent="midnight"] { --accent: #3454a8; }
+:root[data-accent="golden"] { --accent: #a5782e; }
+:root[data-accent="botanical"] { --accent: #3f7a3a; }
+:root[data-accent="gilded"] { --accent: #8a6b1f; }
+
+:root[data-theme="dark"][data-accent="blush"] { --accent: #e37b9a; }
+:root[data-theme="dark"][data-accent="midnight"] { --accent: #8fa8e8; }
+:root[data-theme="dark"][data-accent="golden"] { --accent: #e1b965; }
+:root[data-theme="dark"][data-accent="botanical"] { --accent: #9bcf8a; }
+:root[data-theme="dark"][data-accent="gilded"] { --accent: #f0cf6a; }
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="system"][data-accent="blush"] { --accent: #e37b9a; }
+  :root[data-theme="system"][data-accent="midnight"] { --accent: #8fa8e8; }
+  :root[data-theme="system"][data-accent="golden"] { --accent: #e1b965; }
+  :root[data-theme="system"][data-accent="botanical"] { --accent: #9bcf8a; }
+  :root[data-theme="system"][data-accent="gilded"] { --accent: #f0cf6a; }
+}
+
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
