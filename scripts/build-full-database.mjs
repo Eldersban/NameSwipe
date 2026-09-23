@@ -118,7 +118,21 @@ for (const key of allKeys) {
 
 console.log(`Merged ${entries.length} unique names (${curatedByName.size} curated, ${namedbByName.size} from database)`);
 
-// ---- 4. Similar-name computation, bucketed by primary style to stay fast at this scale.
+// ---- 4. Scope the deck down to Jewish-origin and biblical names only.
+// A name qualifies if it's tagged style "biblical" (curated entries authored
+// that way, and namedb-derived entries whose family is Hebrew/Aramaic/Yiddish
+// via styleFromFamily above) OR its origin is Hebrew/Yiddish/Aramaic/Jewish
+// even if it wasn't caught by the style tag. Remove this filter (and the
+// `entries = entries.filter(...)` line) to go back to the full global list.
+const JEWISH_BIBLICAL_ORIGIN_RE = /hebrew|yiddish|aramaic|jewish/i;
+const scoped = entries.filter(
+  (e) => e.styles.includes("biblical") || e.origins.some((o) => JEWISH_BIBLICAL_ORIGIN_RE.test(o))
+);
+console.log(`Scoped to Jewish-origin / biblical names: ${scoped.length} of ${entries.length}`);
+entries.length = 0;
+entries.push(...scoped);
+
+// ---- 5. Similar-name computation, bucketed by primary style to stay fast at this scale.
 const byStyle = new Map();
 for (const e of entries) {
   for (const s of e.styles) {

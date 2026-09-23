@@ -28,6 +28,15 @@ export function MyNamesScreen() {
 
   const entries = useMemo(() => [...decisions.values()], [decisions]);
 
+  // Decisions on names that used to be in the deck but have since been removed
+  // (e.g. the catalog was narrowed). Nothing was deleted from storage — these
+  // still count toward stats/achievements — they just can't be browsed here
+  // since the name itself is no longer in the current list.
+  const hiddenLegacyCount = useMemo(
+    () => entries.filter((e) => !getNameById(e.nameId)).length,
+    [entries]
+  );
+
   const counts = useMemo(() => {
     let yes = 0;
     let maybe = 0;
@@ -71,6 +80,15 @@ export function MyNamesScreen() {
       <p className="m-0 text-[14px] leading-relaxed" style={{ color: "var(--muted)" }}>
         Everything you've reviewed so far.
       </p>
+
+      {hiddenLegacyCount > 0 && (
+        <p className="mt-2 text-[12.5px] leading-relaxed" style={{ color: "var(--muted)" }}>
+          {hiddenLegacyCount} earlier {hiddenLegacyCount === 1 ? "decision is" : "decisions are"} on{" "}
+          {hiddenLegacyCount === 1 ? "a name that isn't" : "names that aren't"} in the current list
+          anymore, so {hiddenLegacyCount === 1 ? "it isn't" : "they aren't"} shown below — nothing
+          was deleted, they're just not browsable here.
+        </p>
+      )}
 
       <div className="my-6 grid grid-cols-3 gap-2.5">
         {[
