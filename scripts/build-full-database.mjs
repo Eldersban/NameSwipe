@@ -129,8 +129,16 @@ const scoped = entries.filter(
   (e) => e.styles.includes("biblical") || e.origins.some((o) => JEWISH_BIBLICAL_ORIGIN_RE.test(o))
 );
 console.log(`Scoped to Jewish-origin / biblical names: ${scoped.length} of ${entries.length}`);
+
+// ---- 4b. Within that, keep only names actually in current use (real SSA rank
+// <= MODERN_RANK_CUTOFF among all ~25,795 male names, 2007-2016) — cuts the
+// genuinely archaic tail (Zebadiah, Zephaniah, Zerubbabel, ...) that nobody
+// actually names a kid today. Raise/remove the cutoff to bring more back.
+const MODERN_RANK_CUTOFF = 750;
+const modern = scoped.filter((e) => e._ssaRank <= MODERN_RANK_CUTOFF);
+console.log(`Kept names in modern use (SSA rank <= ${MODERN_RANK_CUTOFF}): ${modern.length} of ${scoped.length}`);
 entries.length = 0;
-entries.push(...scoped);
+entries.push(...modern);
 
 // ---- 5. Similar-name computation, bucketed by primary style to stay fast at this scale.
 const byStyle = new Map();
