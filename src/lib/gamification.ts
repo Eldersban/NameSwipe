@@ -37,6 +37,7 @@ export function computeStats(
   decisions: Map<string, UserNameState>,
   gamification: GamificationState
 ): AchievementStats {
+  let reviewedCount = 0;
   let yesCount = 0;
   let likedCount = 0;
   let likedButNoCount = 0;
@@ -44,20 +45,25 @@ export function computeStats(
   let hasRareReview = false;
 
   for (const state of decisions.values()) {
+    // Only count decisions on names still in the current catalog — a name
+    // can be removed when the deck is re-scoped, and that decision stays in
+    // storage (nothing is deleted) but shouldn't count toward "reviewed all
+    // of the current list" milestones like Calibrated or Completionist.
+    const name = namesById.get(state.nameId);
+    if (!name) continue;
+
+    reviewedCount++;
     if (state.disposition === "yes") yesCount++;
     if (state.liked) likedCount++;
     if (state.liked && state.disposition === "no") {
       likedButNoCount++;
       if (state.rejectionReason === "family") familyLikedNoCount++;
     }
-    if (!hasRareReview) {
-      const name = namesById.get(state.nameId);
-      if (name?.popularityTier === "rare") hasRareReview = true;
-    }
+    if (!hasRareReview && name.popularityTier === "rare") hasRareReview = true;
   }
 
   return {
-    reviewedCount: decisions.size,
+    reviewedCount,
     totalNames: names.length,
     yesCount,
     likedCount,

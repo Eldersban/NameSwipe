@@ -44,6 +44,7 @@ interface AppState {
   lastRejectionPromptNameId: string | null;
   gamification: GamificationState;
   achievementToastQueue: Achievement[];
+  showGrandFinale: boolean;
 
   init: () => Promise<void>;
   currentNameId: () => string | undefined;
@@ -68,6 +69,7 @@ interface AppState {
 
   resetAllData: () => Promise<void>;
   dismissAchievementToast: () => void;
+  dismissGrandFinale: () => void;
 }
 
 function regenerateQueue(decisions: Map<string, UserNameState>): string[] {
@@ -104,9 +106,14 @@ function checkAchievements(
     unlockedThemes: [...unlockedThemes],
   };
 
+  // Completionist gets the full-screen grand finale instead of a small toast.
+  const justCompleted = newlyUnlocked.some((a) => a.id === "completionist");
+  const toastable = newlyUnlocked.filter((a) => a.id !== "completionist");
+
   set({
     gamification,
-    achievementToastQueue: [...state.achievementToastQueue, ...newlyUnlocked],
+    achievementToastQueue: [...state.achievementToastQueue, ...toastable],
+    ...(justCompleted ? { showGrandFinale: true } : {}),
   });
   void saveGamification(gamification);
 }
@@ -122,6 +129,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   lastRejectionPromptNameId: null,
   gamification: defaultGamificationState(),
   achievementToastQueue: [],
+  showGrandFinale: false,
 
   init: async () => {
     const [decisionsList, settings, queueOrder, pinnedQueue, pendingLikes, gamification] = await Promise.all([
@@ -402,4 +410,6 @@ export const useAppStore = create<AppState>((set, get) => ({
     const state = get();
     set({ achievementToastQueue: state.achievementToastQueue.slice(1) });
   },
+
+  dismissGrandFinale: () => set({ showGrandFinale: false }),
 }));

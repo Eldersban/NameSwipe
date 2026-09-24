@@ -7,7 +7,7 @@ import { NameDetailSheet } from "../components/NameDetailSheet";
 import { AchievementToast } from "../components/AchievementToast";
 import { IconUndo } from "../components/Icons";
 import { fireHaptic } from "../lib/haptics";
-import { NAMES } from "../data/names";
+import { NAMES, NAMES_BY_ID } from "../data/names";
 import type { Disposition } from "../types/name";
 
 export function DiscoverScreen() {
@@ -33,8 +33,15 @@ export function DiscoverScreen() {
   const [detailsOpen, setDetailsOpen] = useState(false);
 
   const swipeRightMeansYes = settings.swipeDirection === "right-yes";
-  const reviewedCount = decisions.size;
+  // Only count decisions on names still in the current list — old decisions
+  // on names removed by a later re-scope stay saved but shouldn't inflate
+  // "reviewed" past the size of the current deck.
+  const reviewedCount = useMemo(
+    () => [...decisions.keys()].filter((id) => NAMES_BY_ID.has(id)).length,
+    [decisions]
+  );
   const totalCount = NAMES.length;
+  const isComplete = totalCount > 0 && reviewedCount >= totalCount;
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -67,10 +74,11 @@ export function DiscoverScreen() {
       <div className="relative flex-1" style={{ minHeight: 410, display: "grid", placeItems: "center", perspective: 1400 }}>
         {!currentName && (
           <div className="text-center px-6">
-            <p className="font-serif text-3xl mb-2">All caught up</p>
+            <p className="font-serif text-3xl mb-2">{isComplete ? "You did it" : "All caught up"}</p>
             <p className="text-sm" style={{ color: "var(--muted)" }}>
-              You've reviewed every name in the deck. Check My Names to revisit your shortlist,
-              or reset from Settings to start fresh.
+              {isComplete
+                ? "Every name in the deck is reviewed. Check My Names for your shortlist, or reset from Settings to start fresh."
+                : "You've reviewed every name in the deck. Check My Names to revisit your shortlist, or reset from Settings to start fresh."}
             </p>
           </div>
         )}

@@ -10,6 +10,7 @@ import { SettingsScreen } from "./screens/SettingsScreen";
 import { SearchOverlay } from "./components/SearchOverlay";
 import { OnboardingFlow } from "./components/OnboardingFlow";
 import { AchievementsOverlay } from "./components/AchievementsOverlay";
+import { GrandFinale } from "./components/GrandFinale";
 import { useAccentTheme } from "./hooks/useAccentTheme";
 
 type Tab = "discover" | "names" | "insights" | "settings";
@@ -29,6 +30,7 @@ export default function App() {
   const [tab, setTab] = useState<Tab>("discover");
   const [searchOpen, setSearchOpen] = useState(false);
   const [achievementsOpen, setAchievementsOpen] = useState(false);
+  const showGrandFinale = useAppStore((s) => s.showGrandFinale);
   const [onboarded, setOnboarded] = useState(() => {
     try {
       return localStorage.getItem(ONBOARDING_KEY) === "1";
@@ -161,6 +163,8 @@ export default function App() {
       <AnimatePresence>
         {achievementsOpen && <AchievementsOverlay onClose={() => setAchievementsOpen(false)} />}
       </AnimatePresence>
+
+      <AnimatePresence>{showGrandFinale && <GrandFinale />}</AnimatePresence>
     </div>
   );
 }
