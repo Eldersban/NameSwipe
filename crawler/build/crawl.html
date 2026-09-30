@@ -1,0 +1,3609 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CRAWL: Dungeon Crawler Carl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Chakra+Petch:wght@400;600;700&family=VT323&display=swap">
+<style>
+/* Layout: full-bleed 3D view, HUD pinned to the four corners, menus as a centered panel over a dimmed view. */
+:root {
+  color-scheme: dark;
+  --ink: #0b0910;          /* void behind everything */
+  --panel: #16121e;        /* menu surfaces */
+  --panel-2: #211a2c;
+  --line: #3a3048;
+  --text: #ece6f2;
+  --muted: #9d93ab;
+  --gold: #ffcc33;         /* show-business accent */
+  --sys: #5fd8ff;          /* the System AI's voice */
+  --donut: #ff7ad9;        /* Princess Donut */
+  --blood: #e0303a;
+  --good: #6cf09a;
+  --f-display: 'Bungee', 'Impact', 'Arial Black', sans-serif;
+  --f-ui: 'Chakra Petch', 'Segoe UI', system-ui, sans-serif;
+  --f-sys: 'VT323', 'Consolas', 'Courier New', monospace;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; margin: 0; background: var(--ink); color: var(--text); overflow: hidden; font-family: var(--f-ui); }
+#game { position: fixed; inset: 0; user-select: none; -webkit-user-select: none; }
+#view { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; display: block; cursor: crosshair; }
+
+/* ------------------------------------------------------------------ HUD */
+#hud { position: absolute; inset: 0; pointer-events: none; transition: opacity .2s; }
+#hud.dim { opacity: .25; }
+.hud-tl { position: absolute; left: 16px; top: 14px; display: grid; gap: 4px; }
+#floor-name { font-family: var(--f-display); font-size: 15px; letter-spacing: .04em; color: var(--text); text-shadow: 2px 2px 0 #000; }
+.hud-row { display: flex; gap: 14px; align-items: baseline; font-family: var(--f-sys); font-size: 22px; text-shadow: 1px 1px 0 #000; }
+#timer { color: var(--gold); font-size: 30px; font-variant-numeric: tabular-nums; }
+#timer.urgent { color: var(--blood); animation: pulse .6s infinite alternate; }
+.viewers { color: var(--muted); }
+.viewers b { color: var(--text); font-weight: 400; }
+.live-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--blood); margin-right: 5px; animation: pulse 1s infinite alternate; vertical-align: 1px; }
+#safe-badge { font-family: var(--f-display); font-size: 12px; color: var(--good); letter-spacing: .08em; }
+.hud-tr { position: absolute; right: 16px; top: 14px; }
+#minimap { width: 132px; height: 132px; border: 2px solid var(--line); border-radius: 50%; display: block; background: #000; }
+
+#bossbar { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); width: min(520px, 50vw); text-align: center; }
+#boss-name { font-family: var(--f-display); color: var(--blood); font-size: 15px; text-shadow: 2px 2px 0 #000; margin-bottom: 4px; }
+.boss-track { height: 12px; background: #1a0808; border: 2px solid #000; box-shadow: 0 0 0 1px var(--blood); }
+#boss-fill { height: 100%; width: 100%; background: linear-gradient(#ff5048, #a01418); transition: width .15s; }
+
+.hud-bl { position: absolute; left: 16px; bottom: 16px; width: min(320px, 40vw); display: grid; gap: 6px; }
+.bar { position: relative; height: 22px; background: #000a; border: 2px solid #000; box-shadow: 0 0 0 1px var(--line); }
+.bar .fill { position: absolute; inset: 0; width: 100%; transition: width .12s; }
+#hp-fill { background: linear-gradient(#ff5a5a, #b0161e); }
+#hp-text { position: absolute; inset: 0; display: flex; align-items: center; padding-left: 8px; font-family: var(--f-sys); font-size: 21px; text-shadow: 1px 1px 0 #000; font-variant-numeric: tabular-nums; }
+.bar.xp { height: 8px; }
+#xp-fill { background: var(--sys); }
+.lvl-row { display: flex; gap: 10px; align-items: center; font-family: var(--f-sys); font-size: 20px; text-shadow: 1px 1px 0 #000; }
+.lvl-row .lv { font-family: var(--f-display); font-size: 13px; color: var(--sys); }
+#points { color: var(--gold); animation: pulse .7s infinite alternate; }
+.gold { color: var(--gold); }
+
+.hud-br { position: absolute; right: 16px; bottom: 16px; text-align: right; display: grid; gap: 6px; justify-items: end; }
+#weapon-name { font-family: var(--f-display); font-size: 15px; text-shadow: 2px 2px 0 #000; }
+#ammo { font-family: var(--f-sys); font-size: 26px; color: var(--gold); text-shadow: 1px 1px 0 #000; }
+#slots { display: flex; gap: 4px; }
+.slot { width: 22px; height: 22px; display: grid; place-items: center; font-family: var(--f-sys); font-size: 18px; background: #000a; border: 1px solid var(--line); color: var(--muted); }
+.slot.on { border-color: var(--gold); color: var(--gold); }
+.slot.locked { opacity: .3; }
+.inv-row { display: flex; gap: 12px; font-family: var(--f-sys); font-size: 20px; text-shadow: 1px 1px 0 #000; align-items: center; }
+.inv-row kbd { font-family: var(--f-sys); font-size: 15px; padding: 0 4px; border: 1px solid var(--line); background: #000a; color: var(--muted); }
+.cd { --p: 1; position: relative; padding: 1px 8px; border: 1px solid var(--line); background: linear-gradient(90deg, #ffffff22 calc(var(--p) * 100%), #0008 0); color: var(--muted); }
+.cd.ready { color: var(--text); border-color: var(--muted); }
+#ult-cd.ready { color: var(--donut); border-color: var(--donut); }
+
+#crosshair { position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; transform: translate(-50%, -50%); }
+#crosshair::before, #crosshair::after { content: ''; position: absolute; background: #fffc; box-shadow: 0 0 0 1px #0008; }
+#crosshair::before { left: 6px; top: 0; width: 2px; height: 14px; }
+#crosshair::after { top: 6px; left: 0; height: 2px; width: 14px; }
+#prompt { position: absolute; left: 50%; top: calc(50% + 34px); transform: translateX(-50%); font-family: var(--f-sys); font-size: 24px; background: #000b; padding: 2px 12px; border: 1px solid var(--line); white-space: nowrap; }
+#prompt b { color: var(--gold); font-weight: 400; border: 1px solid var(--gold); padding: 0 5px; margin-right: 6px; }
+
+#log { position: absolute; left: 16px; top: 96px; width: min(380px, 38vw); display: grid; gap: 5px; }
+.msg { font-family: var(--f-sys); font-size: 17px; line-height: 1.05; padding: 5px 9px; background: #06101acc; border-left: 3px solid var(--sys); color: #d8f4ff; animation: slidein .25s ease-out; transition: opacity 1.4s; }
+.msg .who { color: var(--sys); margin-right: 4px; }
+.msg.donut { border-color: var(--donut); background: #1a0816cc; color: #ffe0f6; }
+.msg.donut .who { color: var(--donut); }
+.msg.boss { border-color: var(--blood); background: #1a0606cc; color: #ffd8d8; }
+.msg.boss .who { color: var(--blood); }
+.msg.warn { border-color: var(--gold); }
+.msg.warn .who { color: var(--gold); }
+.msg.good { border-color: var(--good); }
+.msg.good .who { color: var(--good); }
+.msg.fade { opacity: 0; }
+
+#achv { position: absolute; top: 60px; left: 50%; transform: translate(-50%, -30px); width: min(520px, 80vw); padding: 12px 18px 14px; background: linear-gradient(#0d2230f2, #081620f2); border: 2px solid var(--sys); box-shadow: 0 0 0 4px #000, 0 0 30px #5fd8ff55; text-align: center; opacity: 0; transition: opacity .3s, transform .3s; }
+#achv.show { opacity: 1; transform: translate(-50%, 0); }
+.achv-kicker { font-family: var(--f-sys); font-size: 18px; color: var(--sys); letter-spacing: .15em; text-transform: uppercase; }
+.achv-title { font-family: var(--f-display); font-size: 21px; color: var(--gold); margin: 2px 0 6px; text-wrap: balance; }
+.achv-text { font-family: var(--f-sys); font-size: 20px; line-height: 1.05; color: #d8f4ff; }
+.achv-reward { font-family: var(--f-display); font-size: 12px; margin-top: 8px; }
+
+#levelup { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); font-family: var(--f-display); font-size: 54px; color: var(--sys); text-shadow: 4px 4px 0 #000, 0 0 30px var(--sys); opacity: 0; pointer-events: none; }
+#levelup.show { animation: lvl 2.2s ease-out forwards; }
+#hurt { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 45%, #c00000cc 100%); opacity: 0; pointer-events: none; }
+#click-hint { position: absolute; left: 50%; top: 58%; transform: translateX(-50%); font-family: var(--f-display); font-size: 16px; padding: 10px 18px; background: #000c; border: 2px solid var(--gold); color: var(--gold); cursor: pointer; pointer-events: auto; }
+
+/* --------------------------------------------------------------- screens */
+.screen { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px 16px; background: #0b0910b8; overflow-y: auto; backdrop-filter: blur(2px); }
+.screen.title { background: linear-gradient(180deg, #0b0910cc, #0b091066 40%, #0b0910ee); }
+.panel { width: min(640px, 100%); background: var(--panel); border: 2px solid var(--line); box-shadow: 0 0 0 4px #000, 0 20px 60px #000c; padding: 26px 28px; display: grid; gap: 14px; }
+.panel h2 { font-family: var(--f-display); font-size: 28px; margin: 0; color: var(--gold); text-wrap: balance; line-height: 1.1; }
+.panel h3 { font-family: var(--f-display); font-size: 13px; letter-spacing: .06em; color: var(--sys); margin: 4px 0 6px; }
+.sub, .hint { color: var(--muted); margin: 0; }
+.hint { font-size: 13px; text-align: center; }
+.menu { display: grid; gap: 10px; }
+.btn { font: 600 16px var(--f-ui); color: var(--text); background: var(--panel-2); border: 2px solid var(--line); padding: 10px 18px; cursor: pointer; letter-spacing: .02em; transition: transform .08s, border-color .15s, background .15s; }
+.btn:hover:not(:disabled) { border-color: var(--gold); transform: translateY(-1px); }
+.btn:focus-visible { outline: 2px solid var(--sys); outline-offset: 2px; }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn.primary { background: var(--gold); color: #1a1000; border-color: #000; box-shadow: 0 4px 0 #8a6a00; }
+.btn.primary:hover { border-color: #000; }
+.btn.danger { color: #ffb0b0; }
+.btn.big { font-size: 19px; padding: 14px 20px; }
+.btn.tiny { padding: 2px 10px; font-size: 18px; line-height: 1; }
+
+.title-wrap { width: min(620px, 100%); text-align: center; display: grid; gap: 18px; justify-items: center; }
+.title-kicker { font-family: var(--f-sys); font-size: 22px; color: var(--sys); letter-spacing: .2em; text-transform: uppercase; }
+.title-logo { font-family: var(--f-display); font-size: clamp(64px, 14vw, 132px); line-height: .85; margin: 0; color: var(--gold); text-shadow: 6px 6px 0 #000, 0 0 60px #ffcc3355; display: grid; }
+.title-logo span { font-size: clamp(16px, 3.2vw, 26px); color: var(--text); letter-spacing: .12em; text-shadow: 3px 3px 0 #000; margin-top: 10px; }
+.title-blurb { font-size: 17px; line-height: 1.5; max-width: 52ch; margin: 0; color: var(--text); text-shadow: 1px 1px 2px #000; }
+.title-wrap .menu { width: min(320px, 100%); }
+.pc-note { color: var(--muted); font-size: 13px; margin: 0; }
+
+.intro { text-align: center; }
+.intro-floor { font-family: var(--f-sys); font-size: 22px; letter-spacing: .2em; color: var(--sys); text-transform: uppercase; }
+.intro-name { font-size: 34px !important; }
+.intro-text { font-family: var(--f-sys); font-size: 22px; line-height: 1.1; color: #d8f4ff; margin: 0; background: #06101a; border-left: 3px solid var(--sys); padding: 10px 14px; text-align: left; }
+.intro-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; text-align: left; }
+.intro-facts div { background: var(--panel-2); padding: 8px 12px; display: grid; gap: 2px; min-width: 0; }
+.intro-facts span, .derived span, .inv span { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.intro-facts b { font-weight: 600; }
+
+.help-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 6px 16px; font-size: 14px; }
+kbd { font-family: var(--f-sys); font-size: 17px; background: var(--panel-2); border: 1px solid var(--line); border-bottom-width: 3px; padding: 0 6px; color: var(--gold); }
+.help ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; line-height: 1.45; font-size: 14px; }
+
+.settings label { display: flex; justify-content: space-between; font-weight: 600; }
+.settings output { color: var(--gold); font-family: var(--f-sys); font-size: 20px; }
+.settings input[type=range] { width: 100%; accent-color: var(--gold); }
+.settings .check { justify-content: flex-start; gap: 10px; }
+
+.panel.sheet, .panel.shop { width: min(1040px, 100%); }
+.sheet-head, .shop-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.sheet-points { font-family: var(--f-display); font-size: 13px; color: var(--muted); }
+.sheet-points.has { color: var(--gold); animation: pulse .7s infinite alternate; }
+.sheet-grid, .shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.sheet-grid section, .shop-grid section { min-width: 0; }
+.stat { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.stat-name { font-weight: 700; display: grid; }
+.stat-name small { font-weight: 400; color: var(--muted); font-size: 12px; }
+.stat-val { font-family: var(--f-display); font-size: 20px; color: var(--gold); min-width: 2ch; text-align: right; font-variant-numeric: tabular-nums; }
+.derived, .inv { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; margin-top: 12px; }
+.derived div, .inv div { display: grid; }
+.derived b, .inv b { font-variant-numeric: tabular-nums; }
+.weapons { width: 100%; border-collapse: collapse; font-size: 14px; }
+.weapons th { text-align: left; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; padding: 4px 6px 4px 0; }
+.weapons td { padding: 5px 6px 5px 0; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+.weapons tr.locked td { color: var(--muted); opacity: .6; }
+.ach-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; color: var(--muted); max-height: 360px; overflow-y: auto; }
+.ach-list li.got { color: var(--gold); }
+
+.mordecai-say { font-family: var(--f-sys); font-size: 21px; line-height: 1.1; color: #d8f4ff; flex: 1; min-width: 0; }
+.mordecai-say b { color: var(--good); font-weight: 400; }
+.wallet { font-family: var(--f-display); font-size: 26px; color: var(--gold); display: grid; text-align: right; }
+.wallet small { font-family: var(--f-ui); font-size: 11px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+.shop-row, .box-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.box-row { grid-template-columns: auto 1fr auto; }
+.box-icon { width: 26px; height: 26px; background: var(--c); border: 2px solid #fff; box-shadow: 0 0 12px var(--c); }
+.shop-info { min-width: 0; }
+.shop-name { font-weight: 700; }
+.shop-desc { font-size: 13px; color: var(--muted); }
+.btn.buy { min-width: 84px; padding: 6px 12px; font-size: 15px; }
+.empty { color: var(--muted); font-size: 14px; }
+.opened { border: 2px solid var(--c); background: #0008; padding: 10px 14px; margin-bottom: 8px; }
+.opened.fresh { animation: pop .4s ease-out; }
+.opened-title { font-family: var(--f-display); font-size: 13px; color: var(--c); }
+.opened ul { margin: 6px 0 0; padding-left: 18px; font-family: var(--f-sys); font-size: 20px; line-height: 1.1; }
+
+.mapview { width: min(640px, 100%); justify-items: center; }
+#bigmap { width: min(560px, 100%); aspect-ratio: 1; max-width: 100%; image-rendering: pixelated; border: 2px solid var(--line); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; }
+
+.death { text-align: center; border-color: var(--blood); }
+.death h2 { color: var(--blood); font-size: 48px; }
+.death-kicker { font-family: var(--f-sys); font-size: 22px; letter-spacing: .2em; color: var(--blood); text-transform: uppercase; }
+.death-msg { font-family: var(--f-sys); font-size: 22px; line-height: 1.1; color: #ffd8d8; margin: 0; }
+.victory { border-color: var(--gold); box-shadow: 0 0 0 4px #000, 0 0 80px #ffcc3355; }
+
+@keyframes pulse { from { opacity: 1; } to { opacity: .45; } }
+@keyframes slidein { from { transform: translateX(-12px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes pop { from { transform: scale(.9); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes lvl { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.6); } 15% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); } 70% { opacity: 1; transform: translate(-50%, -60%) scale(1); } 100% { opacity: 0; transform: translate(-50%, -70%) scale(1); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+@media (max-width: 700px) {
+  #log { top: auto; bottom: 150px; width: calc(100vw - 32px); }
+  .hud-tr { display: none; }
+  #levelup { font-size: 36px; }
+}
+</style>
+</head>
+<body>
+
+
+<div id="game">
+  <canvas id="view"></canvas>
+  <div id="hud" hidden>
+    <div id="hurt"></div>
+    <div class="hud-tl">
+      <div id="floor-name">Floor 1</div>
+      <div class="hud-row"><span id="timer">12:00</span><span class="viewers"><span class="live-dot"></span><b id="viewers">0</b> watching</span></div>
+      <div id="safe-badge" hidden>SAFE ROOM · HEALING</div>
+    </div>
+    <div class="hud-tr"><canvas id="minimap" width="132" height="132"></canvas></div>
+    <div id="bossbar" hidden><div id="boss-name">Boss</div><div class="boss-track"><div id="boss-fill"></div></div></div>
+    <div id="log" aria-live="polite"></div>
+    <div id="crosshair"></div>
+    <div id="prompt" hidden></div>
+    <div id="achv"></div>
+    <div id="levelup"></div>
+    <div class="hud-bl">
+      <div class="lvl-row"><span class="lv">LV <span id="lvl">1</span></span><span class="gold"><span id="gold">0</span>g</span><span id="points" hidden></span></div>
+      <div class="bar"><div class="fill" id="hp-fill"></div><div id="hp-text">100 / 100</div></div>
+      <div class="bar xp"><div class="fill" id="xp-fill"></div></div>
+    </div>
+    <div class="hud-br">
+      <div id="slots"></div>
+      <div id="weapon-name">Fists</div>
+      <div id="ammo">∞</div>
+      <div class="inv-row">
+        <span><kbd>Q</kbd> <span id="potions">0</span> potions</span>
+        <span><span id="boxes">0</span> boxes</span>
+      </div>
+      <div class="inv-row">
+        <span class="cd" id="kick-cd">F / RMB Kick</span>
+        <span class="cd" id="ult-cd">R Donut</span>
+      </div>
+    </div>
+    <div id="click-hint" hidden>Click to fight</div>
+  </div>
+  <div id="screen" class="screen" hidden></div>
+</div>
+
+<script>
+'use strict';
+// ---------------------------------------------------------------------------
+// Static game data: floors, monsters, weapons, loot, achievements, dialogue.
+// ---------------------------------------------------------------------------
+
+const FLOORS = [
+  {
+    name: 'The Stone Maze', theme: 'stone', time: 720,
+    pool: ['rat', 'rat', 'goblin'], count: 26, boss: 'ratking',
+    fog: [6, 5, 8], ambient: 1.0,
+    intro: 'Welcome to Floor One. It is made of rocks and regret. Find the stairwell before the floor collapses. There is a boss. There is always a boss.',
+  },
+  {
+    name: 'The Goblin Warrens', theme: 'moss', time: 720,
+    pool: ['rat', 'goblin', 'goblin', 'slinger'], count: 32, boss: 'matriarch',
+    fog: [4, 9, 5], ambient: 0.95,
+    intro: 'Floor Two. The goblins here have formed a union. Their demands are your organs.',
+  },
+  {
+    name: 'The Ossuary', theme: 'bone', time: 660,
+    pool: ['goblin', 'slinger', 'skeleton', 'skeleton'], count: 36, boss: 'bonewright',
+    fog: [8, 8, 12], ambient: 0.9,
+    intro: 'Floor Three. Everything down here used to be a crawler. Try not to join the decor.',
+  },
+  {
+    name: 'The Furnace', theme: 'furnace', time: 660,
+    pool: ['skeleton', 'slinger', 'brute', 'wisp', 'wisp'], count: 40, boss: 'hellhound',
+    fog: [22, 5, 2], ambient: 0.9,
+    intro: 'Floor Four. It is hot. The sponsors requested it be hotter. It has been made hotter.',
+  },
+  {
+    name: 'The Studio', theme: 'studio', time: 600,
+    pool: ['brute', 'wisp', 'skeleton', 'goblin', 'slinger'], count: 44, boss: 'showrunner',
+    fog: [10, 3, 16], ambient: 1.0,
+    intro: 'Floor Five. You have reached the production floor. The Showrunner would like a word. Several, actually. All of them violent.',
+  },
+];
+
+// hp/dmg are floor-one values; they scale with depth.
+const MOBS = {
+  rat: {
+    name: 'Dungeon Rat', hp: 11, speed: 2.7, dmg: 4, range: 0.75, cd: 0.8,
+    xp: 6, gold: [0, 2], h: 0.42, radius: 0.22, sprite: 'rat',
+  },
+  goblin: {
+    name: 'Goblin Scrapper', hp: 24, speed: 2.05, dmg: 7, range: 0.9, cd: 1.0,
+    xp: 12, gold: [1, 5], h: 0.72, radius: 0.28, sprite: 'goblin',
+  },
+  slinger: {
+    name: 'Goblin Slinger', hp: 18, speed: 1.8, dmg: 7, cd: 2.1,
+    ranged: { speed: 7, proj: 'rock', keep: 4.5 },
+    xp: 15, gold: [1, 6], h: 0.7, radius: 0.28, sprite: 'slinger',
+  },
+  skeleton: {
+    name: 'Rattling Skeleton', hp: 46, speed: 1.65, dmg: 11, range: 1.0, cd: 1.2,
+    xp: 22, gold: [2, 8], h: 0.86, radius: 0.3, sprite: 'skeleton',
+  },
+  brute: {
+    name: 'Troglodyte Brute', hp: 95, speed: 1.4, dmg: 18, range: 1.2, cd: 1.7,
+    xp: 40, gold: [5, 14], h: 1.05, radius: 0.42, sprite: 'brute',
+  },
+  wisp: {
+    name: 'Hellspark', hp: 26, speed: 2.3, dmg: 9, cd: 1.9,
+    ranged: { speed: 6, proj: 'fireball', keep: 5 },
+    xp: 25, gold: [2, 9], h: 0.5, z: 0.3, fly: true, radius: 0.25, sprite: 'wisp', bright: true,
+  },
+
+  // ---- floor bosses ----
+  ratking: {
+    boss: true, name: 'Squeakers, the Rat King', hp: 280, speed: 2.1, dmg: 10, range: 1.2, cd: 1.0,
+    xp: 160, gold: [40, 60], h: 1.1, radius: 0.5, sprite: 'ratking',
+    abilities: [{ kind: 'summon', mob: 'rat', n: 3, every: 7 }],
+    taunt: 'SQUEEEEK. (Translation: "You are standing in my kitchen.")',
+  },
+  matriarch: {
+    boss: true, name: 'Matriarch Gobsmack', hp: 430, speed: 1.9, dmg: 14, range: 1.2, cd: 1.1,
+    xp: 260, gold: [60, 90], h: 1.35, radius: 0.5, sprite: 'matriarch',
+    abilities: [
+      { kind: 'spread', n: 5, arc: 0.7, proj: 'rock', speed: 8, every: 3.2 },
+      { kind: 'summon', mob: 'goblin', n: 2, every: 11 },
+    ],
+    taunt: 'Who let the pantsless one into my warren? Children! Dinner has arrived!',
+  },
+  bonewright: {
+    boss: true, name: 'The Bonewright', hp: 620, speed: 1.6, dmg: 18, range: 1.3, cd: 1.3,
+    xp: 380, gold: [80, 120], h: 1.45, radius: 0.5, sprite: 'bonewright',
+    abilities: [
+      { kind: 'radial', n: 12, proj: 'bone', speed: 6.5, every: 4.0 },
+      { kind: 'summon', mob: 'skeleton', n: 2, every: 13 },
+    ],
+    taunt: 'Ah, fresh materials. I shall make a lovely chair out of you.',
+  },
+  hellhound: {
+    boss: true, name: 'Gerald, the Hellhound', hp: 780, speed: 2.3, dmg: 22, range: 1.3, cd: 1.0,
+    xp: 520, gold: [110, 160], h: 1.25, radius: 0.55, sprite: 'hellhound', bright: true,
+    abilities: [
+      { kind: 'charge', every: 5.0 },
+      { kind: 'spread', n: 3, arc: 0.4, proj: 'fireball', speed: 7.5, every: 2.7 },
+    ],
+    taunt: 'Gerald is a good boy. Gerald has been told to eat you. Gerald is VERY good.',
+  },
+  showrunner: {
+    boss: true, name: 'The Showrunner', hp: 1300, speed: 1.9, dmg: 24, range: 1.3, cd: 1.1,
+    xp: 900, gold: [200, 300], h: 1.5, radius: 0.5, sprite: 'showrunner', bright: true,
+    abilities: [
+      { kind: 'radial', n: 14, proj: 'static', speed: 6, every: 4.5 },
+      { kind: 'spread', n: 5, arc: 0.6, proj: 'static', speed: 8.5, every: 2.6 },
+      { kind: 'summon', mob: 'wisp', n: 2, every: 12 },
+      { kind: 'teleport', every: 9 },
+    ],
+    taunt: 'Ratings are down, Carl. Do you know what boosts ratings? A really gruesome season finale.',
+  },
+};
+
+const WEAPONS = [
+  { id: 'fists', key: '1', name: 'Fists', desc: 'Carl\'s knuckles. Surprisingly effective. Scales with STR and your gauntlet.' },
+  { id: 'club', key: '2', name: 'Nail-Studded Club', desc: 'Slow, heavy, deeply satisfying. Scales with STR.' },
+  { id: 'crossbow', key: '3', name: 'Rusty Crossbow', desc: 'Fires bolts. Scales with DEX.', ammo: 'bolts' },
+  { id: 'lobber', key: '4', name: 'Hob-Lobber', desc: 'A jug of alchemical nonsense with a fuse. Throw. Run. Also hurts you.', ammo: 'lobbers' },
+];
+
+const GAUNTLETS = [
+  { name: 'Bare Knuckles', mult: 1.0 },
+  { name: 'Enchanted Knuckle Wraps', mult: 1.35 },
+  { name: 'Brawler\'s Gauntlet', mult: 1.75 },
+  { name: 'Gauntlet of the Unhinged', mult: 2.3 },
+];
+
+const BOX_TYPES = {
+  bronze: { name: 'Bronze Adventurer Box', color: '#c07a3a' },
+  silver: { name: 'Silver Adventurer Box', color: '#b9c3cf' },
+  gold: { name: 'Gold Adventurer Box', color: '#ffcc33' },
+  boss: { name: 'Gold Boss Box', color: '#ff6a3d' },
+  fan: { name: 'Fan Box', color: '#ff66cc' },
+};
+
+const SHOP = [
+  { id: 'potion', name: 'Healing Potion', desc: 'Restores half your health. [Q] to drink.', price: 25 },
+  { id: 'bolts', name: 'Crossbow Bolts ×12', desc: 'Pointy. Reusable exactly zero times.', price: 20, needs: 'crossbow' },
+  { id: 'lobbers', name: 'Hob-Lobbers ×2', desc: 'Carl\'s signature crafting project.', price: 35 },
+  { id: 'gauntlet', name: 'Gauntlet Upgrade', desc: 'Punch harder. Much harder.', price: 140, scale: 180 },
+  { id: 'club', name: 'Nail-Studded Club', desc: 'A plank with nails. Artisanal.', price: 110, once: 'club' },
+  { id: 'crossbow', name: 'Rusty Crossbow', desc: 'Includes 12 bolts. Rust is free.', price: 150, once: 'crossbow' },
+  { id: 'tonic', name: 'Stat Tonic', desc: '+1 stat point. Tastes like pennies.', price: 260, scale: 120 },
+];
+
+// Achievements: the System AI hands these out with commentary and a prize.
+const ACHIEVEMENTS = {
+  pantsless: { title: 'Pantsless in Public', box: 'bronze', text: 'You entered the World Dungeon in boxer shorts and a leather jacket. Millions of viewers have questions. None of them are about your survival odds.' },
+  firstblood: { title: 'First Blood', box: 'silver', text: 'You killed something! Its family will be notified never.' },
+  knuckles: { title: 'Knuckle Sandwich Artisan', box: 'silver', text: 'Fifteen kills with your bare hands. Your knuckles would like to file a complaint.' },
+  bonk: { title: 'Bonk', box: 'bronze', text: 'Ten kills with a plank of wood that has nails in it. Civilization peaked here.' },
+  pewpew: { title: 'Pew Pew', box: 'bronze', text: 'Ten crossbow kills. You are basically a sniper now. A rusty, pantsless sniper.' },
+  kaboom: { title: 'Hob-Lobber Enthusiast', box: 'gold', text: 'Three or more kills with a single explosion. The insurance adjusters are weeping.' },
+  selfown: { title: 'Friendly Fire, Emphasis on Fire', box: 'bronze', text: 'You blew yourself up. Here is a prize, because the audience laughed so hard.' },
+  kicker: { title: 'Door-to-Door Salesman', box: 'silver', text: 'Five kills with a kick. Your feet are now registered weapons in eleven systems.' },
+  catkill: { title: 'The Cat Did It', box: 'silver', text: 'Donut has ten kills. She would like it noted that she is carrying this team.' },
+  firstboss: { title: 'Floor Boss Slayer', box: 'gold', text: 'You killed a floor boss. Management is thrilled. Management is also sending more.' },
+  flesh: { title: 'Just a Flesh Wound', box: 'bronze', text: 'You survived with less than ten percent health. Dramatic. We love dramatic.' },
+  speedrun: { title: 'Places to Be', box: 'silver', text: 'You descended with more than half the timer left. Somewhere, a producer is annoyed at the lost ad time.' },
+  shopper: { title: 'Consumer Culture', box: 'bronze', text: 'You spent 300 gold. The economy thanks you for your sacrifice.' },
+  hoarder: { title: 'Box Hoarder', box: 'bronze', text: 'You are holding five unopened boxes. Please see a professional. Here is another box.' },
+  lvl5: { title: 'Getting the Hang of Murder', box: 'silver', text: 'Level five! The monsters are noticing. That is bad for them, mostly.' },
+  lvl10: { title: 'Professional Crawler', box: 'gold', text: 'Level ten. You may now list "dungeon crawler" on your resume. Your resume has been incinerated.' },
+  trending: { title: 'Trending', box: 'fan', text: 'Over a million viewers are watching you. Wave! No, not with that hand.' },
+  tough: { title: 'Tough as Toenails', box: 'silver', text: 'You cleared a floor without drinking a single potion. Stubborn. Possibly concussed.' },
+  finale: { title: 'Series Finale', box: null, text: 'You cancelled the Showrunner. Permanently. The network is reviewing its options.' },
+};
+
+const SYSTEM_LINES = {
+  levelup: [
+    'LEVEL UP! You have become marginally more dangerous.',
+    'LEVEL UP! Your mother would be proud. Your mother cannot see this. Probably.',
+    'LEVEL UP! Spend your stat points before something eats you. [TAB]',
+  ],
+  death: [
+    'You have died. The audience gave it a 7 out of 10.',
+    'You have died. Your cat has already listed your belongings for auction.',
+    'You have died. Don\'t worry, the replay is trending.',
+  ],
+  collapse: 'The floor collapsed. You were not on the stairs. This is what we call a teachable moment, except you can no longer be taught.',
+  stairsLocked: 'The stairwell is sealed by the floor boss\'s barrier. Kill the boss. Or stare at it. Staring is not recommended.',
+  stairsOpen: 'The floor boss is dead! The stairwell barrier has dropped. Descend when ready.',
+  safeRoom: 'You are in a Safe Room. Monsters cannot enter. You heal quickly here. Talk to Mordecai to shop and open boxes.',
+  boxNotSafe: 'Loot boxes can only be opened in a Safe Room. Rules are rules. We made them up, but still.',
+  timeWarn: 'One minute until the floor collapses. Hurry, or don\'t. Your funeral is good content either way.',
+};
+
+const DONUT_LINES = {
+  start: [
+    'Carl. Carl! We are on TELEVISION. Fix your hair. Actually, fix everything.',
+    'I have been informed that I am a Princess. I always knew. Now it is official.',
+  ],
+  kill: [
+    'Magic Missile! Did everyone see that? Somebody tell me they saw that.',
+    'That one looked at me funny.',
+    'I am a PRINCESS and also a MURDERER. Both can be true.',
+    'Mongo would have been proud. Mongo is not here. Mongo is a dinosaur. Never mind.',
+    'Another one for the highlight reel!',
+  ],
+  hurt: [
+    'Carl, you are bleeding on my fur. Stop that.',
+    'Carl! Drink a potion! Press Q! Why am I always the responsible one?',
+    'If you die, who is going to carry my snacks?',
+  ],
+  level: [
+    'You leveled up! I leveled up too, spiritually.',
+    'Put points into Charisma, Carl. Look at me. Charisma works.',
+  ],
+  boss: [
+    'Carl, that one is big. Punch it until it is small.',
+    'A boss! Okay, I will do the magic, you do the screaming.',
+  ],
+  idle: [
+    'Do you think the audience likes my tiara? They must. Look at it.',
+    'Why do you not wear pants, Carl? I am asking for the viewers.',
+    'I am bored. Let us go murder something.',
+    'My fan count is higher than yours. I checked.',
+  ],
+  descend: [
+    'Next floor! Try to keep up, Carl.',
+    'Onward! Down is the only direction that pays.',
+  ],
+  ult: [
+    'MAGIC MISSILE BARRAGE! Bow before your Princess!',
+    'Everybody DIES! Except Carl. Mostly.',
+  ],
+};
+
+const MORDECAI_LINES = [
+  'Welcome to the Safe Room, kid. Sit. Buy things. Don\'t get blood on the rug.',
+  'Hob-lobbers are your friend. Throw them far. Farther than that.',
+  'The boss sits on the stairwell. Always does. Showbiz.',
+  'Open your boxes. Loot doesn\'t help you from inside a box.',
+  'Stat points in Constitution keep you alive. Stat points in Charisma keep you famous. Your call.',
+  'If the timer hits zero, the floor goes and you go with it. Don\'t dawdle.',
+  'Your cat is terrifying. I mean that as a compliment.',
+];
+
+</script>
+<script>
+'use strict';
+// ---------------------------------------------------------------------------
+// Procedural art: wall/floor textures and billboard sprites are painted onto
+// small offscreen canvases at startup, then converted to Uint32 pixel arrays
+// that the raycaster samples directly. No image files needed.
+// ---------------------------------------------------------------------------
+
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+
+function cv(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+
+// Convert a canvas into {w,h,data} with ABGR pixels. Transparent pixels = 0.
+function toTex(c) {
+  const w = c.width, h = c.height;
+  const d = c.getContext('2d').getImageData(0, 0, w, h).data;
+  const out = new Uint32Array(w * h);
+  for (let i = 0; i < w * h; i++) {
+    const a = d[i * 4 + 3];
+    if (a < 110) { out[i] = 0; continue; }
+    out[i] = (255 << 24 | d[i * 4 + 2] << 16 | d[i * 4 + 1] << 8 | d[i * 4]) >>> 0;
+  }
+  return { w, h, data: out };
+}
+
+const rgb = (r, g, b) => `rgb(${r | 0},${g | 0},${b | 0})`;
+function jit(rng, c, amt) { const k = (rng() - 0.5) * amt; return c.map(v => clamp(v + k + (rng() - 0.5) * amt * 0.3, 0, 255)); }
+
+function noisePass(c, rng, amt, speck = 0) {
+  const x = c.getContext('2d');
+  const id = x.getImageData(0, 0, c.width, c.height), d = id.data;
+  for (let i = 0; i < d.length; i += 4) {
+    if (d[i + 3] === 0) continue;
+    let n = (rng() - 0.5) * amt;
+    if (speck && rng() < speck) n -= 40;
+    d[i] = clamp(d[i] + n, 0, 255); d[i + 1] = clamp(d[i + 1] + n, 0, 255); d[i + 2] = clamp(d[i + 2] + n, 0, 255);
+  }
+  x.putImageData(id, 0, 0);
+}
+
+// ---------- drawing shorthands ----------
+function P(ctx) {
+  return {
+    ctx,
+    fill(c) { ctx.fillStyle = c; return this; },
+    stroke(c, w = 1) { ctx.strokeStyle = c; ctx.lineWidth = w; return this; },
+    rect(x, y, w, h, c) { if (c) ctx.fillStyle = c; ctx.fillRect(x, y, w, h); return this; },
+    circ(x, y, r, c) { if (c) ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill(); return this; },
+    ell(x, y, rx, ry, c, rot = 0) { if (c) ctx.fillStyle = c; ctx.beginPath(); ctx.ellipse(x, y, rx, ry, rot, 0, Math.PI * 2); ctx.fill(); return this; },
+    poly(pts, c) { if (c) ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(pts[0], pts[1]); for (let i = 2; i < pts.length; i += 2) ctx.lineTo(pts[i], pts[i + 1]); ctx.closePath(); ctx.fill(); return this; },
+    line(x1, y1, x2, y2, c, w = 1) { ctx.strokeStyle = c; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); return this; },
+    text(t, x, y, c, font) { ctx.fillStyle = c; ctx.font = font; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(t, x, y); return this; },
+  };
+}
+
+// =========================== WALL TEXTURES ===============================
+
+function brickTex(seed, o) {
+  const rng = mulberry32(seed), c = cv(64, 64), p = P(c.getContext('2d'));
+  p.rect(0, 0, 64, 64, rgb(...o.mortar));
+  const rows = o.rows || 8, cols = o.cols || 4, bh = 64 / rows, bw = 64 / cols;
+  for (let r = 0; r < rows; r++) {
+    const off = (r % 2) * bw / 2 + (o.stagger ? rng() * 6 : 0);
+    for (let i = -1; i <= cols; i++) {
+      const bx = i * bw + off, by = r * bh;
+      const col = jit(rng, o.base, o.jitter || 30);
+      p.rect(bx + 1, by + 1, bw - 2, bh - 2, rgb(...col));
+      p.rect(bx + 1, by + 1, bw - 2, 1, rgb(...col.map(v => v + 22)));
+      p.rect(bx + 1, by + bh - 2, bw - 2, 1, rgb(...col.map(v => v - 30)));
+      if (o.cracks && rng() < o.cracks) {
+        const cx = bx + 2 + rng() * (bw - 4), cy = by + 2;
+        p.line(cx, cy, cx + (rng() - 0.5) * 6, cy + bh - 4, rgb(...col.map(v => v - 45)), 1);
+      }
+    }
+  }
+  noisePass(c, rng, o.noise || 18, o.speck || 0.02);
+  return c;
+}
+
+function stoneWall(seed, base) {
+  return brickTex(seed, { base, mortar: base.map(v => v * 0.45), rows: 5, cols: 3, jitter: 34, stagger: true, cracks: 0.25, noise: 22, speck: 0.04 });
+}
+
+function mossify(c, seed, amount) {
+  const rng = mulberry32(seed), p = P(c.getContext('2d'));
+  for (let i = 0; i < amount; i++) {
+    const x = rng() * 64, y = rng() < 0.6 ? 48 + rng() * 16 : rng() * 64;
+    p.ell(x, y, 2 + rng() * 5, 1 + rng() * 3, rgb(40 + rng() * 30, 90 + rng() * 50, 30 + rng() * 20));
+  }
+  for (let i = 0; i < 6; i++) { // hanging vines
+    const x = rng() * 64; let y = 0;
+    const len = 10 + rng() * 30;
+    p.line(x, 0, x + (rng() - 0.5) * 4, len, rgb(50, 110 + rng() * 40, 40), 1.5);
+    y = len; p.circ(x, y, 1.5, rgb(70, 150, 50));
+  }
+  noisePass(c, rng, 10);
+  return c;
+}
+
+function boneWall(seed) {
+  const rng = mulberry32(seed), c = cv(64, 64), p = P(c.getContext('2d'));
+  p.rect(0, 0, 64, 64, '#2a2622');
+  for (let i = 0; i < 60; i++) { // packed bones
+    const x = rng() * 64, y = rng() * 64, a = rng() * Math.PI, l = 6 + rng() * 10;
+    const dx = Math.cos(a) * l / 2, dy = Math.sin(a) * l / 2, col = rgb(150 + rng() * 60, 140 + rng() * 55, 110 + rng() * 40);
+    p.line(x - dx, y - dy, x + dx, y + dy, col, 2.5);
+    p.circ(x - dx, y - dy, 2, col).circ(x + dx, y + dy, 2, col);
+  }
+  for (let r = 0; r < 2; r++) for (let i = 0; i < 2; i++) { // skulls
+    const x = 16 + i * 32 + (r % 2) * 8, y = 16 + r * 32;
+    p.ell(x, y, 8, 7, '#d8ceb0').rect(x - 5, y + 3, 10, 6, '#d8ceb0');
+    p.circ(x - 3, y - 1, 2.5, '#1a1612').circ(x + 3, y - 1, 2.5, '#1a1612');
+    p.poly([x, y + 2, x - 1.5, y + 5, x + 1.5, y + 5], '#1a1612');
+    for (let t = -4; t <= 4; t += 2) p.rect(x + t - 0.5, y + 6, 1, 3, '#3a342c');
+  }
+  noisePass(c, rng, 16, 0.03);
+  return c;
+}
+
+function furnaceWall(seed, alt) {
+  const c = brickTex(seed, { base: [92, 38, 30], mortar: [30, 10, 8], rows: 8, cols: 4, jitter: 26, cracks: 0.35, noise: 16 });
+  const rng = mulberry32(seed + 9), p = P(c.getContext('2d'));
+  for (let i = 0; i < (alt ? 9 : 4); i++) { // glowing cracks
+    let x = rng() * 64, y = rng() * 64;
+    for (let s = 0; s < 6; s++) {
+      const nx = x + (rng() - 0.5) * 10, ny = y + rng() * 8;
+      p.line(x, y, nx, ny, 'rgba(255,140,30,0.9)', 1.5);
+      p.line(x, y, nx, ny, 'rgba(255,230,120,0.9)', 0.6);
+      x = nx; y = ny;
+    }
+  }
+  if (alt) { // grate with fire behind
+    p.rect(14, 22, 36, 28, '#1a0804');
+    for (let i = 0; i < 36; i++) p.rect(15 + i, 30 + Math.sin(i * 0.7) * 3 + rng() * 6, 1, 20, rgb(255, 80 + rng() * 120, 20));
+    for (let i = 0; i < 5; i++) p.rect(14 + i * 8, 22, 3, 28, '#2e2a28');
+    p.rect(14, 22, 36, 3, '#2e2a28').rect(14, 47, 36, 3, '#2e2a28');
+  }
+  return c;
+}
+
+function studioWall(seed, alt) {
+  const rng = mulberry32(seed), c = cv(64, 64), p = P(c.getContext('2d'));
+  p.rect(0, 0, 64, 64, '#1c1428');
+  for (let y = 0; y < 64; y += 32) for (let x = 0; x < 64; x += 32) {
+    p.rect(x + 1, y + 1, 30, 30, '#2a1f3c').rect(x + 1, y + 1, 30, 1, '#3d2e56').rect(x + 1, y + 30, 30, 1, '#120c1a');
+    p.circ(x + 4, y + 4, 1, '#6a5a80').circ(x + 28, y + 4, 1, '#6a5a80').circ(x + 4, y + 28, 1, '#6a5a80').circ(x + 28, y + 28, 1, '#6a5a80');
+  }
+  p.rect(0, 40, 64, 3, '#ff2fb0').rect(0, 41, 64, 1, '#ffc0ec');
+  p.rect(0, 12, 64, 2, '#36e0ff');
+  if (alt) {
+    p.rect(8, 16, 48, 20, '#140a0a').rect(10, 18, 44, 16, '#b0101a');
+    p.text('ON AIR', 32, 26.5, '#ffe0e0', 'bold 11px monospace');
+  }
+  noisePass(c, rng, 8);
+  return c;
+}
+
+function woodWall(seed) {
+  const rng = mulberry32(seed), c = cv(64, 64), p = P(c.getContext('2d'));
+  for (let i = 0; i < 8; i++) {
+    const col = jit(rng, [110, 70, 40], 25);
+    p.rect(0, i * 8, 64, 8, rgb(...col)).rect(0, i * 8 + 7, 64, 1, rgb(...col.map(v => v * 0.5)));
+    for (let k = 0; k < 4; k++) p.line(rng() * 64, i * 8 + 2 + rng() * 4, rng() * 64, i * 8 + 2 + rng() * 4, rgb(...col.map(v => v * 0.8)), 0.6);
+  }
+  p.rect(0, 50, 64, 4, '#2e6b3a').rect(0, 51, 64, 1, '#7fe08f'); // safe-room green trim
+  p.rect(0, 10, 64, 2, '#3a2412');
+  noisePass(c, rng, 10);
+  return c;
+}
+
+function doorTex(seed, boss, themeCol) {
+  const rng = mulberry32(seed), c = cv(64, 64), p = P(c.getContext('2d'));
+  const base = boss ? [120, 25, 20] : [105, 68, 38];
+  for (let i = 0; i < 6; i++) {
+    const col = jit(rng, base, 22);
+    p.rect(2 + i * 10, 0, 10, 64, rgb(...col)).rect(2 + i * 10, 0, 1, 64, rgb(...col.map(v => v * 0.5)));
+  }
+  p.rect(0, 0, 2, 64, '#1a1410').rect(62, 0, 2, 64, '#1a1410');
+  const iron = boss ? '#2a2a30' : '#3a3a40';
+  p.rect(0, 10, 64, 5, iron).rect(0, 48, 64, 5, iron);
+  for (let i = 4; i < 64; i += 10) { p.circ(i, 12.5, 1.2, '#8a8a90'); p.circ(i, 50.5, 1.2, '#8a8a90'); }
+  p.circ(50, 32, 4, '#1a1a1a').circ(50, 32, 2.5, boss ? '#c05030' : '#9a8a50');
+  if (boss) {
+    p.ell(30, 31, 9, 8, '#d8ceb0').circ(27, 30, 2.5, '#300').circ(33, 30, 2.5, '#300').rect(26, 36, 8, 4, '#d8ceb0');
+  }
+  if (themeCol) p.rect(0, 0, 64, 2, themeCol);
+  noisePass(c, rng, 12);
+  return c;
+}
+
+function runeOverlay(c, seed, color) {
+  const rng = mulberry32(seed), p = P(c.getContext('2d'));
+  for (let i = 0; i < 3; i++) {
+    const x = 10 + rng() * 44, y = 10 + rng() * 44;
+    p.stroke(color, 1.2);
+    const ctx = p.ctx; ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.stroke();
+    p.line(x - 5, y, x + 5, y, color, 1.2).line(x, y - 6, x, y + 6, color, 1.2);
+  }
+  return c;
+}
+
+// =========================== FLOOR / CEILING ==============================
+
+function flagstones(seed, base, rows = 4) {
+  return brickTex(seed, { base, mortar: base.map(v => v * 0.4), rows, cols: rows, jitter: 26, stagger: true, noise: 20, speck: 0.03 });
+}
+function dirtFloor(seed) {
+  const rng = mulberry32(seed), c = cv(64, 64), p = P(c.getContext('2d'));
+  p.rect(0, 0, 64, 64, '#3a3222');
+  for (let i = 0; i < 90; i++) p.ell(rng() * 64, rng() * 64, 1 + rng() * 4, 1 + rng() * 2, rgb(50 + rng() * 30, 44 + rng() * 26, 28 + rng() * 14));
+  for (let i = 0; i < 25; i++) { const x = rng() * 64, y = rng() * 64; p.line(x, y, x + (rng() - .5) * 3, y - 3, rgb(50, 110, 40), 1); }
+  noisePass(c, rng, 18);
+  return c;
+}
+function boneFloor(seed) {
+  const rng = mulberry32(seed), c = flagstones(seed, [70, 66, 60]), p = P(c.getContext('2d'));
+  for (let i = 0; i < 14; i++) {
+    const x = rng() * 64, y = rng() * 64, a = rng() * 3, l = 3 + rng() * 5;
+    p.line(x, y, x + Math.cos(a) * l, y + Math.sin(a) * l, '#c8bc9c', 1.5);
+  }
+  return c;
+}
+function grateFloor(seed) {
+  const rng = mulberry32(seed), c = cv(64, 64), p = P(c.getContext('2d'));
+  p.rect(0, 0, 64, 64, '#2a0a04');
+  for (let i = 0; i < 40; i++) p.circ(rng() * 64, rng() * 64, 1 + rng() * 3, rgb(200 + rng() * 55, 60 + rng() * 80, 10));
+  for (let i = 0; i < 64; i += 8) { p.rect(i, 0, 3, 64, '#3a3432'); p.rect(0, i, 64, 3, '#3a3432'); }
+  p.rect(0, 0, 64, 2, '#4a4442').rect(0, 0, 2, 64, '#4a4442');
+  noisePass(c, rng, 10);
+  return c;
+}
+function checkerFloor(seed) {
+  const rng = mulberry32(seed), c = cv(64, 64), p = P(c.getContext('2d'));
+  for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) p.rect(x * 16, y * 16, 16, 16, (x + y) % 2 ? '#1a1420' : '#cfc6d8');
+  noisePass(c, rng, 10);
+  return c;
+}
+function rugFloor(seed) {
+  const rng = mulberry32(seed), c = cv(64, 64), p = P(c.getContext('2d'));
+  p.rect(0, 0, 64, 64, '#7a1e22');
+  p.rect(4, 4, 56, 56, '#9a2a28').rect(8, 8, 48, 48, '#7a1e22');
+  p.poly([32, 14, 50, 32, 32, 50, 14, 32], '#c8943a').poly([32, 20, 44, 32, 32, 44, 20, 32], '#7a1e22');
+  p.circ(32, 32, 4, '#e0b050');
+  for (let i = 0; i < 64; i += 4) { p.rect(i, 0, 2, 2, '#e0b050'); p.rect(i, 62, 2, 2, '#e0b050'); }
+  noisePass(c, rng, 14);
+  return c;
+}
+function darkCeil(seed, base) {
+  const rng = mulberry32(seed), c = cv(64, 64), p = P(c.getContext('2d'));
+  p.rect(0, 0, 64, 64, rgb(...base));
+  for (let i = 0; i < 50; i++) p.ell(rng() * 64, rng() * 64, 2 + rng() * 6, 1 + rng() * 4, rgb(...jit(rng, base, 22)));
+  noisePass(c, rng, 12);
+  return c;
+}
+function beamCeil(seed) {
+  const c = darkCeil(seed, [40, 36, 34]), p = P(c.getContext('2d'));
+  p.rect(0, 26, 64, 12, '#4a2e1a').rect(0, 26, 64, 2, '#6a4428').rect(0, 36, 64, 2, '#2a1a0e');
+  return c;
+}
+function trussCeil(seed) {
+  const rng = mulberry32(seed), c = cv(64, 64), p = P(c.getContext('2d'));
+  p.rect(0, 0, 64, 64, '#0c0812');
+  p.rect(0, 28, 64, 8, '#3a3a44');
+  for (let i = 0; i < 64; i += 8) p.line(i, 28, i + 8, 36, '#5a5a66', 1.5);
+  p.circ(16, 16, 5, '#2a2a2a').circ(16, 16, 3, '#ffe9a0').circ(48, 48, 5, '#2a2a2a').circ(48, 48, 3, '#ff90e0');
+  noisePass(c, rng, 6);
+  return c;
+}
+
+// Build a texture set for a floor theme. Keys match tile ids in map.js.
+function buildTheme(theme, seed) {
+  const T = {};
+  switch (theme) {
+    case 'stone':
+      T.wall = stoneWall(seed, [110, 104, 96]); T.wall2 = mossify(stoneWall(seed + 1, [100, 96, 90]), seed, 20);
+      T.floor = flagstones(seed + 2, [84, 78, 70]); T.ceil = darkCeil(seed + 3, [44, 40, 38]);
+      T.bossWall = runeOverlay(stoneWall(seed + 4, [96, 70, 64]), seed, '#ff4030');
+      break;
+    case 'moss':
+      T.wall = mossify(brickTex(seed, { base: [70, 84, 60], mortar: [30, 36, 24], rows: 8, cols: 4, jitter: 30, cracks: 0.2 }), seed, 45);
+      T.wall2 = mossify(stoneWall(seed + 1, [80, 86, 64]), seed + 1, 80);
+      T.floor = dirtFloor(seed + 2); T.ceil = beamCeil(seed + 3);
+      T.bossWall = runeOverlay(mossify(stoneWall(seed + 4, [90, 70, 50]), seed + 4, 30), seed, '#ffd040');
+      break;
+    case 'bone':
+      T.wall = boneWall(seed); T.wall2 = stoneWall(seed + 1, [80, 78, 86]);
+      T.floor = boneFloor(seed + 2); T.ceil = darkCeil(seed + 3, [30, 28, 34]);
+      T.bossWall = runeOverlay(boneWall(seed + 4), seed, '#70ffd0');
+      break;
+    case 'furnace':
+      T.wall = furnaceWall(seed, false); T.wall2 = furnaceWall(seed + 1, true);
+      T.floor = grateFloor(seed + 2); T.ceil = darkCeil(seed + 3, [36, 16, 12]);
+      T.bossWall = runeOverlay(furnaceWall(seed + 4, false), seed, '#ffe060');
+      break;
+    default:
+      T.wall = studioWall(seed, false); T.wall2 = studioWall(seed + 1, true);
+      T.floor = checkerFloor(seed + 2); T.ceil = trussCeil(seed + 3);
+      T.bossWall = runeOverlay(studioWall(seed + 4, false), seed, '#ff2020');
+  }
+  T.safeWall = woodWall(seed + 5);
+  T.safeFloor = rugFloor(seed + 6);
+  T.door = doorTex(seed + 7, false);
+  T.bossDoor = doorTex(seed + 8, true);
+  const out = {};
+  for (const k in T) out[k] = toTex(T[k]);
+  return out;
+}
+
+// ============================== SPRITES ===================================
+
+// Lay a standing sprite on its side with a blood pool: the corpse frame.
+function corpseOf(frame, bloodCol = '#6a0808') {
+  const w = frame.width, h = frame.height;
+  const c = cv(w, h), x = c.getContext('2d');
+  x.fillStyle = bloodCol; x.beginPath(); x.ellipse(w / 2, h - 3, w * 0.45, 3, 0, 0, Math.PI * 2); x.fill();
+  x.save(); x.translate(w / 2, h - 2); x.rotate(-Math.PI / 2); x.scale(0.55, 1);
+  x.drawImage(frame, -w * 0.1, -w / 2, h * 0.9, w);
+  x.restore();
+  return c;
+}
+
+function drawRat(f, king) {
+  const W = 64, H = king ? 64 : 40, c = cv(W, H), p = P(c.getContext('2d'));
+  const by = H - 14, bob = f === 1 ? 2 : 0, fur = king ? '#5a4a52' : '#6b5d52', dark = king ? '#3a2e36' : '#4a3e36';
+  const s = king ? 1.5 : 1;
+  if (king) p.poly([10, by - 18, 44, by - 22, 48, by + 8, 6, by + 10], '#8a1a30'); // royal cape
+  p.line(8, by + 2, 2, by - 10 + bob, '#c09090', 2.5 * s); // tail
+  p.ell(30, by - bob, 20 * s * 0.8, 10 * s * 0.8, fur).ell(30, by + 3 - bob, 16 * s * 0.8, 6 * s * 0.8, '#8a7a6a');
+  const leg = f === 1 ? 3 : 0;
+  p.rect(18 - leg, by + 4, 4, 9, dark).rect(38 + leg, by + 4, 4, 9, dark);
+  const hx = f === 2 ? 50 : 46, hy = by - 4 - bob;
+  p.ell(hx, hy, 11 * s * 0.8, 8 * s * 0.8, fur).circ(hx - 5, hy - 8 * s * 0.8, 4 * s * 0.8, '#c09090');
+  p.circ(hx + 4, hy - 2, 2 * s, '#ff2020').circ(hx + 10 * s * 0.8, hy + 2, 2, '#301818');
+  if (f === 2) { p.rect(hx + 5, hy + 4, 2, 5, '#fff').rect(hx + 8, hy + 4, 2, 5, '#fff'); } else p.rect(hx + 6, hy + 4, 3, 3, '#fff');
+  if (king) { // crown and cape
+    p.poly([hx - 12, hy - 14, hx - 10, hy - 26, hx - 5, hy - 18, hx, hy - 28, hx + 5, hy - 18, hx + 9, hy - 25, hx + 10, hy - 14], '#ffcc33');
+    p.circ(hx, hy - 21, 2, '#e02040');
+  }
+  return c;
+}
+
+function drawGoblin(f, kind) {
+  const W = 48, H = 64, c = cv(W, H), p = P(c.getContext('2d'));
+  const skin = kind === 'slinger' ? '#6a9a3a' : '#5c8c34', skinD = '#3e6420';
+  const step = f === 1 ? 4 : f === 0 ? -2 : 0;
+  p.rect(16 + step, 44, 6, 18, skinD).rect(27 - step, 44, 6, 18, skinD); // legs
+  p.rect(14 + step, 60, 9, 4, '#2a1a10').rect(26 - step, 60, 9, 4, '#2a1a10');
+  p.ell(24, 36, 11, 12, skin); // torso
+  p.poly([13, 40, 35, 40, 38, 52, 10, 52], kind === 'slinger' ? '#8a4a1a' : '#6a4424');
+  if (kind === 'slinger') p.poly([12, 26, 36, 26, 30, 44, 18, 44], '#b0621e'); // hood cloak
+  // head
+  p.circ(24, 18, 10, skin);
+  p.poly([15, 16, 1, 8, 15, 22], skin).poly([33, 16, 47, 8, 33, 22], skin); // ears
+  p.circ(20, 17, 2.4, '#ffe040').circ(28, 17, 2.4, '#ffe040').circ(20, 17, 1, '#000').circ(28, 17, 1, '#000');
+  p.rect(18, 23, 12, 3, '#2a0a0a');
+  for (let i = 0; i < 4; i++) p.rect(19 + i * 3, 23, 1.5, 2, '#fff');
+  if (kind === 'slinger') p.ell(24, 10, 11, 5, '#b0621e');
+  // arms / weapon
+  if (kind === 'slinger') {
+    const up = f === 2;
+    p.line(14, 30, up ? 6 : 8, up ? 12 : 42, skin, 4);
+    p.line(34, 30, 40, 40, skin, 4);
+    if (up) { p.line(6, 12, 12, 2, '#6a4a2a', 1).circ(12, 2, 3, '#888'); } else p.line(8, 42, 6, 52, '#6a4a2a', 1);
+  } else {
+    const up = f === 2;
+    p.line(14, 30, 8, 42, skin, 4);
+    p.line(34, 30, up ? 42 : 40, up ? 18 : 40, skin, 4);
+    if (up) p.poly([41, 18, 46, 2, 44, 18], '#c8c8d0'); else p.poly([39, 40, 44, 54, 41, 40], '#c8c8d0');
+  }
+  return c;
+}
+
+function drawMatriarch(f) {
+  const W = 64, H = 80, c = cv(W, H), p = P(c.getContext('2d'));
+  const skin = '#4e7c2c', step = f === 1 ? 3 : 0;
+  p.rect(20 + step, 58, 9, 20, '#35541c').rect(35 - step, 58, 9, 20, '#35541c');
+  p.ell(32, 46, 22, 22, skin); // big belly
+  p.poly([10, 50, 54, 50, 58, 70, 6, 70], '#6a2a5a'); // skirt
+  p.ell(32, 42, 14, 10, '#6a2a5a');
+  for (let i = 0; i < 6; i++) p.circ(18 + i * 5.5, 34, 2.5, '#e0e0e0'); // necklace of teeth
+  p.circ(32, 20, 13, skin);
+  p.poly([20, 18, 2, 6, 20, 26], skin).poly([44, 18, 62, 6, 44, 26], skin);
+  p.circ(27, 18, 3, '#ffcc00').circ(37, 18, 3, '#ffcc00').circ(27, 18, 1.3, '#000').circ(37, 18, 1.3, '#000');
+  p.rect(24, 26, 16, 4, '#2a0a0a').rect(26, 26, 2, 3, '#fff').rect(36, 26, 2, 3, '#fff');
+  p.poly([20, 8, 22, -2, 27, 5, 32, -4, 37, 5, 42, -2, 44, 8], '#ffcc33'); // crown
+  const up = f === 2;
+  p.line(12, 38, up ? 4 : 4, up ? 16 : 52, skin, 6);
+  p.line(52, 38, up ? 60 : 60, up ? 16 : 52, skin, 6);
+  p.circ(up ? 4 : 4, up ? 14 : 54, 5, '#888'); // a rock in each hand
+  p.circ(up ? 60 : 60, up ? 14 : 54, 5, '#888');
+  return c;
+}
+
+function drawSkeleton(f, big) {
+  const W = big ? 64 : 48, H = big ? 80 : 64, c = cv(W, H), p = P(c.getContext('2d'));
+  const bone = big ? '#e4dcc4' : '#d8d0b8', cx = W / 2, s = big ? 1.25 : 1;
+  const step = f === 1 ? 3 : f === 0 ? -2 : 0;
+  const hip = H - 22 * s;
+  p.line(cx - 4, hip, cx - 6 + step, H - 2, bone, 3 * s).line(cx + 4, hip, cx + 6 - step, H - 2, bone, 3 * s);
+  p.line(cx, hip, cx, hip - 22 * s, bone, 3 * s); // spine
+  for (let i = 0; i < 4; i++) p.line(cx - 9 * s, hip - 8 * s - i * 4 * s, cx + 9 * s, hip - 8 * s - i * 4 * s, bone, 2);
+  p.ell(cx, hip, 8 * s, 3 * s, bone);
+  const sh = hip - 22 * s;
+  p.line(cx - 10 * s, sh, cx + 10 * s, sh, bone, 3);
+  // skull
+  p.ell(cx, sh - 9 * s, 8 * s, 8 * s, bone).rect(cx - 5 * s, sh - 5 * s, 10 * s, 5 * s, bone);
+  p.circ(cx - 3 * s, sh - 10 * s, 2.2 * s, big ? '#40ffc0' : '#200').circ(cx + 3 * s, sh - 10 * s, 2.2 * s, big ? '#40ffc0' : '#200');
+  const up = f === 2;
+  if (big) { // four arms and a staff
+    p.line(cx - 10 * s, sh, cx - 22, sh + 16, bone, 2.5).line(cx + 10 * s, sh, cx + 22, sh + 16, bone, 2.5);
+    p.line(cx - 10 * s, sh + 6, cx - 24, up ? sh - 18 : sh + 2, bone, 2.5).line(cx + 10 * s, sh + 6, cx + 24, up ? sh - 18 : sh + 2, bone, 2.5);
+    p.line(cx + 24, up ? sh - 30 : sh - 14, cx + 24, H - 2, '#5a3a20', 3).circ(cx + 24, up ? sh - 32 : sh - 16, 5, '#40ffc0');
+    p.poly([cx - 10, sh - 24, cx - 6, sh - 34, cx, sh - 26, cx + 6, sh - 34, cx + 10, sh - 24], '#b0a888'); // bone crown
+  } else {
+    p.line(cx - 10, sh, cx - 14, sh + 18, bone, 2.5);
+    p.line(cx + 10, sh, up ? cx + 18 : cx + 14, up ? sh - 8 : sh + 16, bone, 2.5);
+    if (up) p.line(cx + 18, sh - 8, cx + 20, sh - 30, '#b0b8c0', 3); else p.line(cx + 14, sh + 16, cx + 22, sh + 34, '#b0b8c0', 3);
+  }
+  return c;
+}
+
+function drawBrute(f) {
+  const W = 64, H = 72, c = cv(W, H), p = P(c.getContext('2d'));
+  const skin = '#6a7a8a', dark = '#4a5864', step = f === 1 ? 3 : 0;
+  p.rect(18 + step, 50, 11, 22, dark).rect(35 - step, 50, 11, 22, dark);
+  p.ell(32, 38, 22, 20, skin).ell(32, 44, 16, 10, '#8a98a4');
+  p.poly([12, 50, 52, 50, 50, 60, 14, 60], '#5a3a22');
+  p.circ(32, 16, 11, skin).rect(22, 18, 20, 8, skin);
+  p.rect(22, 11, 20, 4, dark); // brow
+  p.circ(27, 17, 2, '#ffa020').circ(37, 17, 2, '#ffa020');
+  p.poly([26, 25, 28, 30, 30, 25], '#fff').poly([34, 25, 36, 30, 38, 25], '#fff'); // tusks
+  const up = f === 2;
+  p.line(10, 30, 4, 50, skin, 8);
+  p.line(54, 30, up ? 58 : 60, up ? 12 : 48, skin, 8);
+  if (up) p.line(58, 12, 50, -4, '#6a4a2a', 7).circ(50, 2, 7, '#5a3a1a');
+  else p.line(60, 48, 62, 70, '#6a4a2a', 7).circ(62, 66, 7, '#5a3a1a');
+  return c;
+}
+
+function drawWisp(f) {
+  const c = cv(40, 40), p = P(c.getContext('2d'));
+  const fl = f % 2;
+  p.circ(20, 22, 16, 'rgba(255,90,20,0.55)');
+  p.poly([6, 24, 12, fl ? 2 : 6, 18, 14, 22, fl ? 0 : 4, 26, 12, 32, fl ? 4 : 2, 34, 24], '#ff6a10');
+  p.circ(20, 24, 12, '#ff9a20').circ(20, 26, 8, '#ffe070');
+  p.circ(16, 24, 2, '#400').circ(24, 24, 2, '#400');
+  p.ell(20, 30, 3, f === 2 ? 3 : 1.5, '#400');
+  return c;
+}
+
+function drawHound(f) {
+  const W = 80, H = 60, c = cv(W, H), p = P(c.getContext('2d'));
+  const fur = '#8a1a10', dark = '#4a0a06', step = f === 1 ? 5 : 0;
+  // flames on back
+  for (let i = 0; i < 7; i++) p.poly([18 + i * 7, 22, 21 + i * 7, 6 + (i + f) % 3 * 4, 24 + i * 7, 22], i % 2 ? '#ffb020' : '#ff5010');
+  p.ell(36, 30, 24, 12, fur);
+  p.rect(18 - step, 36, 6, 22, dark).rect(28 + step, 36, 6, 22, dark).rect(42 - step, 36, 6, 22, dark).rect(52 + step, 36, 6, 22, dark);
+  p.line(12, 28, 2, 16 - step, fur, 4); // tail
+  const hx = f === 2 ? 66 : 62;
+  p.ell(hx, 24, 12, 10, fur).ell(hx + 10, 28, 8, 5, fur);
+  p.poly([hx - 8, 16, hx - 4, 4, hx, 16], dark).poly([hx + 2, 16, hx + 6, 4, hx + 8, 16], dark);
+  p.circ(hx + 2, 22, 2.5, '#ffe020');
+  p.rect(hx + 4, 30, 14, f === 2 ? 5 : 2, '#200');
+  if (f === 2) for (let i = 0; i < 4; i++) p.poly([hx + 5 + i * 3.5, 30, hx + 6.5 + i * 3.5, 33, hx + 8 + i * 3.5, 30], '#fff');
+  p.rect(hx - 6, 30, 12, 3, '#333').circ(hx - 2, 31.5, 1.5, '#aaa'); // collar with tag
+  return c;
+}
+
+function drawShowrunner(f) {
+  const W = 56, H = 84, c = cv(W, H), p = P(c.getContext('2d'));
+  const step = f === 1 ? 3 : 0;
+  p.rect(18 + step, 58, 8, 24, '#1a1a22').rect(30 - step, 58, 8, 24, '#1a1a22');
+  p.rect(16 + step, 80, 11, 4, '#000').rect(29 - step, 80, 11, 4, '#000');
+  p.poly([12, 30, 44, 30, 42, 62, 14, 62], '#2a2a3a'); // suit
+  p.poly([24, 30, 32, 30, 28, 50], '#eee').poly([27, 32, 29, 32, 30, 46, 28, 50, 26, 46], '#d01030'); // shirt + tie
+  const up = f === 2;
+  p.line(14, 34, up ? 4 : 8, up ? 14 : 56, '#2a2a3a', 6).line(42, 34, up ? 52 : 48, up ? 14 : 56, '#2a2a3a', 6);
+  p.circ(up ? 4 : 8, up ? 12 : 58, 3, '#e0b090').circ(up ? 52 : 48, up ? 12 : 58, 3, '#e0b090');
+  if (!up) p.rect(46, 50, 4, 10, '#333').circ(48, 49, 3, '#888'); // microphone
+  // TV head
+  p.rect(10, 2, 36, 28, '#3a3a44').rect(13, 5, 26, 22, '#101820').rect(41, 8, 3, 3, '#ff4040').rect(41, 14, 3, 3, '#40ff40');
+  p.line(20, 2, 14, -8, '#888', 1.5).line(34, 2, 40, -8, '#888', 1.5);
+  const g = f === 2 ? '#ff3060' : '#40e0ff';
+  p.rect(17, 11, 5, 4, g).rect(30, 11, 5, 4, g);
+  if (f === 2) p.rect(17, 19, 18, 4, g); else p.rect(18, 20, 16, 2, g).rect(16, 18, 2, 2, g).rect(34, 18, 2, 2, g);
+  for (let y = 5; y < 27; y += 3) p.rect(13, y, 26, 1, 'rgba(255,255,255,0.08)');
+  return c;
+}
+
+function drawDonut(f) {
+  const W = 48, H = 40, c = cv(W, H), p = P(c.getContext('2d'));
+  const fur = '#f2e6d0', shade = '#d8c8aa';
+  const step = f === 1 ? 2 : 0;
+  // fluffy tail
+  p.ell(8, 18 - step, 5, 10, fur, -0.4);
+  // body
+  p.ell(22, 28, 14, 9, fur).ell(22, 31, 11, 5, shade);
+  p.rect(12 + step, 32, 4, 7, fur).rect(28 - step, 32, 4, 7, fur);
+  for (let i = 0; i < 10; i++) p.circ(12 + i * 2.2, 21 + (i % 2), 2.2, fur); // fluff
+  // head
+  const hx = 34, hy = f === 3 ? 14 : 17;
+  p.circ(hx, hy, 9, fur);
+  p.poly([hx - 8, hy - 4, hx - 7, hy - 13, hx - 2, hy - 7], fur).poly([hx + 2, hy - 7, hx + 7, hy - 13, hx + 8, hy - 4], fur);
+  p.poly([hx - 7, hy - 5, hx - 6.5, hy - 10, hx - 3.5, hy - 7], '#f0a0b0').poly([hx + 3.5, hy - 7, hx + 6.5, hy - 10, hx + 7, hy - 5], '#f0a0b0');
+  p.ell(hx - 3.5, hy, 2.2, 2.6, '#3060c0').ell(hx + 3.5, hy, 2.2, 2.6, '#3060c0');
+  p.rect(hx - 4, hy - 1, 1, 2, '#000').rect(hx + 3, hy - 1, 1, 2, '#000');
+  p.poly([hx - 1.2, hy + 3, hx + 1.2, hy + 3, hx, hy + 4.5], '#e06080');
+  p.line(hx - 2, hy + 4, hx - 9, hy + 3, '#999', 0.5).line(hx + 2, hy + 4, hx + 9, hy + 3, '#999', 0.5);
+  // tiara
+  p.poly([hx - 6, hy - 8, hx - 4, hy - 13, hx - 2, hy - 10, hx, hy - 15, hx + 2, hy - 10, hx + 4, hy - 13, hx + 6, hy - 8], '#e8e8f8');
+  p.circ(hx, hy - 12, 1.6, '#ff4090');
+  if (f === 3) { // casting sparkle
+    p.circ(hx + 10, hy - 6, 4, 'rgba(255,120,240,0.8)').circ(hx + 10, hy - 6, 2, '#fff');
+  }
+  return c;
+}
+
+function drawMordecai() {
+  const c = cv(48, 64), p = P(c.getContext('2d'));
+  p.poly([10, 30, 38, 30, 44, 64, 4, 64], '#3a4a6a'); // robe
+  p.poly([20, 30, 28, 30, 26, 64, 22, 64], '#2a3450');
+  p.circ(24, 20, 10, '#b89a70'); // head
+  p.ell(24, 28, 9, 6, '#dcdcdc'); // beard
+  p.circ(20, 18, 1.8, '#000').circ(28, 18, 1.8, '#000');
+  p.poly([12, 14, 24, 2, 36, 14], '#3a4a6a'); // hood-hat
+  p.line(12, 36, 6, 46, '#3a4a6a', 5).line(36, 36, 42, 44, '#3a4a6a', 5);
+  p.rect(38, 38, 8, 9, '#e8e8e8').rect(46, 40, 2, 5, '#e8e8e8').rect(39, 39, 6, 2, '#6a3a10'); // mug
+  return c;
+}
+
+// ---- items / props ----
+function drawCoins() { const c = cv(24, 16), p = P(c.getContext('2d')); p.ell(12, 12, 10, 3.5, '#a07010'); for (let i = 0; i < 6; i++) p.ell(5 + (i * 7) % 14, 12 - i * 1.3, 4, 2, i % 2 ? '#ffd040' : '#f0b020'); return c; }
+function drawPotion(col = '#e02030') { const c = cv(16, 24), p = P(c.getContext('2d')); p.circ(8, 16, 7, col).rect(6, 3, 4, 8, '#c8e0f0').rect(5, 1, 6, 3, '#8a5a2a').circ(6, 14, 2, 'rgba(255,255,255,0.7)'); return c; }
+function drawBoltsItem() { const c = cv(24, 16), p = P(c.getContext('2d')); for (let i = 0; i < 4; i++) { p.line(2, 4 + i * 3, 20, 3 + i * 3, '#7a5a3a', 1.5); p.poly([20, 1 + i * 3, 24, 3 + i * 3, 20, 5 + i * 3], '#bbb'); } p.rect(8, 2, 3, 13, '#5a2a1a'); return c; }
+function drawJug(lit) { const c = cv(20, 24), p = P(c.getContext('2d')); p.circ(10, 15, 8, '#5a6a3a').rect(7, 4, 6, 6, '#6a7a4a').rect(6, 12, 8, 4, '#c8b060'); p.line(10, 4, 13, 0, '#ccc', 1); if (lit) p.circ(13, 1, 2, '#ffe060'); return c; }
+function drawChest(open) {
+  const c = cv(40, 32), p = P(c.getContext('2d'));
+  p.rect(2, 14, 36, 18, '#7a4a20').rect(2, 14, 36, 3, '#5a3010').rect(18, 14, 4, 18, '#c8a030');
+  if (open) { p.rect(2, 4, 36, 10, '#5a3010').rect(4, 12, 32, 4, '#ffd040').circ(12, 13, 2, '#fff8c0'); }
+  else { p.rect(2, 6, 36, 10, '#8a5a28').rect(2, 6, 36, 2, '#a06a30').rect(18, 6, 4, 10, '#c8a030').rect(17, 14, 6, 5, '#e0c040'); }
+  return c;
+}
+function drawBox(col) {
+  const c = cv(28, 28), p = P(c.getContext('2d'));
+  p.circ(14, 14, 13, 'rgba(255,255,255,0.25)');
+  p.rect(4, 8, 20, 18, col).rect(4, 8, 20, 4, '#fff').rect(12, 8, 4, 18, '#fff');
+  p.rect(4, 12, 20, 1, 'rgba(0,0,0,0.3)');
+  p.poly([14, 8, 8, 2, 12, 8], '#fff').poly([14, 8, 20, 2, 16, 8], '#fff');
+  return c;
+}
+function drawStairs(open, f) {
+  const c = cv(64, 64), p = P(c.getContext('2d'));
+  p.ell(32, 58, 30, 6, '#111');
+  for (let i = 0; i < 6; i++) p.rect(10 + i * 2, 20 + i * 7, 44 - i * 4, 6, rgb(90 - i * 12, 90 - i * 12, 100 - i * 12));
+  p.rect(6, 12, 6, 48, '#5a5a66').rect(52, 12, 6, 48, '#5a5a66').rect(4, 8, 56, 6, '#6a6a78');
+  p.text('EXIT', 32, 5, '#40ff80', 'bold 8px monospace');
+  if (open) {
+    p.ell(32, 40, 18 + f, 20, 'rgba(80,200,255,0.35)');
+  } else {
+    for (let i = 0; i < 10; i++) p.line(8, 14 + i * 5 + f, 56, 16 + i * 5 - f, 'rgba(255,40,40,0.8)', 1.5);
+    p.rect(8, 12, 48, 48, 'rgba(255,0,0,0.18)');
+  }
+  return c;
+}
+function drawBrazier(f) {
+  const c = cv(24, 48), p = P(c.getContext('2d'));
+  p.rect(10, 22, 4, 26, '#3a3230').rect(4, 44, 16, 4, '#3a3230');
+  p.poly([2, 18, 22, 18, 18, 26, 6, 26], '#4a4240');
+  const h = [0, 3, 1][f];
+  p.poly([4, 18, 8, 4 + h, 12, 12, 15, 1 + (2 - h), 20, 18], '#ff6a10');
+  p.poly([7, 18, 10, 8 + h, 13, 14, 16, 10 - h, 17, 18], '#ffd040');
+  return c;
+}
+function drawBones() { const c = cv(40, 16), p = P(c.getContext('2d')); p.line(4, 12, 20, 10, '#d0c8b0', 2.5).line(16, 14, 30, 8, '#d0c8b0', 2.5); p.ell(30, 10, 5, 4.5, '#d8d0b8').circ(28, 9, 1.2, '#222').circ(32, 9, 1.2, '#222'); return c; }
+function drawBarrel() { const c = cv(32, 40), p = P(c.getContext('2d')); p.ell(16, 20, 14, 19, '#7a4a22').rect(2, 8, 28, 3, '#3a3a40').rect(2, 29, 28, 3, '#3a3a40'); for (let i = 0; i < 5; i++) p.rect(5 + i * 5, 2, 1, 36, '#5a3212'); return c; }
+function drawCamera() { const c = cv(32, 48), p = P(c.getContext('2d')); p.line(16, 20, 6, 48, '#333', 2).line(16, 20, 26, 48, '#333', 2).line(16, 20, 16, 48, '#333', 2); p.rect(6, 8, 20, 12, '#222').rect(0, 11, 7, 6, '#444').circ(3, 14, 2, '#6af'); p.circ(24, 10, 1.5, '#f22'); return c; }
+
+// ---- projectiles / fx ----
+function drawRock() { const c = cv(12, 12), p = P(c.getContext('2d')); p.circ(6, 6, 5, '#8a8078').circ(4.5, 4.5, 1.5, '#aaa'); return c; }
+function drawFireball(f) { const c = cv(16, 16), p = P(c.getContext('2d')); p.circ(8, 8, 7 - f, '#ff5010').circ(8, 8, 4.5, '#ffb020').circ(8, 8, 2, '#fff8c0'); return c; }
+function drawMissile(f) { const c = cv(16, 16), p = P(c.getContext('2d')); p.circ(8, 8, 7, 'rgba(255,80,220,0.6)').poly([8, 0, 10, 6, 16, 8, 10, 10, 8, 16, 6, 10, 0, 8, 6, 6], f ? '#ffb0f0' : '#ff60e0').circ(8, 8, 2.5, '#fff'); return c; }
+function drawBolt() { const c = cv(10, 10), p = P(c.getContext('2d')); p.circ(5, 5, 2.5, '#6a4a2a').circ(5, 5, 1.2, '#ddd'); p.line(1, 5, 9, 5, '#ccc', 1); p.line(5, 1, 5, 9, '#ccc', 1); return c; }
+function drawBoneShard() { const c = cv(12, 12), p = P(c.getContext('2d')); p.line(2, 10, 10, 2, '#e8e0c8', 3).circ(2, 10, 2, '#e8e0c8').circ(10, 2, 2, '#e8e0c8').circ(6, 6, 5, 'rgba(80,255,200,0.35)'); return c; }
+function drawStatic(f) { const c = cv(16, 16), p = P(c.getContext('2d')); const rng = mulberry32(f + 7); p.circ(8, 8, 7, 'rgba(60,220,255,0.5)'); for (let i = 0; i < 20; i++) p.rect(2 + rng() * 11, 2 + rng() * 11, 2, 2, rng() < 0.5 ? '#fff' : '#40e0ff'); return c; }
+function drawExplosion(f) {
+  const c = cv(64, 64), p = P(c.getContext('2d')), r = 10 + f * 6;
+  const rng = mulberry32(f * 31 + 3);
+  if (f < 4) {
+    p.circ(32, 32, r, f < 2 ? '#ff7010' : '#e04008');
+    for (let i = 0; i < 10; i++) p.circ(32 + (rng() - 0.5) * r * 1.4, 32 + (rng() - 0.5) * r * 1.4, r * 0.35, '#ffb020');
+    p.circ(32, 32, r * 0.5, f < 2 ? '#fff8c0' : '#ffd040');
+  } else {
+    for (let i = 0; i < 12; i++) p.circ(32 + (rng() - 0.5) * 40, 32 + (rng() - 0.5) * 40, 6 + rng() * 6, 'rgba(70,64,60,0.85)');
+  }
+  return c;
+}
+function drawDot(col, r = 3) { const c = cv(r * 2, r * 2), p = P(c.getContext('2d')); p.circ(r, r, r, col); return c; }
+
+// ============================== BUILD ALL ==================================
+
+const SPR = {};
+function buildSprites() {
+  const anim = (fn, n = 3, extra) => {
+    const frames = []; for (let i = 0; i < n; i++) frames.push(fn(i));
+    frames.push(corpseOf(frames[0], extra));
+    return frames.map(toTex);
+  };
+  SPR.rat = anim(f => drawRat(f, false));
+  SPR.ratking = anim(f => drawRat(f, true));
+  SPR.goblin = anim(f => drawGoblin(f, 'goblin'));
+  SPR.slinger = anim(f => drawGoblin(f, 'slinger'));
+  SPR.matriarch = anim(drawMatriarch);
+  SPR.skeleton = anim(f => drawSkeleton(f, false), 3, '#3a3830');
+  SPR.bonewright = anim(f => drawSkeleton(f, true), 3, '#2a3a36');
+  SPR.brute = anim(drawBrute);
+  SPR.wisp = anim(drawWisp, 3, '#3a1a08');
+  SPR.hellhound = anim(drawHound);
+  SPR.showrunner = anim(drawShowrunner, 3, '#101830');
+  SPR.donut = [0, 1, 2, 3].map(f => toTex(drawDonut(f)));
+  SPR.mordecai = toTex(drawMordecai());
+  SPR.coins = toTex(drawCoins());
+  SPR.potion = toTex(drawPotion());
+  SPR.bolts = toTex(drawBoltsItem());
+  SPR.lobbers = toTex(drawJug(false));
+  SPR.chest = toTex(drawChest(false));
+  SPR.chestOpen = toTex(drawChest(true));
+  SPR.box = {};
+  for (const k in BOX_TYPES) SPR.box[k] = toTex(drawBox(BOX_TYPES[k].color));
+  SPR.stairsLocked = [0, 1, 2].map(f => toTex(drawStairs(false, f)));
+  SPR.stairsOpen = [0, 1, 2].map(f => toTex(drawStairs(true, f * 2)));
+  SPR.brazier = [0, 1, 2].map(f => toTex(drawBrazier(f)));
+  SPR.bones = toTex(drawBones());
+  SPR.barrel = toTex(drawBarrel());
+  SPR.camera = toTex(drawCamera());
+  SPR.rock = [toTex(drawRock())];
+  SPR.fireball = [0, 1].map(f => toTex(drawFireball(f)));
+  SPR.missile = [0, 1].map(f => toTex(drawMissile(f)));
+  SPR.bolt = [toTex(drawBolt())];
+  SPR.bone = [toTex(drawBoneShard())];
+  SPR.static = [0, 1, 2].map(f => toTex(drawStatic(f)));
+  SPR.lobber = [toTex(drawJug(true))];
+  SPR.explosion = [0, 1, 2, 3, 4, 5].map(f => toTex(drawExplosion(f)));
+  SPR.blood = toTex(drawDot('#a01010', 3));
+  SPR.goo = toTex(drawDot('#40c060', 3));
+  SPR.dust = toTex(drawDot('#d8d0b8', 2));
+  SPR.spark = toTex(drawDot('#ffd040', 2));
+  SPR.pink = toTex(drawDot('#ff70e0', 2));
+  SPR.ember = toTex(drawDot('#ff7020', 2));
+  SPR.cyan = toTex(drawDot('#50e0ff', 2));
+}
+
+</script>
+<script>
+'use strict';
+// ---------------------------------------------------------------------------
+// Synthesized sound effects and a small generative soundtrack (WebAudio).
+// ---------------------------------------------------------------------------
+
+const Sound = (() => {
+  let ac = null, master = null, sfxBus = null, musicBus = null, noiseBuf = null;
+  let musicOn = true, sfxVol = 0.7, musicVol = 0.35;
+  let musicTimer = null, step = 0, nextTime = 0, theme = 0, intensity = 0;
+
+  function init() {
+    if (ac) { if (ac.state === 'suspended') ac.resume(); return; }
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    ac = new AC();
+    master = ac.createGain(); master.gain.value = 0.9; master.connect(ac.destination);
+    sfxBus = ac.createGain(); sfxBus.gain.value = sfxVol; sfxBus.connect(master);
+    musicBus = ac.createGain(); musicBus.gain.value = musicVol; musicBus.connect(master);
+    noiseBuf = ac.createBuffer(1, ac.sampleRate, ac.sampleRate);
+    const d = noiseBuf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    startMusic();
+  }
+
+  function env(g, t, a, peak, dec) {
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(peak, t + a);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + a + dec);
+  }
+
+  function tone(type, f0, f1, dur, vol, bus, delay = 0) {
+    if (!ac) return;
+    const t = ac.currentTime + delay;
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(f0, t);
+    if (f1 !== f0) o.frequency.exponentialRampToValueAtTime(Math.max(20, f1), t + dur);
+    env(g, t, 0.005, vol, dur);
+    o.connect(g); g.connect(bus || sfxBus);
+    o.start(t); o.stop(t + dur + 0.05);
+  }
+
+  function noise(dur, vol, filterType, f0, f1, delay = 0, q = 1) {
+    if (!ac) return;
+    const t = ac.currentTime + delay;
+    const s = ac.createBufferSource(); s.buffer = noiseBuf;
+    const f = ac.createBiquadFilter(); f.type = filterType; f.Q.value = q;
+    f.frequency.setValueAtTime(f0, t);
+    f.frequency.exponentialRampToValueAtTime(Math.max(30, f1), t + dur);
+    const g = ac.createGain(); env(g, t, 0.004, vol, dur);
+    s.connect(f); f.connect(g); g.connect(sfxBus);
+    s.start(t, Math.random() * 0.5); s.stop(t + dur + 0.05);
+  }
+
+  const fx = {
+    swing() { noise(0.12, 0.25, 'bandpass', 900, 2500, 0, 2); },
+    punch() { noise(0.09, 0.8, 'lowpass', 1400, 200); tone('sine', 160, 60, 0.12, 0.6); },
+    club() { noise(0.14, 0.9, 'lowpass', 900, 120); tone('triangle', 110, 45, 0.18, 0.7); },
+    kick() { noise(0.12, 0.9, 'lowpass', 700, 90); tone('sine', 120, 40, 0.2, 0.8); },
+    crossbow() { tone('square', 700, 180, 0.08, 0.15); noise(0.1, 0.3, 'highpass', 3000, 1500); },
+    throw() { noise(0.2, 0.3, 'bandpass', 500, 1400, 0, 3); },
+    bounce() { tone('triangle', 300, 200, 0.06, 0.2); },
+    explode() {
+      noise(1.1, 1.0, 'lowpass', 2200, 60);
+      tone('sine', 90, 30, 0.8, 0.9);
+      noise(0.4, 0.5, 'highpass', 4000, 800, 0.02);
+    },
+    hit() { tone('square', 220, 90, 0.08, 0.15); noise(0.06, 0.3, 'bandpass', 1200, 500, 0, 2); },
+    mobDie() { tone('sawtooth', 300, 60, 0.35, 0.18); noise(0.25, 0.25, 'lowpass', 1200, 200); },
+    squeak() { tone('square', 1800, 2600, 0.08, 0.06); tone('square', 2400, 1600, 0.06, 0.05, null, 0.08); },
+    hurt() { tone('sawtooth', 140, 70, 0.25, 0.3); noise(0.15, 0.4, 'lowpass', 900, 200); },
+    pickup() { tone('square', 880, 880, 0.05, 0.1); tone('square', 1320, 1320, 0.08, 0.1, null, 0.05); },
+    coin() { tone('square', 1320, 1320, 0.04, 0.08); tone('square', 1760, 1760, 0.12, 0.08, null, 0.04); },
+    potion() { for (let i = 0; i < 4; i++) tone('sine', 400 + i * 120, 500 + i * 120, 0.08, 0.2, null, i * 0.06); },
+    levelup() { [523, 659, 784, 1047, 1319].forEach((f, i) => tone('square', f, f, 0.14, 0.12, null, i * 0.08)); },
+    achieve() {
+      [392, 523, 659, 784].forEach((f, i) => tone('triangle', f, f, 0.2, 0.25, null, i * 0.1));
+      tone('square', 1047, 1047, 0.5, 0.12, null, 0.4);
+    },
+    door() { noise(0.6, 0.35, 'lowpass', 300, 900, 0, 4); tone('sawtooth', 70, 90, 0.5, 0.08); },
+    missile() { tone('sine', 1200, 400, 0.25, 0.18); tone('triangle', 1800, 900, 0.2, 0.08); },
+    enemyShot() { tone('square', 500, 250, 0.12, 0.1); },
+    fireball() { noise(0.35, 0.35, 'bandpass', 400, 1200, 0, 1.5); },
+    roar() { tone('sawtooth', 90, 45, 1.2, 0.45); noise(1.0, 0.5, 'lowpass', 600, 100); },
+    box() { [659, 784, 988, 1319].forEach((f, i) => tone('square', f, f, 0.1, 0.12, null, i * 0.07)); noise(0.3, 0.2, 'highpass', 5000, 2000, 0.3); },
+    buy() { tone('square', 988, 988, 0.05, 0.1); tone('square', 1319, 1319, 0.12, 0.1, null, 0.06); },
+    deny() { tone('square', 200, 150, 0.2, 0.15); },
+    chest() { noise(0.3, 0.3, 'lowpass', 400, 1200); this.coin(); },
+    descend() { [784, 659, 523, 392, 262].forEach((f, i) => tone('triangle', f, f, 0.25, 0.25, null, i * 0.12)); },
+    death() { [392, 330, 262, 196].forEach((f, i) => tone('sawtooth', f, f * 0.95, 0.4, 0.2, null, i * 0.3)); },
+    teleport() { tone('sine', 200, 1600, 0.4, 0.25); },
+    click() { tone('square', 600, 600, 0.03, 0.08); },
+    step() { noise(0.05, 0.05, 'lowpass', 500, 200); },
+  };
+
+  function play(name) {
+    if (!ac || !fx[name]) return;
+    try { fx[name](); } catch (e) { /* audio is best-effort */ }
+  }
+
+  // --- generative soundtrack: bass drone + minor arpeggio per floor theme ---
+  const SCALES = [
+    [0, 3, 5, 7, 10], [0, 2, 3, 7, 8], [0, 1, 5, 7, 8], [0, 3, 6, 7, 10], [0, 3, 5, 6, 7, 10],
+  ];
+  const ROOTS = [45, 43, 41, 40, 44];
+  const midi = n => 440 * Math.pow(2, (n - 69) / 12);
+
+  function startMusic() {
+    if (musicTimer) return;
+    nextTime = ac.currentTime + 0.1;
+    musicTimer = setInterval(schedule, 50);
+  }
+
+  function schedule() {
+    if (!ac) return;
+    const bpm = 96 + intensity * 30;
+    const stepDur = 60 / bpm / 2;
+    while (nextTime < ac.currentTime + 0.2) {
+      if (musicOn) playStep(step, nextTime, stepDur);
+      step++;
+      nextTime += stepDur;
+    }
+  }
+
+  function note(type, freq, t, dur, vol, cutoff) {
+    const o = ac.createOscillator(), g = ac.createGain(), f = ac.createBiquadFilter();
+    o.type = type; o.frequency.value = freq;
+    f.type = 'lowpass'; f.frequency.value = cutoff;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(f); f.connect(g); g.connect(musicBus);
+    o.start(t); o.stop(t + dur + 0.05);
+  }
+
+  function playStep(s, t, d) {
+    const sc = SCALES[theme % SCALES.length], root = ROOTS[theme % ROOTS.length];
+    const bar = Math.floor(s / 16) % 4;
+    const shift = [0, 0, 5, 3][bar];
+    if (s % 8 === 0) note('sawtooth', midi(root - 12 + shift), t, d * 7, 0.22, 300);
+    if (s % 4 === 2 && intensity > 0.3) note('square', midi(root + shift), t, d * 0.9, 0.05, 900);
+    const pat = [0, 2, 1, 3, 2, 4, 3, 1];
+    if (s % 2 === 0 || intensity > 0.5) {
+      const deg = pat[(s >> (intensity > 0.5 ? 0 : 1)) % pat.length];
+      const n = root + 12 + shift + sc[deg % sc.length] + (deg >= sc.length ? 12 : 0);
+      note('triangle', midi(n), t, d * 1.6, 0.06 + intensity * 0.04, 2000);
+    }
+    // percussion
+    if (s % 8 === 0 || (intensity > 0.5 && s % 8 === 5)) kickDrum(t);
+    if (s % 8 === 4) hat(t, 0.08);
+    if (intensity > 0.3 && s % 2 === 1) hat(t, 0.03);
+  }
+
+  function kickDrum(t) {
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(40, t + 0.15);
+    g.gain.setValueAtTime(0.35, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+    o.connect(g); g.connect(musicBus); o.start(t); o.stop(t + 0.25);
+  }
+
+  function hat(t, v) {
+    const s = ac.createBufferSource(); s.buffer = noiseBuf;
+    const f = ac.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = 7000;
+    const g = ac.createGain();
+    g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+    s.connect(f); f.connect(g); g.connect(musicBus); s.start(t, Math.random()); s.stop(t + 0.06);
+  }
+
+  return {
+    init, play,
+    setTheme(i) { theme = i; },
+    setIntensity(v) { intensity += (v - intensity) * 0.05; },
+    toggleMusic() { musicOn = !musicOn; return musicOn; },
+    get musicOn() { return musicOn; },
+    setSfx(v) { sfxVol = v; if (sfxBus) sfxBus.gain.value = v; },
+    setMusic(v) { musicVol = v; if (musicBus) musicBus.gain.value = v; },
+    get sfxVol() { return sfxVol; },
+    get musicVol() { return musicVol; },
+  };
+})();
+
+</script>
+<script>
+'use strict';
+// ---------------------------------------------------------------------------
+// Dungeon generation (rooms + corridors), line of sight, and the BFS flow
+// field monsters use to chase the player through corridors.
+// ---------------------------------------------------------------------------
+
+const T_EMPTY = 0, T_WALL = 1, T_WALL2 = 2, T_SAFE = 3, T_BOSS = 4, T_DOOR = 8, T_BOSSDOOR = 9;
+const Z_NORMAL = 0, Z_SAFE = 1, Z_BOSS = 2;
+
+class Dungeon {
+  constructor(floorIdx, seed) {
+    this.floorIdx = floorIdx;
+    const rng = this.rng = mulberry32(seed);
+    const W = this.W = 52 + floorIdx * 4, H = this.H = 52 + floorIdx * 4;
+    this.tiles = new Uint8Array(W * H).fill(T_WALL);
+    this.zone = new Uint8Array(W * H);
+    this.door = new Float32Array(W * H);     // 0 closed .. 1 open
+    this.doorMoving = new Uint8Array(W * H);
+    this.seen = new Uint8Array(W * H);
+    this.light = new Float32Array(W * H);
+    this.flow = new Int16Array(W * H);
+    this.flowFrom = -1;
+    this.spawns = { mobs: [], chests: [], items: [], decor: [], lights: [] };
+    this.generate(rng);
+  }
+
+  idx(x, y) { return y * this.W + x; }
+  inside(x, y) { return x >= 0 && y >= 0 && x < this.W && y < this.H; }
+  tileAt(x, y) { return this.inside(x, y) ? this.tiles[y * this.W + x] : T_WALL; }
+  isDoorTile(t) { return t === T_DOOR || t === T_BOSSDOOR; }
+
+  // Blocks movement: walls and doors that are not (mostly) open.
+  solid(x, y) {
+    x |= 0; y |= 0;
+    if (!this.inside(x, y)) return true;
+    const i = y * this.W + x, t = this.tiles[i];
+    if (t === T_EMPTY) return false;
+    if (t === T_DOOR || t === T_BOSSDOOR) return this.door[i] < 0.85;
+    return true;
+  }
+  blocksSight(x, y) {
+    x |= 0; y |= 0;
+    if (!this.inside(x, y)) return true;
+    const i = y * this.W + x, t = this.tiles[i];
+    if (t === T_EMPTY) return false;
+    if (t === T_DOOR || t === T_BOSSDOOR) return this.door[i] < 0.6;
+    return true;
+  }
+  passable(i) { const t = this.tiles[i]; return t === T_EMPTY || t === T_DOOR || t === T_BOSSDOOR; }
+
+  generate(rng) {
+    const { W, H } = this;
+    const ri = (a, b) => a + Math.floor(rng() * (b - a + 1));
+    const rooms = this.rooms = [];
+    const overlaps = (r) => rooms.some(o => r.x - 2 < o.x + o.w && r.x + r.w + 2 > o.x && r.y - 2 < o.y + o.h && r.y + r.h + 2 > o.y);
+    // safe room first: fixed size
+    for (let tries = 0; tries < 200 && rooms.length === 0; tries++) {
+      const r = { x: ri(2, W - 9), y: ri(2, H - 9), w: 6, h: 6 };
+      rooms.push(r);
+    }
+    const target = 17 + this.floorIdx * 2;
+    for (let tries = 0; tries < 600 && rooms.length < target; tries++) {
+      const big = rng() < 0.3;
+      const w = big ? ri(8, 11) : ri(4, 8), h = big ? ri(8, 11) : ri(4, 8);
+      const r = { x: ri(2, W - w - 2), y: ri(2, H - h - 2), w, h };
+      if (!overlaps(r)) rooms.push(r);
+    }
+    rooms.forEach(r => { r.cx = r.x + (r.w >> 1); r.cy = r.y + (r.h >> 1); });
+    for (const r of rooms) this.carveRect(r.x, r.y, r.w, r.h);
+
+    // connect rooms: Prim's tree + a few loops
+    const connected = [0], edges = [];
+    const remaining = rooms.map((_, i) => i).slice(1);
+    while (remaining.length) {
+      let best = null, bd = 1e9;
+      for (const a of connected) for (const b of remaining) {
+        const d = Math.abs(rooms[a].cx - rooms[b].cx) + Math.abs(rooms[a].cy - rooms[b].cy);
+        if (d < bd) { bd = d; best = [a, b]; }
+      }
+      edges.push(best); connected.push(best[1]); remaining.splice(remaining.indexOf(best[1]), 1);
+    }
+    for (let k = 0; k < 5; k++) {
+      const a = 1 + Math.floor(rng() * (rooms.length - 1)), b = 1 + Math.floor(rng() * (rooms.length - 1));
+      if (a !== b) edges.push([a, b]);
+    }
+    // pick boss room after the tree exists (needs distances), so carve first
+    for (const [a, b] of edges) this.corridor(rooms[a], rooms[b], rng, a === 0 || b === 0 ? 1 : (rng() < 0.3 ? 2 : 1));
+
+    const safe = this.safeRoom = rooms[0];
+    this.start = { x: safe.cx + 0.5, y: safe.cy + 0.5 };
+    const dist = this.bfs(safe.cx, safe.cy);
+    let bossRoom = null, bdist = -1;
+    for (const r of rooms.slice(1)) {
+      const d = dist[this.idx(r.cx, r.cy)] + (r.w >= 7 && r.h >= 7 ? 12 : 0);
+      if (d > bdist) { bdist = d; bossRoom = r; }
+    }
+    this.bossRoom = bossRoom;
+
+    // zones
+    for (let y = safe.y; y < safe.y + safe.h; y++) for (let x = safe.x; x < safe.x + safe.w; x++) this.zone[this.idx(x, y)] = Z_SAFE;
+    for (let y = bossRoom.y; y < bossRoom.y + bossRoom.h; y++) for (let x = bossRoom.x; x < bossRoom.x + bossRoom.w; x++) this.zone[this.idx(x, y)] = Z_BOSS;
+
+    // doors
+    for (const r of rooms) this.placeDoors(r, r === safe ? 1 : r === bossRoom ? 2 : 0, rng);
+
+    // wall dressing
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const i = this.idx(x, y);
+      if (this.tiles[i] !== T_WALL) continue;
+      let nearSafe = false, nearBoss = false;
+      for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+        if (!this.inside(x + dx, y + dy)) continue;
+        const z = this.zone[this.idx(x + dx, y + dy)], t = this.tiles[this.idx(x + dx, y + dy)];
+        if (t === T_EMPTY && z === Z_SAFE) nearSafe = true;
+        if (t === T_EMPTY && z === Z_BOSS) nearBoss = true;
+      }
+      if (nearSafe) this.tiles[i] = T_SAFE;
+      else if (nearBoss) this.tiles[i] = T_BOSS;
+      else if (rng() < 0.1) this.tiles[i] = T_WALL2;
+    }
+
+    this.stairs = { x: bossRoom.cx + 0.5, y: bossRoom.cy + 0.5 };
+    this.mordecai = { x: safe.x + 0.7, y: safe.y + 0.7 };
+    this.populate(rng, dist);
+    this.computeLight();
+  }
+
+  carveRect(x, y, w, h) {
+    for (let j = y; j < y + h; j++) for (let i = x; i < x + w; i++) if (this.inside(i, j)) this.tiles[this.idx(i, j)] = T_EMPTY;
+  }
+
+  corridor(a, b, rng, width) {
+    let x = a.cx, y = a.cy;
+    const horizFirst = rng() < 0.5;
+    const carve = (cx, cy) => {
+      for (let k = 0; k < width; k++) {
+        const i = cx + (horizFirst ? 0 : k), j = cy + (horizFirst ? k : 0);
+        if (i > 0 && j > 0 && i < this.W - 1 && j < this.H - 1) this.tiles[this.idx(i, j)] = T_EMPTY;
+      }
+    };
+    const stepX = () => { while (x !== b.cx) { x += Math.sign(b.cx - x); carve(x, y); } };
+    const stepY = () => { while (y !== b.cy) { y += Math.sign(b.cy - y); carve(x, y); } };
+    if (horizFirst) { stepX(); stepY(); } else { stepY(); stepX(); }
+  }
+
+  placeDoors(r, special, rng) {
+    const wallish = (x, y) => { const t = this.tileAt(x, y); return t !== T_EMPTY && !this.isDoorTile(t); };
+    const tryDoor = (x, y, horizontalSide) => {
+      if (!this.inside(x, y) || this.tileAt(x, y) !== T_EMPTY) return;
+      const ok = horizontalSide ? (wallish(x - 1, y) && wallish(x + 1, y)) : (wallish(x, y - 1) && wallish(x, y + 1));
+      if (!ok) return;
+      if (special || rng() < 0.4) {
+        this.tiles[this.idx(x, y)] = special === 2 ? T_BOSSDOOR : T_DOOR;
+        if (special === 1) this.zone[this.idx(x, y)] = Z_SAFE;
+      }
+    };
+    for (let x = r.x; x < r.x + r.w; x++) { tryDoor(x, r.y - 1, true); tryDoor(x, r.y + r.h, true); }
+    for (let y = r.y; y < r.y + r.h; y++) { tryDoor(r.x - 1, y, false); tryDoor(r.x + r.w, y, false); }
+  }
+
+  bfs(sx, sy) {
+    const { W, H } = this, dist = new Int16Array(W * H).fill(-1), q = new Int32Array(W * H);
+    let h = 0, t = 0;
+    const s = this.idx(sx, sy); dist[s] = 0; q[t++] = s;
+    while (h < t) {
+      const i = q[h++], x = i % W, y = (i / W) | 0, d = dist[i] + 1;
+      const n = [i - 1, i + 1, i - W, i + W];
+      if (x === 0) n[0] = -1; if (x === W - 1) n[1] = -1; if (y === 0) n[2] = -1; if (y === H - 1) n[3] = -1;
+      for (const j of n) if (j >= 0 && dist[j] < 0 && this.passable(j)) { dist[j] = d; q[t++] = j; }
+    }
+    return dist;
+  }
+
+  updateFlow(px, py) {
+    const i = this.idx(px | 0, py | 0);
+    if (i === this.flowFrom) return;
+    this.flowFrom = i;
+    this.flow = this.bfs(px | 0, py | 0);
+  }
+
+  // Direction (unit vector) a monster at (x,y) should step to approach the player.
+  flowDir(x, y) {
+    const cx = x | 0, cy = y | 0, W = this.W;
+    const here = this.flow[this.idx(cx, cy)];
+    let best = here < 0 ? 1e9 : here, bx = -1, by = -1;
+    for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+      if (!dx && !dy) continue;
+      const nx = cx + dx, ny = cy + dy;
+      if (!this.inside(nx, ny)) continue;
+      const d = this.flow[ny * W + nx];
+      if (d < 0) continue;
+      if (dx && dy && (!this.passable(cy * W + nx) || !this.passable(ny * W + cx))) continue;
+      if (d < best) { best = d; bx = nx; by = ny; }
+    }
+    if (bx < 0) return null;
+    const tx = bx + 0.5 - x, ty = by + 0.5 - y, l = Math.hypot(tx, ty) || 1;
+    return { x: tx / l, y: ty / l, cell: by * W + bx };
+  }
+
+  los(x0, y0, x1, y1) {
+    const dx = x1 - x0, dy = y1 - y0, d = Math.hypot(dx, dy), n = Math.ceil(d * 4);
+    for (let k = 1; k < n; k++) {
+      const t = k / n;
+      if (this.blocksSight(x0 + dx * t, y0 + dy * t)) return false;
+    }
+    return true;
+  }
+
+  randomCellIn(r, rng, margin = 0) {
+    return {
+      x: r.x + margin + Math.floor(rng() * (r.w - margin * 2)) + 0.5,
+      y: r.y + margin + Math.floor(rng() * (r.h - margin * 2)) + 0.5,
+    };
+  }
+
+  populate(rng, dist) {
+    const F = FLOORS[this.floorIdx], sp = this.spawns;
+    const normalRooms = this.rooms.filter(r => r !== this.safeRoom && r !== this.bossRoom);
+    const used = new Set();
+    const free = (x, y) => {
+      const i = this.idx(x | 0, y | 0);
+      return this.tiles[i] === T_EMPTY && !used.has(i);
+    };
+    const claim = (x, y) => used.add(this.idx(x | 0, y | 0));
+    used.add(this.idx(this.stairs.x | 0, this.stairs.y | 0));
+
+    // monsters
+    for (let k = 0, tries = 0; k < F.count && tries < 2000; tries++) {
+      let p;
+      if (rng() < 0.75 && normalRooms.length) p = this.randomCellIn(normalRooms[Math.floor(rng() * normalRooms.length)], rng);
+      else p = { x: 1 + Math.floor(rng() * (this.W - 2)) + 0.5, y: 1 + Math.floor(rng() * (this.H - 2)) + 0.5 };
+      const i = this.idx(p.x | 0, p.y | 0);
+      if (!free(p.x, p.y) || this.zone[i] !== Z_NORMAL || dist[i] < 8) continue;
+      claim(p.x, p.y);
+      sp.mobs.push({ type: F.pool[Math.floor(rng() * F.pool.length)], x: p.x, y: p.y });
+      k++;
+    }
+    // boss guards the stairs
+    const br = this.bossRoom;
+    sp.boss = { type: F.boss, x: br.cx + 0.5, y: Math.max(br.y + 0.5, br.cy - 1.5) };
+
+    // chests in room corners
+    const nChests = 4 + Math.floor(this.floorIdx / 2);
+    for (let k = 0, tries = 0; k < nChests && tries < 200; tries++) {
+      const r = normalRooms[Math.floor(rng() * normalRooms.length)];
+      if (!r) break;
+      const x = (rng() < 0.5 ? r.x : r.x + r.w - 1) + 0.5, y = (rng() < 0.5 ? r.y : r.y + r.h - 1) + 0.5;
+      if (!free(x, y)) continue;
+      claim(x, y); sp.chests.push({ x, y }); k++;
+    }
+    // loose items
+    const loose = [['coins', 10], ['potion', 3], ['bolts', 3], ['lobbers', 2]];
+    for (const [kind, n] of loose) for (let k = 0, tries = 0; k < n && tries < 200; tries++) {
+      const r = normalRooms[Math.floor(rng() * normalRooms.length)];
+      if (!r) break;
+      const p = this.randomCellIn(r, rng);
+      if (!free(p.x, p.y)) continue;
+      claim(p.x, p.y); sp.items.push({ kind, x: p.x + (rng() - 0.5) * 0.4, y: p.y + (rng() - 0.5) * 0.4 }); k++;
+    }
+    // light sources + decor
+    const theme = F.theme;
+    for (const r of this.rooms) {
+      const corners = [[r.x + 0.5, r.y + 0.5], [r.x + r.w - 0.5, r.y + r.h - 0.5], [r.x + r.w - 0.5, r.y + 0.5], [r.x + 0.5, r.y + r.h - 0.5]];
+      const n = r === this.safeRoom ? 0 : r === this.bossRoom ? 4 : 1 + (rng() < 0.5 ? 1 : 0);
+      for (let k = 0; k < n; k++) {
+        const [x, y] = corners[(k + (r === this.bossRoom ? 0 : Math.floor(rng() * 4))) % 4];
+        if (!free(x, y)) continue;
+        claim(x, y);
+        sp.decor.push({ kind: 'brazier', x, y });
+        sp.lights.push({ x, y, s: 1 });
+      }
+      if (r === this.safeRoom) continue;
+      const extra = 1 + Math.floor(rng() * 3);
+      for (let k = 0; k < extra; k++) {
+        const p = this.randomCellIn(r, rng);
+        if (!free(p.x, p.y)) continue;
+        claim(p.x, p.y);
+        const kind = theme === 'studio' ? (rng() < 0.5 ? 'camera' : 'barrel') : theme === 'bone' ? 'bones' : (rng() < 0.5 ? 'bones' : 'barrel');
+        sp.decor.push({ kind, x: p.x + (rng() - 0.5) * 0.5, y: p.y + (rng() - 0.5) * 0.5 });
+      }
+    }
+    // the safe room glows warmly; the stairs glow too
+    const s = this.safeRoom;
+    sp.lights.push({ x: s.cx + 0.5, y: s.cy + 0.5, s: 1.4, r: 6 });
+    sp.lights.push({ x: this.stairs.x, y: this.stairs.y, s: 0.8, r: 4 });
+  }
+
+  computeLight() {
+    const { W, H } = this;
+    for (const L of this.spawns.lights) {
+      const R = L.r || 5;
+      for (let y = Math.max(0, (L.y - R) | 0); y <= Math.min(H - 1, (L.y + R) | 0); y++) {
+        for (let x = Math.max(0, (L.x - R) | 0); x <= Math.min(W - 1, (L.x + R) | 0); x++) {
+          const d = Math.hypot(x + 0.5 - L.x, y + 0.5 - L.y);
+          if (d > R) continue;
+          const i = this.idx(x, y);
+          if (this.tiles[i] !== T_EMPTY && !this.isDoorTile(this.tiles[i])) continue;
+          if (d > 1 && !this.los(L.x, L.y, x + 0.5, y + 0.5)) continue;
+          this.light[i] = Math.min(1.2, this.light[i] + L.s * (1 - d / R) * 0.85);
+        }
+      }
+    }
+  }
+}
+
+</script>
+<script>
+'use strict';
+// ---------------------------------------------------------------------------
+// Software raycaster: textured walls with sliding doors, textured floor and
+// ceiling, per-cell lightmap, distance fog, z-buffered billboard sprites and
+// a hand-drawn first-person weapon.
+// ---------------------------------------------------------------------------
+
+const Render = {
+  W: 480, H: 270, canvas: null, ctx: null, img: null, buf: null, zbuf: null,
+  tex: null, wallTex: [], fog: [0, 0, 0],
+  cam: null,
+
+  init(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d', { alpha: false });
+    this.resize();
+  },
+
+  resize() {
+    const aspect = window.innerWidth / Math.max(1, window.innerHeight);
+    this.H = 270;
+    this.W = clamp(Math.round(this.H * aspect / 2) * 2, 300, 760);
+    this.canvas.width = this.W; this.canvas.height = this.H;
+    this.img = this.ctx.createImageData(this.W, this.H);
+    this.buf = new Uint32Array(this.img.data.buffer);
+    this.zbuf = new Float32Array(this.W);
+    this.ctx.imageSmoothingEnabled = false;
+  },
+
+  setTheme(tex, fog) {
+    this.tex = tex;
+    this.fog = fog;
+    const w = [];
+    w[T_WALL] = tex.wall; w[T_WALL2] = tex.wall2; w[T_SAFE] = tex.safeWall; w[T_BOSS] = tex.bossWall;
+    w[T_DOOR] = tex.door; w[T_BOSSDOOR] = tex.bossDoor;
+    this.wallTex = w;
+  },
+
+  // ---------------------------------------------------------------- scene
+  frame(G, sprites) {
+    const P = G.player, M = G.map, W = this.W, H = this.H, buf = this.buf, zbuf = this.zbuf;
+    const shakeA = G.shake > 0 ? (Math.random() - 0.5) * G.shake * 0.03 : 0;
+    const ang = P.a + shakeA;
+    const dirX = Math.cos(ang), dirY = Math.sin(ang);
+    const pl = W / (2 * H);
+    const planeX = -dirY * pl, planeY = dirX * pl;
+    const horizon = Math.round(H / 2 + P.pitch + (G.shake > 0 ? (Math.random() - 0.5) * G.shake * 4 : 0) + P.bobY);
+    const px = P.x, py = P.y;
+    this.cam = { px, py, dirX, dirY, planeX, planeY, horizon };
+    const [fr0, fg0, fb0] = this.fog;
+    const flash = G.flash || 0;
+    const amb = 0.34 * (FLOORS[G.floor].ambient || 1);
+    const light = M.light, tiles = M.tiles, zone = M.zone, MW = M.W, MH = M.H;
+    const T = this.tex;
+    const floorT = T.floor.data, ceilT = T.ceil.data, safeT = T.safeFloor.data;
+    const fogK = 0.014;
+
+    // ---- floor + ceiling (row by row) ----
+    const rdx0 = dirX - planeX, rdy0 = dirY - planeY, rdx1 = dirX + planeX, rdy1 = dirY + planeY;
+    for (let y = 0; y < H; y++) {
+      const isFloor = y > horizon;
+      const p = isFloor ? y - horizon : horizon - y;
+      const o0 = y * W;
+      if (p < 1) { const c = 0xff000000 | fb0 << 16 | fg0 << 8 | fr0; buf.fill(c, o0, o0 + W); continue; }
+      const rowDist = (0.5 * H) / p;
+      const fogf = 1 / (1 + rowDist * rowDist * fogK);
+      const glow = Math.max(0, 0.55 - rowDist * 0.09);
+      const fr = fr0 * (1 - fogf), fg = fg0 * (1 - fogf), fb = fb0 * (1 - fogf);
+      const stepX = rowDist * (rdx1 - rdx0) / W, stepY = rowDist * (rdy1 - rdy0) / W;
+      let fx = px + rowDist * rdx0, fy = py + rowDist * rdy0;
+      const dimC = isFloor ? 1 : 0.8;
+      for (let x = 0; x < W; x++, fx += stepX, fy += stepY) {
+        const cx = fx | 0, cy = fy | 0;
+        const o = o0 + x;
+        if (cx < 0 || cy < 0 || cx >= MW || cy >= MH) { buf[o] = 0xff000000 | fb0 << 16 | fg0 << 8 | fr0; continue; }
+        const ci = cy * MW + cx;
+        const tx = ((fx - cx) * 64) & 63, ty = ((fy - cy) * 64) & 63;
+        const c = isFloor ? (zone[ci] === Z_SAFE ? safeT : floorT)[ty * 64 + tx] : ceilT[ty * 64 + tx];
+        let s = (amb + light[ci] + glow + flash) * fogf * dimC;
+        if (s > 1.3) s = 1.3;
+        const si = (s * 256) | 0;
+        let r = (((c & 255) * si) >> 8) + fr, g = (((c >> 8 & 255) * si) >> 8) + fg, b = (((c >> 16 & 255) * si) >> 8) + fb;
+        buf[o] = 0xff000000 | (b > 255 ? 255 : b) << 16 | (g > 255 ? 255 : g) << 8 | (r > 255 ? 255 : r);
+      }
+    }
+
+    // ---- walls (DDA per column) ----
+    const seen = M.seen, door = M.door, wallTex = this.wallTex;
+    for (let x = 0; x < W; x++) {
+      const camX = 2 * x / W - 1;
+      const rdx = dirX + planeX * camX, rdy = dirY + planeY * camX;
+      let mx = px | 0, my = py | 0;
+      const ddx = Math.abs(1 / rdx), ddy = Math.abs(1 / rdy);
+      let stepx, stepy, sdx, sdy;
+      if (rdx < 0) { stepx = -1; sdx = (px - mx) * ddx; } else { stepx = 1; sdx = (mx + 1 - px) * ddx; }
+      if (rdy < 0) { stepy = -1; sdy = (py - my) * ddy; } else { stepy = 1; sdy = (my + 1 - py) * ddy; }
+      let side = 0, hit = 0, tile = 0, dist = 0, wallX = 0, prevI = my * MW + mx, lastEmpty = prevI;
+      for (let n = 0; n < 80; n++) {
+        if (sdx < sdy) { sdx += ddx; mx += stepx; side = 0; } else { sdy += ddy; my += stepy; side = 1; }
+        if (mx < 0 || my < 0 || mx >= MW || my >= MH) break;
+        const i = my * MW + mx;
+        seen[i] = 1;
+        tile = tiles[i];
+        if (tile === T_EMPTY) { lastEmpty = i; continue; }
+        dist = side === 0 ? (mx - px + (1 - stepx) / 2) / rdx : (my - py + (1 - stepy) / 2) / rdy;
+        wallX = side === 0 ? py + dist * rdy : px + dist * rdx;
+        wallX -= Math.floor(wallX);
+        if (tile === T_DOOR || tile === T_BOSSDOOR) {
+          const op = door[i];
+          if (wallX < op) { lastEmpty = i; continue; } // slid open past this point
+          wallX -= op;
+        }
+        hit = 1; prevI = i;
+        break;
+      }
+      if (!hit) { zbuf[x] = 1e9; continue; }
+      if (dist < 0.05) dist = 0.05;
+      zbuf[x] = dist;
+      const tex = wallTex[tile] || T.wall;
+      let tx = (wallX * 64) | 0;
+      if ((side === 0 && rdx > 0) || (side === 1 && rdy < 0)) tx = 63 - tx;
+      const lineH = H / dist;
+      const top = horizon - lineH / 2;
+      const y0 = Math.max(0, Math.ceil(top)), y1 = Math.min(H, Math.ceil(horizon + lineH / 2));
+      const fogf = 1 / (1 + dist * dist * fogK);
+      const glow = Math.max(0, 0.55 - dist * 0.09);
+      let s = (amb + light[lastEmpty] + glow + flash) * fogf * (side ? 0.78 : 1);
+      if (s > 1.3) s = 1.3;
+      const si = (s * 256) | 0;
+      const fr = fr0 * (1 - fogf), fg = fg0 * (1 - fogf), fb = fb0 * (1 - fogf);
+      const td = tex.data, texStep = 64 / lineH;
+      let ty = (y0 - top) * texStep;
+      for (let y = y0; y < y1; y++, ty += texStep) {
+        const c = td[((ty | 0) & 63) * 64 + tx];
+        let r = (((c & 255) * si) >> 8) + fr, g = (((c >> 8 & 255) * si) >> 8) + fg, b = (((c >> 16 & 255) * si) >> 8) + fb;
+        buf[y * W + x] = 0xff000000 | (b > 255 ? 255 : b) << 16 | (g > 255 ? 255 : g) << 8 | (r > 255 ? 255 : r);
+      }
+    }
+
+    // ---- sprites ----
+    const invDet = 1 / (planeX * dirY - dirX * planeY);
+    const list = [];
+    for (const s of sprites) {
+      const dx = s.x - px, dy = s.y - py;
+      const ty = invDet * (-planeY * dx + planeX * dy);
+      if (ty < 0.12) continue;
+      const tx = invDet * (dirY * dx - dirX * dy);
+      s._tx = tx; s._ty = ty;
+      list.push(s);
+    }
+    list.sort((a, b) => b._ty - a._ty);
+    for (const s of list) this.drawSprite(s, amb, flash, fogK, light, MW, MH);
+
+    this.ctx.putImageData(this.img, 0, 0);
+  },
+
+  drawSprite(s, amb, flash, fogK, light, MW, MH) {
+    const W = this.W, H = this.H, buf = this.buf, zbuf = this.zbuf, cam = this.cam;
+    const img = s.img; if (!img) return;
+    const ty = s._ty, scale = H / ty;
+    const hpx = s.h * scale, wpx = hpx * img.w / img.h;
+    const sx = (W / 2) * (1 + s._tx / ty);
+    const bottom = cam.horizon + (0.5 - (s.z || 0)) * scale;
+    const top = bottom - hpx;
+    const left = sx - wpx / 2;
+    const x0 = Math.max(0, Math.ceil(left)), x1 = Math.min(W, Math.ceil(left + wpx));
+    const y0 = Math.max(0, Math.ceil(top)), y1 = Math.min(H, Math.ceil(bottom));
+    if (x0 >= x1 || y0 >= y1) return;
+    let si, fr = 0, fg = 0, fb = 0;
+    if (s.bright) si = 256;
+    else {
+      const cx = s.x | 0, cy = s.y | 0;
+      const L = (cx >= 0 && cy >= 0 && cx < MW && cy < MH) ? light[cy * MW + cx] : 0;
+      const fogf = 1 / (1 + ty * ty * fogK);
+      const glow = Math.max(0, 0.55 - ty * 0.09);
+      let v = (amb + L + glow + flash) * fogf;
+      if (v > 1.3) v = 1.3;
+      si = (v * 256) | 0;
+      fr = this.fog[0] * (1 - fogf); fg = this.fog[1] * (1 - fogf); fb = this.fog[2] * (1 - fogf);
+    }
+    const iw = img.w, ih = img.h, d = img.data;
+    const flashW = s.flash > 0;
+    const mirror = s.mirror;
+    for (let x = x0; x < x1; x++) {
+      if (ty >= zbuf[x]) continue;
+      let u = (((x - left) / wpx) * iw) | 0;
+      if (u < 0) u = 0; else if (u >= iw) u = iw - 1;
+      if (mirror) u = iw - 1 - u;
+      for (let y = y0; y < y1; y++) {
+        let v = (((y - top) / hpx) * ih) | 0;
+        if (v >= ih) v = ih - 1;
+        const c = d[v * iw + u];
+        if (c === 0) continue;
+        let r = (((c & 255) * si) >> 8) + fr, g = (((c >> 8 & 255) * si) >> 8) + fg, b = (((c >> 16 & 255) * si) >> 8) + fb;
+        if (flashW) { r = (r + 510) / 3; g = (g + 510) / 3; b = (b + 510) / 3; }
+        buf[y * W + x] = 0xff000000 | (b > 255 ? 255 : b) << 16 | (g > 255 ? 255 : g) << 8 | (r > 255 ? 255 : r);
+      }
+    }
+  },
+
+  // world -> screen, for floating text
+  project(x, y, z) {
+    const c = this.cam; if (!c) return null;
+    const invDet = 1 / (c.planeX * c.dirY - c.dirX * c.planeY);
+    const dx = x - c.px, dy = y - c.py;
+    const ty = invDet * (-c.planeY * dx + c.planeX * dy);
+    if (ty < 0.2) return null;
+    const tx = invDet * (c.dirY * dx - c.dirX * dy);
+    const scale = this.H / ty;
+    return { x: (this.W / 2) * (1 + tx / ty), y: c.horizon + (0.5 - z) * scale, scale, dist: ty };
+  },
+
+  // ------------------------------------------------------- overlays
+  drawTexts(texts) {
+    const ctx = this.ctx;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    for (const t of texts) {
+      const p = this.project(t.x, t.y, t.z);
+      if (!p) continue;
+      const cx = p.x | 0;
+      if (cx < 0 || cx >= this.W || p.dist > this.zbuf[cx] + 0.3) continue;
+      const a = Math.min(1, t.life * 2);
+      ctx.globalAlpha = a;
+      ctx.font = `bold ${t.big ? 12 : 9}px monospace`;
+      ctx.fillStyle = '#000'; ctx.fillText(t.text, p.x + 1, p.y + 1);
+      ctx.fillStyle = t.color; ctx.fillText(t.text, p.x, p.y);
+    }
+    ctx.globalAlpha = 1;
+  },
+
+  // Carl's first-person hands / weapons, drawn with vector shapes.
+  drawWeapon(P, t) {
+    const ctx = this.ctx, W = this.W, H = this.H, k = H / 270;
+    const bobX = Math.sin(P.bob) * 5 * k, bobY = Math.abs(Math.cos(P.bob)) * 4 * k;
+    const a = P.attackAnim; // 1 -> 0 over the swing
+    const skin = '#d8a27a', skinD = '#b07a54', wrap = ['#d8d0c0', '#c8a860', '#8a8aa0', '#b03050'][P.gauntlet];
+    ctx.save();
+    ctx.translate(W / 2 + bobX, H + bobY);
+    ctx.scale(k, k);
+    const fist = (x, y, s, lit) => {
+      ctx.fillStyle = skinD; ctx.fillRect(x - 16 * s, y, 32 * s, 60);
+      ctx.fillStyle = '#3a2a22'; ctx.fillRect(x - 18 * s, y + 30, 36 * s, 40); // leather jacket sleeve
+      ctx.fillStyle = skin; ctx.beginPath(); ctx.ellipse(x, y, 22 * s, 18 * s, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = wrap; ctx.fillRect(x - 20 * s, y - 4 * s, 40 * s, 10 * s);
+      ctx.fillStyle = skinD;
+      for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.arc(x - 13 * s + i * 9 * s, y - 12 * s, 5 * s, 0, Math.PI * 2); ctx.fill(); }
+      ctx.fillStyle = skin;
+      for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.arc(x - 13 * s + i * 9 * s, y - 13 * s, 4.2 * s, 0, Math.PI * 2); ctx.fill(); }
+      if (lit) { ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.beginPath(); ctx.arc(x, y - 20 * s, 10 * s, 0, Math.PI * 2); ctx.fill(); }
+    };
+    const w = P.weapon;
+    if (P.kickAnim > 0) { // boot enters from the bottom
+      const e = Math.sin(P.kickAnim * Math.PI);
+      ctx.fillStyle = '#3a2618';
+      ctx.beginPath(); ctx.ellipse(10, 20 - e * 110, 40, 26, -0.2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#5a3a24'; ctx.fillRect(-10, 30 - e * 110, 40, 90);
+      ctx.fillStyle = '#1a1008'; ctx.fillRect(-28, 30 - e * 110, 70, 8);
+    }
+    if (w === 'fists') {
+      const e = Math.sin(a * Math.PI);
+      const leftPunch = P.punchSide;
+      fist(-70 + (leftPunch ? e * 50 : 0), -55 - (leftPunch ? e * 70 : 0), leftPunch ? 1 - e * 0.35 : 1, false);
+      fist(70 - (!leftPunch ? e * 50 : 0), -55 - (!leftPunch ? e * 70 : 0), !leftPunch ? 1 - e * 0.35 : 1, false);
+    } else if (w === 'club') {
+      const e = Math.sin(a * Math.PI);
+      ctx.save();
+      ctx.translate(75 - e * 60, -40 - e * 30);
+      ctx.rotate(-0.5 - e * 1.1);
+      ctx.fillStyle = '#6a4424'; ctx.fillRect(-9, -130, 18, 130);
+      ctx.fillStyle = '#7a5430'; ctx.fillRect(-14, -150, 28, 60);
+      ctx.fillStyle = '#bbb';
+      for (let i = 0; i < 6; i++) { ctx.fillRect(-20, -145 + i * 9, 7, 2); ctx.fillRect(13, -141 + i * 9, 7, 2); }
+      ctx.restore();
+      fist(75 - e * 60, -40 - e * 30, 0.9, false);
+    } else if (w === 'crossbow') {
+      const r = a * 12;
+      ctx.translate(0, r);
+      ctx.fillStyle = '#5a3a1e'; ctx.fillRect(-12, -120, 24, 120);
+      ctx.fillStyle = '#4a4a52'; ctx.beginPath(); ctx.moveTo(-90, -100); ctx.quadraticCurveTo(0, -140, 90, -100); ctx.lineTo(90, -94); ctx.quadraticCurveTo(0, -130, -90, -94); ctx.fill();
+      ctx.strokeStyle = '#ddd'; ctx.lineWidth = 1.5; ctx.beginPath();
+      if (P.ammo.bolts > 0 && a < 0.4) { ctx.moveTo(-88, -97); ctx.lineTo(0, -88); ctx.lineTo(88, -97); } else { ctx.moveTo(-88, -97); ctx.lineTo(88, -97); }
+      ctx.stroke();
+      if (P.ammo.bolts > 0 && a < 0.4) { ctx.fillStyle = '#8a6a4a'; ctx.fillRect(-2, -150, 4, 64); ctx.fillStyle = '#ccc'; ctx.fillRect(-3, -156, 6, 8); }
+      fist(-40, -30, 0.8, false); fist(40, -20, 0.8, false);
+    } else if (w === 'lobber') {
+      const e = Math.sin(a * Math.PI);
+      if (!(a > 0.3 && a < 0.8) && P.ammo.lobbers > 0) {
+        ctx.fillStyle = '#5a6a3a'; ctx.beginPath(); ctx.arc(60, -95 + e * 40, 26, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#6a7a4a'; ctx.fillRect(50, -135 + e * 40, 20, 18);
+        ctx.fillStyle = '#c8b060'; ctx.fillRect(38, -98 + e * 40, 44, 10);
+        ctx.strokeStyle = '#ccc'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(60, -135 + e * 40); ctx.lineTo(70, -150 + e * 40); ctx.stroke();
+        if ((t * 10 | 0) % 2) { ctx.fillStyle = '#ffe060'; ctx.beginPath(); ctx.arc(70, -152 + e * 40, 4, 0, Math.PI * 2); ctx.fill(); }
+      }
+      fist(60, -60 + e * 40, 1, false);
+      fist(-80, -40, 0.9, false);
+    }
+    ctx.restore();
+  },
+};
+
+</script>
+<script>
+'use strict';
+// ---------------------------------------------------------------------------
+// Core game simulation: player, weapons, monsters, Donut, projectiles, loot,
+// achievements, viewers, and floor progression.
+// ---------------------------------------------------------------------------
+
+const G = {
+  state: 'title', floor: 0, map: null, time: 0,
+  mobs: [], items: [], projs: [], parts: [], decor: [], texts: [],
+  player: null, donut: null, boss: null, bossDead: false, bossSeen: false,
+  timeLeft: 0, shake: 0, flash: 0, warned: false,
+  input: { keys: {}, mouseDown: false, mdx: 0, mdy: 0 },
+  floorStats: null,
+};
+
+const rand = (a, b) => a + Math.random() * (b - a);
+const randi = (a, b) => Math.floor(rand(a, b + 1));
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const fmt = n => Math.round(n).toLocaleString('en-US');
+
+// ================================ PLAYER ===================================
+
+function newPlayer() {
+  return {
+    x: 0, y: 0, a: 0, pitch: 0, radius: 0.24,
+    hp: 100, level: 1, xp: 0, points: 0,
+    stats: { str: 4, con: 4, dex: 4, cha: 3 },
+    gold: 0, potions: 2, boxes: [], gauntlet: 0,
+    weapon: 'fists', weapons: { fists: true, club: false, crossbow: false, lobber: true },
+    ammo: { bolts: 0, lobbers: 3 },
+    cd: 0, kickCd: 0, attackAnim: 0, kickAnim: 0, punchSide: false,
+    bob: 0, bobY: 0, hurtT: 0, potionsUsedFloor: 0,
+    achievements: {}, viewers: 1200, fanMilestone: 0,
+    kills: 0, killsBy: { fists: 0, club: 0, crossbow: 0, lobber: 0, kick: 0, donut: 0 },
+    goldSpent: 0, tonicsBought: 0, gauntletsBought: 0, totalTime: 0, deaths: 0,
+    donutUltCd: 0,
+  };
+}
+
+const maxHp = P => 60 + P.stats.con * 10 + (P.level - 1) * 6;
+const xpNeed = lvl => Math.floor(40 * Math.pow(lvl, 1.55));
+const floorMul = () => 1 + 0.38 * G.floor;
+const dmgMul = () => 1 + 0.26 * G.floor;
+// Bosses already hit harder floor by floor, so they scale gently.
+const mobDmg = d => d.dmg * (d.boss ? 1 + 0.08 * G.floor : dmgMul());
+const shopDiscount = P => Math.max(0.55, 1 - P.stats.cha * 0.025);
+
+function weaponDamage(P, w) {
+  const s = P.stats;
+  switch (w) {
+    case 'fists': return (5 + s.str * 1.7) * GAUNTLETS[P.gauntlet].mult;
+    case 'club': return 13 + s.str * 2.6;
+    case 'crossbow': return 15 + s.dex * 2.4;
+    case 'lobber': return 42 + s.dex * 3 + G.floor * 8;
+    case 'kick': return 8 + s.str * 1.4;
+  }
+  return 0;
+}
+function weaponCooldown(P, w) {
+  const dex = P.stats.dex;
+  switch (w) {
+    case 'fists': return Math.max(0.2, 0.4 - dex * 0.008);
+    case 'club': return Math.max(0.45, 0.75 - dex * 0.01);
+    case 'crossbow': return Math.max(0.45, 0.85 - dex * 0.012);
+    case 'lobber': return 0.9;
+  }
+  return 0.5;
+}
+
+// ================================ FLOORS ===================================
+
+function startNewGame() {
+  G.player = newPlayer();
+  G.player.hp = maxHp(G.player);
+  G.floor = 0;
+  enterFloor(0, true);
+}
+
+function enterFloor(f, fresh) {
+  G.floor = f;
+  const F = FLOORS[f];
+  const seed = (Date.now() & 0xffffff) ^ (f * 7919);
+  G.map = new Dungeon(f, seed);
+  Render.setTheme(buildTheme(F.theme, 1000 + f * 17), F.fog);
+  Sound.setTheme(f);
+  const M = G.map, P = G.player;
+  P.x = M.start.x; P.y = M.start.y; P.a = Math.atan2(M.bossRoom.cy - M.safeRoom.cy, M.bossRoom.cx - M.safeRoom.cx); P.pitch = 0;
+  P.potionsUsedFloor = 0;
+  G.mobs = []; G.items = []; G.projs = []; G.parts = []; G.decor = []; G.texts = [];
+  G.boss = null; G.bossDead = false; G.bossSeen = false;
+  G.timeLeft = F.time; G.warned = false; G.time = 0;
+  G.floorStats = { kills: 0, gold: 0, viewers: P.viewers, start: performance.now() };
+
+  for (const s of M.spawns.mobs) spawnMob(s.type, s.x, s.y);
+  G.boss = spawnMob(M.spawns.boss.type, M.spawns.boss.x, M.spawns.boss.y);
+  for (const c of M.spawns.chests) G.items.push({ kind: 'chest', x: c.x, y: c.y, open: false });
+  for (const it of M.spawns.items) G.items.push({ kind: it.kind, x: it.x, y: it.y, amount: itemAmount(it.kind) });
+  for (const d of M.spawns.decor) G.decor.push({ kind: d.kind, x: d.x, y: d.y, ph: Math.random() * 3 });
+  G.decor.push({ kind: 'mordecai', x: M.mordecai.x, y: M.mordecai.y });
+  G.decor.push({ kind: 'stairs', x: M.stairs.x, y: M.stairs.y });
+
+  G.donut = { x: P.x - Math.cos(P.a) * 0.8, y: P.y - Math.sin(P.a) * 0.8, cd: 2, anim: 0, castT: 0, quipT: 25, moving: false };
+
+  saveGame();
+  G.state = 'intro';
+  UI.showFloorIntro(f);
+  if (fresh) {
+    setTimeout(() => { if (G.floor === 0) unlock('pantsless'); }, 2500);
+    setTimeout(() => donutSay(pick(DONUT_LINES.start)), 6000);
+  } else {
+    setTimeout(() => donutSay(pick(DONUT_LINES.descend)), 3000);
+  }
+}
+
+function itemAmount(kind) {
+  switch (kind) {
+    case 'coins': return randi(4, 10) * (1 + G.floor);
+    case 'bolts': return randi(4, 8);
+    case 'lobbers': return 1;
+    default: return 1;
+  }
+}
+
+function descend() {
+  const P = G.player, F = FLOORS[G.floor];
+  Sound.play('descend');
+  if (G.timeLeft > F.time / 2) unlock('speedrun');
+  if (P.potionsUsedFloor === 0) unlock('tough');
+  P.totalTime += F.time - G.timeLeft;
+  const summary = {
+    floor: G.floor, kills: G.floorStats.kills, gold: G.floorStats.gold,
+    viewers: P.viewers - G.floorStats.viewers, time: F.time - G.timeLeft,
+  };
+  if (G.floor === FLOORS.length - 1) {
+    G.state = 'victory';
+    clearSave();
+    UI.showVictory();
+    return;
+  }
+  G.state = 'summary';
+  UI.showFloorSummary(summary);
+}
+
+// ================================ SAVE =====================================
+
+const SAVE_KEY = 'crawl-carl-save-v1';
+function saveGame() {
+  try {
+    const P = G.player;
+    const snap = JSON.parse(JSON.stringify(P));
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ floor: G.floor, player: snap, hp: P.hp }));
+  } catch (e) { /* storage unavailable */ }
+}
+function loadSave() {
+  try { const s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch (e) { return null; }
+}
+function clearSave() { try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* ignore */ } }
+function continueGame() {
+  const s = loadSave();
+  if (!s) return startNewGame();
+  G.player = Object.assign(newPlayer(), s.player);
+  G.player.hp = Math.max(maxHp(G.player) * 0.6, s.hp);
+  enterFloor(s.floor, false);
+}
+
+// ================================ MOBS =====================================
+
+function spawnMob(type, x, y) {
+  const d = MOBS[type];
+  const hp = d.hp * (d.boss ? 1 : floorMul());
+  const m = {
+    type, d, x, y, hp, maxHp: hp, state: d.boss ? 'idle' : 'idle',
+    cd: rand(0.5, d.cd), anim: Math.random() * 2, atkT: 0, flash: 0, stun: 0,
+    kx: 0, ky: 0, dead: false, deadT: 0, losT: Math.random() * 0.3, los: false,
+    abil: (d.abilities || []).map(a => ({ ...a, t: a.every * rand(0.5, 1) })),
+    charging: 0, cdx: 0, cdy: 0, mirror: Math.random() < 0.5, noticed: false, stepT: 0,
+  };
+  G.mobs.push(m);
+  return m;
+}
+
+function mobCanStand(x, y, r) {
+  const M = G.map;
+  for (const [ox, oy] of [[-r, -r], [r, -r], [-r, r], [r, r]]) {
+    const cx = (x + ox) | 0, cy = (y + oy) | 0;
+    if (M.solid(cx, cy)) return false;
+    if (M.zone[M.idx(cx, cy)] === Z_SAFE) return false;
+  }
+  return true;
+}
+
+function moveMob(m, vx, vy, dt) {
+  const r = m.d.radius, M = G.map;
+  const nx = m.x + vx * dt, ny = m.y + vy * dt;
+  // monsters open ordinary doors by walking into them
+  const tryDoor = (x, y) => {
+    const i = M.idx(x | 0, y | 0), t = M.tiles[i];
+    if ((t === T_DOOR || t === T_BOSSDOOR) && M.door[i] < 1 && M.zone[i] !== Z_SAFE) openDoor(i);
+  };
+  tryDoor(nx + Math.sign(vx) * r, m.y); tryDoor(m.x, ny + Math.sign(vy) * r);
+  if (mobCanStand(nx, m.y, r)) m.x = nx;
+  if (mobCanStand(m.x, ny, r)) m.y = ny;
+}
+
+function updateMobs(dt) {
+  const P = G.player, M = G.map;
+  for (const m of G.mobs) {
+    if (m.dead) { m.deadT += dt; continue; }
+    const d = m.d;
+    m.flash -= dt; m.anim += dt; m.atkT -= dt;
+    const dx = P.x - m.x, dy = P.y - m.y, dist = Math.hypot(dx, dy);
+    m.losT -= dt;
+    if (m.losT <= 0) { m.losT = 0.25; m.los = dist < 18 && M.los(m.x, m.y, P.x, P.y); }
+
+    // knockback
+    if (m.kx || m.ky) {
+      moveMob(m, m.kx, m.ky, dt);
+      m.kx *= Math.pow(0.02, dt); m.ky *= Math.pow(0.02, dt);
+      if (Math.abs(m.kx) + Math.abs(m.ky) < 0.1) m.kx = m.ky = 0;
+    }
+    if (m.stun > 0) { m.stun -= dt; continue; }
+
+    if (m.state === 'idle') {
+      const wake = (m.los && dist < (d.boss ? 11 : 10)) || dist < 2.5 || (d.boss && M.zone[M.idx(P.x | 0, P.y | 0)] === Z_BOSS);
+      if (wake) aggro(m);
+      else continue;
+    }
+    if (G.state !== 'playing') continue;
+
+    const pz = M.zone[M.idx(P.x | 0, P.y | 0)];
+    const playerSafe = pz === Z_SAFE;
+
+    // boss abilities
+    if (d.boss) updateBoss(m, dt, dist, dx, dy);
+    if (m.charging > 0) {
+      m.charging -= dt;
+      moveMob(m, m.cdx * 8, m.cdy * 8, dt);
+      if (dist < d.radius + P.radius + 0.4 && m.atkT < 0) { hurtPlayer(mobDmg(d) * 1.2, m); m.atkT = 0.6; }
+      continue;
+    }
+
+    m.cd -= dt;
+    let vx = 0, vy = 0;
+    const sp = d.speed * (d.boss ? 1 : 1 + G.floor * 0.04);
+    if (d.ranged) {
+      const keep = d.ranged.keep;
+      if (m.los && dist < 14) {
+        if (m.cd <= 0 && !playerSafe) {
+          m.cd = d.cd * rand(0.8, 1.2); m.atkT = 0.35;
+          fireAt(m, P.x, P.y, d.ranged.proj, d.ranged.speed, mobDmg(d));
+        }
+        if (dist < keep - 1.5) { vx = -dx / dist * sp * 0.8; vy = -dy / dist * sp * 0.8; }
+        else if (dist > keep + 1) { vx = dx / dist * sp; vy = dy / dist * sp; }
+        else { const s = Math.sin(m.anim * 0.9 + m.x) > 0 ? 1 : -1; vx = -dy / dist * sp * 0.5 * s; vy = dx / dist * sp * 0.5 * s; }
+      } else {
+        const f = M.flowDir(m.x, m.y);
+        if (f) { vx = f.x * sp; vy = f.y * sp; }
+      }
+    } else {
+      const reach = d.range + P.radius;
+      if (dist <= reach && m.los) {
+        if (m.cd <= 0) {
+          m.cd = d.cd; m.atkT = 0.35;
+          hurtPlayer(mobDmg(d), m);
+          if (m.type === 'rat' || m.type === 'ratking') Sound.play('squeak');
+        }
+      } else if (m.los && dist < 4) {
+        vx = dx / dist * sp; vy = dy / dist * sp;
+      } else {
+        const f = M.flowDir(m.x, m.y);
+        if (f) { vx = f.x * sp; vy = f.y * sp; }
+        else if (m.los) { vx = dx / dist * sp; vy = dy / dist * sp; }
+      }
+    }
+    if (vx || vy) {
+      moveMob(m, vx, vy, dt);
+      m.mirror = (vx * -Math.sin(P.a) + vy * Math.cos(P.a)) < 0;
+    }
+  }
+  // soft separation so monsters don't stack into one sprite
+  const live = G.mobs.filter(m => !m.dead);
+  for (let i = 0; i < live.length; i++) for (let j = i + 1; j < live.length; j++) {
+    const a = live[i], b = live[j];
+    const dx = b.x - a.x, dy = b.y - a.y, rr = a.d.radius + b.d.radius;
+    if (Math.abs(dx) > rr || Math.abs(dy) > rr) continue;
+    const d = Math.hypot(dx, dy) || 0.01;
+    if (d < rr) {
+      const push = (rr - d) * 0.5, ux = dx / d, uy = dy / d;
+      if (mobCanStand(a.x - ux * push, a.y - uy * push, a.d.radius)) { a.x -= ux * push; a.y -= uy * push; }
+      if (mobCanStand(b.x + ux * push, b.y + uy * push, b.d.radius)) { b.x += ux * push; b.y += uy * push; }
+    }
+  }
+}
+
+function aggro(m) {
+  if (m.state !== 'idle') return;
+  m.state = 'chase';
+  if (m.d.boss && !G.bossSeen) {
+    G.bossSeen = true;
+    Sound.play('roar');
+    UI.bossIntro(m);
+    systemSay(`${m.d.name}: "${m.d.taunt}"`, 'boss');
+    setTimeout(() => donutSay(pick(DONUT_LINES.boss)), 2500);
+  }
+}
+
+function updateBoss(m, dt, dist, dx, dy) {
+  const P = G.player;
+  const enraged = m.hp < m.maxHp * 0.4;
+  for (const a of m.abil) {
+    a.t -= dt * (enraged ? 1.4 : 1);
+    if (a.t > 0) continue;
+    a.t = a.every * rand(0.85, 1.15);
+    switch (a.kind) {
+      case 'summon': {
+        const alive = G.mobs.filter(x => !x.dead && !x.d.boss).length;
+        if (alive > 40) break;
+        for (let i = 0; i < a.n; i++) {
+          const ang = Math.random() * Math.PI * 2;
+          const x = m.x + Math.cos(ang) * 1.2, y = m.y + Math.sin(ang) * 1.2;
+          if (mobCanStand(x, y, MOBS[a.mob].radius)) { const s = spawnMob(a.mob, x, y); aggro(s); puff(x, y, 'dust', 8); }
+        }
+        break;
+      }
+      case 'spread': {
+        if (!m.los) break;
+        const base = Math.atan2(dy, dx);
+        for (let i = 0; i < a.n; i++) {
+          const ang = base + (i - (a.n - 1) / 2) * (a.arc / Math.max(1, a.n - 1)) * 2;
+          fireDir(m, ang, a.proj, a.speed, mobDmg(m.d) * 0.7);
+        }
+        m.atkT = 0.4;
+        break;
+      }
+      case 'radial': {
+        const off = Math.random();
+        for (let i = 0; i < a.n; i++) fireDir(m, off + i / a.n * Math.PI * 2, a.proj, a.speed, mobDmg(m.d) * 0.6);
+        m.atkT = 0.4;
+        break;
+      }
+      case 'charge': {
+        if (!m.los || dist < 2) { a.t = 1; break; }
+        m.charging = 0.7; m.cdx = dx / dist; m.cdy = dy / dist;
+        Sound.play('roar');
+        break;
+      }
+      case 'teleport': {
+        const M = G.map, r = M.bossRoom;
+        for (let k = 0; k < 20; k++) {
+          const x = r.x + 0.5 + Math.random() * (r.w - 1), y = r.y + 0.5 + Math.random() * (r.h - 1);
+          if (Math.hypot(x - P.x, y - P.y) > 3 && mobCanStand(x, y, m.d.radius)) {
+            puff(m.x, m.y, 'cyan', 14); m.x = x; m.y = y; puff(x, y, 'cyan', 14); Sound.play('teleport'); break;
+          }
+        }
+        break;
+      }
+    }
+  }
+}
+
+function damageMob(m, dmg, source, kx = 0, ky = 0) {
+  if (m.dead) return false;
+  const crit = source !== 'donut' && Math.random() < 0.05 + G.player.stats.dex * 0.006;
+  if (crit) dmg *= 1.8;
+  dmg = Math.round(dmg * rand(0.9, 1.1));
+  m.hp -= dmg; m.flash = 0.1;
+  if (m.d.boss) { kx *= 0.15; ky *= 0.15; }
+  m.kx += kx; m.ky += ky;
+  aggro(m);
+  G.texts.push({ x: m.x, y: m.y, z: (m.d.z || 0) + m.d.h + 0.1, text: crit ? dmg + '!' : '' + dmg, color: crit ? '#ffe040' : source === 'donut' ? '#ff9af0' : '#ffffff', life: 0.8, vz: 0.8, big: crit });
+  puff(m.x, m.y, m.type === 'skeleton' || m.type === 'bonewright' ? 'dust' : m.type === 'wisp' ? 'ember' : 'blood', 5, (m.d.z || 0) + m.d.h * 0.6);
+  Sound.play('hit');
+  if (m.hp <= 0) { killMob(m, source); return true; }
+  return false;
+}
+
+function killMob(m, source) {
+  const P = G.player, d = m.d;
+  m.dead = true; m.hp = 0; m.deadT = 0;
+  Sound.play('mobDie');
+  puff(m.x, m.y, m.type === 'skeleton' || m.type === 'bonewright' ? 'dust' : 'blood', 14, d.h * 0.5);
+  P.kills++; G.floorStats.kills++;
+  P.killsBy[source] = (P.killsBy[source] || 0) + 1;
+  const xp = Math.round(d.xp * (d.boss ? 1 : 1 + 0.3 * G.floor));
+  gainXp(xp);
+  const g = randi(d.gold[0], d.gold[1]) * (d.boss ? 1 : 1 + G.floor);
+  if (g > 0) G.items.push({ kind: 'coins', x: m.x, y: m.y, amount: g });
+  if (!d.boss && Math.random() < 0.07) G.items.push({ kind: 'potion', x: m.x + 0.2, y: m.y, amount: 1 });
+  if (!d.boss && P.weapons.crossbow && Math.random() < 0.1) G.items.push({ kind: 'bolts', x: m.x - 0.2, y: m.y, amount: randi(2, 4) });
+  addViewers((d.boss ? 60000 : 900) * (1 + G.floor * 0.6) * (source === 'kick' ? 2 : source === 'lobber' ? 1.5 : 1));
+  if (source === 'donut' && Math.random() < 0.35) donutSay(pick(DONUT_LINES.kill));
+  if (!P.achievements.firstblood) unlock('firstblood');
+  if (P.killsBy.fists >= 15) unlock('knuckles');
+  if (P.killsBy.club >= 10) unlock('bonk');
+  if (P.killsBy.crossbow >= 10) unlock('pewpew');
+  if (P.killsBy.kick >= 5) unlock('kicker');
+  if (P.killsBy.donut >= 10) unlock('catkill');
+  if (d.boss) {
+    G.bossDead = true;
+    UI.bossBar(null);
+    G.items.push({ kind: 'box', x: m.x, y: m.y, box: 'boss' });
+    systemSay(SYSTEM_LINES.stairsOpen, 'good');
+    unlock('firstboss');
+    if (G.floor === FLOORS.length - 1) unlock('finale');
+    // lingering minions flee in shame
+    for (const o of G.mobs) if (!o.dead && Math.hypot(o.x - m.x, o.y - m.y) < 12) { o.stun = 1; }
+    G.shake = 1;
+  }
+}
+
+// ================================ PROJECTILES ==============================
+
+function fireAt(m, tx, ty, proj, speed, dmg) {
+  fireDir(m, Math.atan2(ty - m.y, tx - m.x) + rand(-0.04, 0.04), proj, speed, dmg);
+}
+function fireDir(m, ang, proj, speed, dmg) {
+  G.projs.push({
+    x: m.x + Math.cos(ang) * (m.d.radius + 0.1), y: m.y + Math.sin(ang) * (m.d.radius + 0.1), z: (m.d.z || 0) + m.d.h * 0.55,
+    vx: Math.cos(ang) * speed, vy: Math.sin(ang) * speed, vz: 0,
+    kind: proj, owner: 'enemy', dmg, life: 4, r: 0.18,
+  });
+  Sound.play(proj === 'fireball' ? 'fireball' : 'enemyShot');
+}
+
+function updateProjs(dt) {
+  const P = G.player, M = G.map;
+  for (const p of G.projs) {
+    if (p.dead) continue;
+    p.life -= dt;
+    if (p.kind === 'lobber') { updateLobber(p, dt); continue; }
+    if (p.life <= 0) { p.dead = true; continue; }
+    if (p.homing && p.target && !p.target.dead) {
+      const t = p.target, want = Math.atan2(t.y - p.y, t.x - p.x), cur = Math.atan2(p.vy, p.vx);
+      let da = want - cur; while (da > Math.PI) da -= Math.PI * 2; while (da < -Math.PI) da += Math.PI * 2;
+      const na = cur + clamp(da, -6 * dt, 6 * dt), sp = Math.hypot(p.vx, p.vy);
+      p.vx = Math.cos(na) * sp; p.vy = Math.sin(na) * sp;
+      p.z += ((t.d.z || 0) + t.d.h * 0.5 - p.z) * Math.min(1, dt * 4);
+    }
+    const steps = 3;
+    for (let s = 0; s < steps && !p.dead; s++) {
+      p.x += p.vx * dt / steps; p.y += p.vy * dt / steps;
+      if (M.solid(p.x, p.y)) { p.dead = true; puff(p.x - p.vx * 0.02, p.y - p.vy * 0.02, p.kind === 'missile' ? 'pink' : 'spark', 4, p.z); break; }
+      if (p.owner === 'enemy') {
+        if (Math.hypot(P.x - p.x, P.y - p.y) < P.radius + p.r) {
+          p.dead = true; hurtPlayer(p.dmg, null);
+        }
+      } else {
+        for (const m of G.mobs) {
+          if (m.dead) continue;
+          if (Math.hypot(m.x - p.x, m.y - p.y) < m.d.radius + p.r) {
+            p.dead = true;
+            const l = Math.hypot(p.vx, p.vy) || 1;
+            damageMob(m, p.dmg, p.owner === 'donut' ? 'donut' : 'crossbow', p.vx / l * 1.5, p.vy / l * 1.5);
+            puff(p.x, p.y, p.owner === 'donut' ? 'pink' : 'spark', 5, p.z);
+            break;
+          }
+        }
+      }
+    }
+  }
+  G.projs = G.projs.filter(p => !p.dead);
+}
+
+function updateLobber(p, dt) {
+  const M = G.map;
+  p.vz -= 9 * dt; p.z += p.vz * dt;
+  if (p.z < 0.08) { p.z = 0.08; if (p.vz < -1) Sound.play('bounce'); p.vz = -p.vz * 0.35; p.vx *= 0.7; p.vy *= 0.7; }
+  const nx = p.x + p.vx * dt, ny = p.y + p.vy * dt;
+  if (M.solid(nx, p.y)) { p.vx = -p.vx * 0.5; Sound.play('bounce'); } else p.x = nx;
+  if (M.solid(p.x, ny)) { p.vy = -p.vy * 0.5; Sound.play('bounce'); } else p.y = ny;
+  if (Math.random() < 0.5) G.parts.push({ x: p.x, y: p.y, z: p.z + 0.1, vx: 0, vy: 0, vz: 0.5, life: 0.3, img: 'spark', h: 0.05, bright: true });
+  if (p.life <= 0) { p.dead = true; explode(p.x, p.y, p.dmg, 2.8); }
+}
+
+function explode(x, y, dmg, R) {
+  const P = G.player;
+  Sound.play('explode');
+  G.shake = Math.max(G.shake, 1.2); G.flash = 0.8;
+  G.parts.push({ x, y, z: 0.15, vx: 0, vy: 0, vz: 0, life: 0.6, maxLife: 0.6, anim: 'explosion', h: 1.6, bright: true });
+  for (let i = 0; i < 20; i++) {
+    const a = Math.random() * Math.PI * 2, s = rand(1, 5);
+    G.parts.push({ x, y, z: 0.3, vx: Math.cos(a) * s, vy: Math.sin(a) * s, vz: rand(1, 4), life: rand(0.4, 0.9), img: 'ember', h: 0.07, bright: true, grav: true });
+  }
+  let kills = 0;
+  for (const m of G.mobs) {
+    if (m.dead) continue;
+    const d = Math.hypot(m.x - x, m.y - y);
+    if (d > R + m.d.radius) continue;
+    if (!G.map.los(x, y, m.x, m.y)) continue;
+    const f = 1 - Math.min(1, d / (R + m.d.radius)) * 0.6;
+    const ux = (m.x - x) / (d || 1), uy = (m.y - y) / (d || 1);
+    if (damageMob(m, dmg * f, 'lobber', ux * 5, uy * 5)) kills++;
+  }
+  const pd = Math.hypot(P.x - x, P.y - y);
+  if (pd < R && G.map.los(x, y, P.x, P.y)) {
+    hurtPlayer(dmg * 0.45 * (1 - pd / R * 0.6), null, true);
+    unlock('selfown');
+  }
+  if (kills >= 3) unlock('kaboom');
+  if (kills >= 2) addViewers(kills * 4000);
+}
+
+// ================================ PLAYER ACTIONS ===========================
+
+function playerAttack() {
+  const P = G.player;
+  if (P.cd > 0 || G.state !== 'playing') return;
+  const w = P.weapon;
+  if (w === 'crossbow' && P.ammo.bolts <= 0) { systemSay('Out of bolts. Buy more from Mordecai, or punch things like nature intended.', 'warn'); P.cd = 0.5; Sound.play('deny'); return; }
+  if (w === 'lobber' && P.ammo.lobbers <= 0) { systemSay('Out of Hob-Lobbers.', 'warn'); P.cd = 0.5; Sound.play('deny'); return; }
+  P.cd = weaponCooldown(P, w);
+  P.attackAnim = 1;
+  const dirX = Math.cos(P.a), dirY = Math.sin(P.a);
+  if (w === 'fists' || w === 'club') {
+    P.punchSide = !P.punchSide;
+    const range = w === 'club' ? 1.55 : 1.25;
+    const target = meleeTarget(range, w === 'club' ? 0.6 : 0.45);
+    Sound.play('swing');
+    if (target) {
+      const kb = w === 'club' ? 3.5 : 1.8;
+      damageMob(target, weaponDamage(P, w), w, dirX * kb, dirY * kb);
+      Sound.play(w === 'club' ? 'club' : 'punch');
+      G.shake = Math.max(G.shake, 0.25);
+    }
+  } else if (w === 'crossbow') {
+    P.ammo.bolts--;
+    Sound.play('crossbow');
+    G.projs.push({ x: P.x + dirX * 0.3, y: P.y + dirY * 0.3, z: 0.45, vx: dirX * 22, vy: dirY * 22, kind: 'bolt', owner: 'player', dmg: weaponDamage(P, w), life: 2, r: 0.12 });
+  } else if (w === 'lobber') {
+    P.ammo.lobbers--;
+    Sound.play('throw');
+    const up = clamp(-P.pitch / 100, -0.5, 1.2);
+    G.projs.push({ x: P.x + dirX * 0.3, y: P.y + dirY * 0.3, z: 0.5, vx: dirX * 7.5, vy: dirY * 7.5, vz: 2.5 + up * 3, kind: 'lobber', owner: 'player', dmg: weaponDamage(P, w), life: 1.7, r: 0.1 });
+  }
+}
+
+function playerKick() {
+  const P = G.player;
+  if (P.kickCd > 0 || G.state !== 'playing') return;
+  P.kickCd = 2.2; P.kickAnim = 1;
+  Sound.play('swing');
+  const t = meleeTarget(1.4, 0.55);
+  if (t) {
+    const dirX = Math.cos(P.a), dirY = Math.sin(P.a);
+    damageMob(t, weaponDamage(P, 'kick'), 'kick', dirX * 9, dirY * 9);
+    t.stun = t.d.boss ? 0.2 : 0.9;
+    Sound.play('kick');
+    G.shake = Math.max(G.shake, 0.4);
+  }
+}
+
+function meleeTarget(range, cone) {
+  const P = G.player; let best = null, bd = 1e9;
+  for (const m of G.mobs) {
+    if (m.dead) continue;
+    const dx = m.x - P.x, dy = m.y - P.y, d = Math.hypot(dx, dy) - m.d.radius;
+    if (d > range) continue;
+    let da = Math.atan2(dy, dx) - P.a;
+    while (da > Math.PI) da -= Math.PI * 2; while (da < -Math.PI) da += Math.PI * 2;
+    if (Math.abs(da) > cone + 0.3 / Math.max(0.3, d)) continue;
+    if (!G.map.los(P.x, P.y, m.x, m.y)) continue;
+    if (d < bd) { bd = d; best = m; }
+  }
+  return best;
+}
+
+function drinkPotion() {
+  const P = G.player;
+  if (G.state !== 'playing') return;
+  if (P.potions <= 0) { systemSay('No potions left. Mordecai sells them. He is not running a charity.', 'warn'); Sound.play('deny'); return; }
+  const mh = maxHp(P);
+  if (P.hp >= mh) { systemSay('You are already at full health. Hydration is important, but not like this.', 'info'); return; }
+  P.potions--; P.potionsUsedFloor++;
+  P.hp = Math.min(mh, P.hp + mh * 0.5);
+  Sound.play('potion');
+  G.texts.push({ x: P.x + Math.cos(P.a), y: P.y + Math.sin(P.a), z: 0.6, text: '+HP', color: '#60ff80', life: 0.9, vz: 0.6 });
+}
+
+function switchWeapon(id) {
+  const P = G.player;
+  if (!P.weapons[id]) { systemSay(`You don't own the ${WEAPONS.find(w => w.id === id).name} yet.`, 'warn'); return; }
+  if (P.weapon === id) return;
+  P.weapon = id; P.cd = Math.max(P.cd, 0.2); P.attackAnim = 0;
+  Sound.play('click');
+}
+function cycleWeapon(dir) {
+  const P = G.player, ids = WEAPONS.map(w => w.id).filter(id => P.weapons[id]);
+  const i = ids.indexOf(P.weapon);
+  switchWeapon(ids[(i + dir + ids.length) % ids.length]);
+}
+
+function donutUlt() {
+  const P = G.player, D = G.donut;
+  if (G.state !== 'playing') return;
+  if (P.donutUltCd > 0) { systemSay(`Donut's Magic Missile Barrage is recharging (${Math.ceil(P.donutUltCd)}s).`, 'info'); return; }
+  const targets = G.mobs.filter(m => !m.dead && Math.hypot(m.x - D.x, m.y - D.y) < 12 && G.map.los(D.x, D.y, m.x, m.y))
+    .sort((a, b) => Math.hypot(a.x - D.x, a.y - D.y) - Math.hypot(b.x - D.x, b.y - D.y));
+  if (!targets.length) { systemSay('Donut refuses to waste her barrage on nothing. She has standards.', 'info'); return; }
+  P.donutUltCd = 22;
+  donutSay(pick(DONUT_LINES.ult));
+  for (let i = 0; i < 7; i++) {
+    const t = targets[i % targets.length];
+    setTimeout(() => { if (!t.dead && G.state === 'playing') donutMissile(t, 1.6); }, i * 110);
+  }
+}
+
+function donutMissile(t, mult = 1) {
+  const D = G.donut, P = G.player;
+  const ang = Math.atan2(t.y - D.y, t.x - D.x) + rand(-0.6, 0.6);
+  G.projs.push({ x: D.x, y: D.y, z: 0.35, vx: Math.cos(ang) * 9, vy: Math.sin(ang) * 9, kind: 'missile', owner: 'donut', dmg: (6 + P.level * 2.4 + G.floor * 3) * mult, life: 3, r: 0.15, homing: true, target: t });
+  D.castT = 0.4;
+  Sound.play('missile');
+}
+
+// ================================ DONUT ====================================
+
+function updateDonut(dt) {
+  const D = G.donut, P = G.player, M = G.map;
+  D.cd -= dt; D.castT -= dt; D.quipT -= dt;
+  const bx = P.x - Math.cos(P.a) * 0.9 + Math.cos(P.a + Math.PI / 2) * 0.6;
+  const by = P.y - Math.sin(P.a) * 0.9 + Math.sin(P.a + Math.PI / 2) * 0.6;
+  const dx = bx - D.x, dy = by - D.y, d = Math.hypot(dx, dy);
+  D.moving = false;
+  if (Math.hypot(P.x - D.x, P.y - D.y) > 8 || !M.los(D.x, D.y, P.x, P.y) && Math.hypot(P.x - D.x, P.y - D.y) > 4) {
+    // Donut takes shortcuts. Don't ask.
+    if (!M.solid(bx, by)) { D.x = bx; D.y = by; } else { D.x = P.x; D.y = P.y; }
+  } else if (d > 0.4) {
+    const sp = Math.min(5, d * 3);
+    const nx = D.x + dx / d * sp * dt, ny = D.y + dy / d * sp * dt;
+    if (!M.solid(nx, D.y)) D.x = nx;
+    if (!M.solid(D.x, ny)) D.y = ny;
+    D.moving = true;
+  }
+  D.anim += dt * (D.moving ? 8 : 1);
+  if (D.cd <= 0) {
+    let best = null, bd = 9;
+    for (const m of G.mobs) {
+      if (m.dead || m.state === 'idle') continue;
+      const md = Math.hypot(m.x - D.x, m.y - D.y);
+      if (md < bd && M.los(D.x, D.y, m.x, m.y)) { bd = md; best = m; }
+    }
+    if (best) { donutMissile(best); D.cd = Math.max(1.2, 2.4 - P.level * 0.06); }
+    else D.cd = 0.3;
+  }
+  if (D.quipT <= 0) { D.quipT = rand(45, 80); if (G.state === 'playing') donutSay(pick(DONUT_LINES.idle)); }
+}
+
+// ================================ PLAYER UPDATE ============================
+
+function hurtPlayer(dmg, src, self) {
+  const P = G.player;
+  if (G.state !== 'playing' || P.god) return;
+  const M = G.map;
+  if (!self && M.zone[M.idx(P.x | 0, P.y | 0)] === Z_SAFE) return;
+  dmg = Math.round(dmg);
+  P.hp -= dmg; P.hurtT = 0.35;
+  G.shake = Math.max(G.shake, 0.35);
+  Sound.play('hurt');
+  UI.hurt(src, dmg);
+  const mh = maxHp(P);
+  if (P.hp > 0 && P.hp < mh * 0.1) unlock('flesh');
+  if (P.hp > 0 && P.hp < mh * 0.3 && Math.random() < 0.25) donutSay(pick(DONUT_LINES.hurt));
+  if (P.hp <= 0) playerDie(pick(SYSTEM_LINES.death));
+}
+
+function playerDie(msg) {
+  const P = G.player;
+  P.hp = 0; P.deaths++;
+  G.state = 'dead';
+  Sound.play('death');
+  UI.showDeath(msg);
+}
+
+function gainXp(n) {
+  const P = G.player;
+  P.xp += n;
+  while (P.xp >= xpNeed(P.level)) {
+    P.xp -= xpNeed(P.level);
+    P.level++; P.points += 2;
+    P.hp = Math.min(maxHp(P), P.hp + maxHp(P) * 0.5);
+    Sound.play('levelup');
+    systemSay(pick(SYSTEM_LINES.levelup) + ` (Level ${P.level})`, 'good');
+    UI.levelUp(P.level);
+    setTimeout(() => donutSay(pick(DONUT_LINES.level)), 1500);
+    if (P.level >= 5) unlock('lvl5');
+    if (P.level >= 10) unlock('lvl10');
+  }
+}
+
+function addViewers(n) {
+  const P = G.player;
+  P.viewers += Math.round(n * (1 + P.stats.cha * 0.05));
+  if (P.viewers >= 1000000) unlock('trending');
+  const ms = Math.floor(P.viewers / 250000);
+  if (ms > P.fanMilestone) {
+    P.fanMilestone = ms;
+    giveBox('fan');
+    systemSay(`${fmt(ms * 250000)} viewers! Your fans sent you a Fan Box. It smells faintly of desperation.`, 'good');
+  }
+}
+
+function giveBox(type) {
+  const P = G.player;
+  P.boxes.push(type);
+  Sound.play('box');
+  if (P.boxes.length >= 5) unlock('hoarder');
+}
+
+function unlock(id) {
+  const P = G.player;
+  if (!P || P.achievements[id]) return;
+  const a = ACHIEVEMENTS[id];
+  P.achievements[id] = true;
+  Sound.play('achieve');
+  addViewers(12000 * (1 + G.floor * 0.5));
+  UI.achievement(a);
+  if (a.box) setTimeout(() => giveBox(a.box), 400);
+}
+
+function systemSay(text, cls) { UI.log(text, cls || 'sys'); }
+function donutSay(text) { UI.log(text, 'donut'); }
+
+function puff(x, y, img, n, z = 0.4) {
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * Math.PI * 2, s = rand(0.5, 2.2);
+    G.parts.push({ x, y, z, vx: Math.cos(a) * s, vy: Math.sin(a) * s, vz: rand(0.5, 2.5), life: rand(0.3, 0.7), img, h: 0.06, grav: true, bright: img === 'pink' || img === 'ember' || img === 'cyan' || img === 'spark' });
+  }
+}
+
+function openDoor(i) {
+  const M = G.map;
+  if (M.doorMoving[i] || M.door[i] >= 1) return;
+  M.doorMoving[i] = 1;
+  const x = i % M.W, y = (i / M.W) | 0;
+  if (Math.hypot(x + 0.5 - G.player.x, y + 0.5 - G.player.y) < 10) Sound.play('door');
+}
+
+function collides(x, y, r) {
+  const M = G.map;
+  return M.solid(x - r, y - r) || M.solid(x + r, y - r) || M.solid(x - r, y + r) || M.solid(x + r, y + r);
+}
+
+// What the player is looking at and can press E on.
+function findInteract() {
+  const P = G.player, M = G.map;
+  const dirX = Math.cos(P.a), dirY = Math.sin(P.a);
+  // doors directly ahead
+  for (let d = 0.3; d <= 1.4; d += 0.1) {
+    const x = P.x + dirX * d, y = P.y + dirY * d, i = M.idx(x | 0, y | 0), t = M.tiles[i];
+    if ((t === T_DOOR || t === T_BOSSDOOR) && M.door[i] < 0.85) return { kind: 'door', i, label: t === T_BOSSDOOR ? 'Open the boss door (brave!)' : 'Open door' };
+    if (M.solid(x, y)) break;
+  }
+  const near = (o, r) => {
+    const dx = o.x - P.x, dy = o.y - P.y, d = Math.hypot(dx, dy);
+    if (d > r) return false;
+    let da = Math.atan2(dy, dx) - P.a; while (da > Math.PI) da -= Math.PI * 2; while (da < -Math.PI) da += Math.PI * 2;
+    return Math.abs(da) < 0.9 || d < 0.6;
+  };
+  for (const it of G.items) if (it.kind === 'chest' && !it.open && near(it, 1.4)) return { kind: 'chest', it, label: 'Open chest' };
+  if (near(M.mordecai, 1.8)) return { kind: 'mordecai', label: 'Talk to Mordecai (shop & loot boxes)' };
+  if (near(M.stairs, 1.5)) return G.bossDead ? { kind: 'stairs', label: G.floor === FLOORS.length - 1 ? 'Take the final stairwell' : `Descend to Floor ${G.floor + 2}` } : { kind: 'stairsLocked', label: 'Stairwell sealed — kill the floor boss' };
+  return null;
+}
+
+function interact() {
+  if (G.state !== 'playing') return;
+  const it = findInteract();
+  if (!it) return;
+  if (it.kind === 'door') openDoor(it.i);
+  else if (it.kind === 'chest') openChest(it.it);
+  else if (it.kind === 'mordecai') { UI.openShop(); }
+  else if (it.kind === 'stairs') descend();
+  else if (it.kind === 'stairsLocked') { systemSay(SYSTEM_LINES.stairsLocked, 'warn'); Sound.play('deny'); }
+}
+
+function openChest(c) {
+  c.open = true;
+  Sound.play('chest');
+  const P = G.player;
+  const drops = [];
+  drops.push({ kind: 'coins', amount: randi(10, 25) * (1 + G.floor) });
+  const r = Math.random();
+  if (r < 0.35) drops.push({ kind: 'potion', amount: 1 });
+  else if (r < 0.6) drops.push({ kind: 'lobbers', amount: 1 });
+  else if (r < 0.8) drops.push({ kind: P.weapons.crossbow ? 'bolts' : 'coins', amount: P.weapons.crossbow ? randi(5, 9) : 20 });
+  else drops.push({ kind: 'box', box: Math.random() < 0.7 ? 'bronze' : 'silver' });
+  drops.forEach((d, k) => G.items.push({ ...d, x: c.x + Math.cos(P.a + Math.PI + k) * 0.5 * 0 + (Math.random() - 0.5) * 0.6, y: c.y + (Math.random() - 0.5) * 0.6, pop: 0.5 }));
+  systemSay('Chest opened. The contents spill onto the floor, as is tradition.', 'info');
+}
+
+function pickupItems() {
+  const P = G.player;
+  for (const it of G.items) {
+    if (it.taken || it.kind === 'chest') continue;
+    if (it.pop > 0) continue;
+    if (Math.hypot(it.x - P.x, it.y - P.y) > 0.6) continue;
+    it.taken = true;
+    switch (it.kind) {
+      case 'coins': P.gold += it.amount; G.floorStats.gold += it.amount; Sound.play('coin'); floatText(`+${it.amount}g`, '#ffd040'); break;
+      case 'potion': P.potions += it.amount; Sound.play('pickup'); floatText('+Potion', '#ff6070'); break;
+      case 'bolts':
+        if (!P.weapons.crossbow) { it.taken = false; continue; }
+        P.ammo.bolts += it.amount; Sound.play('pickup'); floatText(`+${it.amount} bolts`, '#d0d0d0'); break;
+      case 'lobbers': P.ammo.lobbers += it.amount; Sound.play('pickup'); floatText('+Hob-Lobber', '#a0d060'); break;
+      case 'box': giveBox(it.box); floatText(BOX_TYPES[it.box].name, BOX_TYPES[it.box].color); systemSay(`You picked up a ${BOX_TYPES[it.box].name}. Open it in a Safe Room.`, 'good'); break;
+    }
+  }
+  G.items = G.items.filter(i => !i.taken);
+}
+
+function floatText(text, color) {
+  const P = G.player;
+  G.texts.push({ x: P.x + Math.cos(P.a) * 1.2, y: P.y + Math.sin(P.a) * 1.2, z: 0.45, text, color, life: 1.0, vz: 0.4 });
+}
+
+function updatePlayer(dt) {
+  const P = G.player, K = G.input.keys, M = G.map;
+  const sens = UI.settings.sens;
+  P.a += G.input.mdx * 0.0022 * sens;
+  P.pitch = clamp(P.pitch - G.input.mdy * 0.35 * sens * (UI.settings.invert ? -1 : 1), -90, 90);
+  G.input.mdx = 0; G.input.mdy = 0;
+  if (K.ArrowLeft) P.a -= 2.4 * dt;
+  if (K.ArrowRight) P.a += 2.4 * dt;
+
+  let fwd = 0, str = 0;
+  if (K.KeyW || K.ArrowUp) fwd += 1;
+  if (K.KeyS || K.ArrowDown) fwd -= 1;
+  if (K.KeyD) str += 1;
+  if (K.KeyA) str -= 1;
+  const moving = fwd || str;
+  const speed = (3.1 + P.stats.dex * 0.05) * (K.ShiftLeft || K.ShiftRight ? 1.45 : 1);
+  if (moving) {
+    const l = Math.hypot(fwd, str);
+    const dx = (Math.cos(P.a) * fwd - Math.sin(P.a) * str) / l * speed * dt;
+    const dy = (Math.sin(P.a) * fwd + Math.cos(P.a) * str) / l * speed * dt;
+    const r = P.radius;
+    if (!collides(P.x + dx, P.y, r)) P.x += dx;
+    else { const i = M.idx((P.x + dx + Math.sign(dx) * r) | 0, P.y | 0); if (M.isDoorTile(M.tiles[i])) openDoor(i); }
+    if (!collides(P.x, P.y + dy, r)) P.y += dy;
+    else { const i = M.idx(P.x | 0, (P.y + dy + Math.sign(dy) * r) | 0); if (M.isDoorTile(M.tiles[i])) openDoor(i); }
+    P.bob += dt * speed * 2.6;
+    if (Math.sin(P.bob) > 0.95 && !P._stepped) { P._stepped = true; Sound.play('step'); }
+    if (Math.sin(P.bob) < 0) P._stepped = false;
+  } else {
+    P.bob *= Math.pow(0.001, dt);
+  }
+  P.bobY = Math.abs(Math.sin(P.bob)) * 2;
+
+  P.cd -= dt; P.kickCd -= dt; P.donutUltCd -= dt;
+  P.attackAnim = Math.max(0, P.attackAnim - dt / Math.max(0.2, weaponCooldown(P, P.weapon)));
+  P.kickAnim = Math.max(0, P.kickAnim - dt * 2.8);
+  P.hurtT -= dt;
+  if (G.input.mouseDown && (P.weapon === 'fists' || P.weapon === 'club')) playerAttack();
+
+  // Safe room: rapid regeneration
+  const mh = maxHp(P);
+  if (M.zone[M.idx(P.x | 0, P.y | 0)] === Z_SAFE) {
+    if (!P.inSafe) { P.inSafe = true; if (!P.safeTipShown) { P.safeTipShown = true; systemSay(SYSTEM_LINES.safeRoom, 'info'); } }
+    P.hp = Math.min(mh, P.hp + mh * 0.1 * dt);
+  } else P.inSafe = false;
+  if (P.hp > mh) P.hp = mh;
+}
+
+function updateDoors(dt) {
+  const M = G.map;
+  for (let i = 0; i < M.doorMoving.length; i++) {
+    if (!M.doorMoving[i]) continue;
+    M.door[i] = Math.min(1, M.door[i] + dt * 1.6);
+    if (M.door[i] >= 1) M.doorMoving[i] = 0;
+  }
+}
+
+function updateParts(dt) {
+  for (const p of G.parts) {
+    p.life -= dt;
+    p.x += p.vx * dt; p.y += p.vy * dt; p.z += p.vz * dt;
+    if (p.grav) { p.vz -= 9 * dt; if (p.z < 0.02) { p.z = 0.02; p.vz = 0; p.vx *= 0.5; p.vy *= 0.5; } }
+  }
+  G.parts = G.parts.filter(p => p.life > 0);
+  for (const t of G.texts) { t.life -= dt; t.z += (t.vz || 0.5) * dt; }
+  G.texts = G.texts.filter(t => t.life > 0);
+  for (const it of G.items) if (it.pop > 0) it.pop -= dt;
+}
+
+// ================================ MAIN UPDATE ==============================
+
+function update(dt) {
+  if (G.state !== 'playing') return;
+  const P = G.player, M = G.map;
+  G.time += dt;
+  G.timeLeft -= dt;
+  if (G.timeLeft <= 60 && !G.warned) { G.warned = true; systemSay(SYSTEM_LINES.timeWarn, 'warn'); }
+  if (G.timeLeft <= 0) { G.timeLeft = 0; playerDie(SYSTEM_LINES.collapse); return; }
+  G.shake = Math.max(0, G.shake - dt * 2.5);
+  G.flash = Math.max(0, G.flash - dt * 2.5);
+
+  updatePlayer(dt);
+  M.updateFlow(P.x, P.y);
+  updateDoors(dt);
+  updateMobs(dt);
+  updateDonut(dt);
+  updateProjs(dt);
+  updateParts(dt);
+  pickupItems();
+
+  // music intensity follows the fight
+  let near = 0;
+  for (const m of G.mobs) if (!m.dead && m.state === 'chase' && Math.hypot(m.x - P.x, m.y - P.y) < 10) near++;
+  Sound.setIntensity(Math.min(1, near / 4 + (G.bossSeen && !G.bossDead ? 0.6 : 0)));
+  if (Math.random() < dt * 0.5) addViewers(near * 60 + 10);
+}
+
+// Collect everything visible into the renderer's sprite list.
+function gatherSprites() {
+  const out = [], t = G.time;
+  for (const d of G.decor) {
+    switch (d.kind) {
+      case 'brazier': out.push({ x: d.x, y: d.y, h: 0.7, img: SPR.brazier[((t * 8 + d.ph * 3) | 0) % 3], bright: true }); break;
+      case 'bones': out.push({ x: d.x, y: d.y, h: 0.16, img: SPR.bones }); break;
+      case 'barrel': out.push({ x: d.x, y: d.y, h: 0.55, img: SPR.barrel }); break;
+      case 'camera': out.push({ x: d.x, y: d.y, h: 0.75, img: SPR.camera }); break;
+      case 'mordecai': out.push({ x: d.x, y: d.y, h: 0.85, img: SPR.mordecai }); break;
+      case 'stairs': out.push({ x: d.x, y: d.y, h: 1.0, img: (G.bossDead ? SPR.stairsOpen : SPR.stairsLocked)[((t * 6) | 0) % 3], bright: G.bossDead }); break;
+    }
+  }
+  for (const it of G.items) {
+    const bob = Math.sin(t * 3 + it.x * 5) * 0.03;
+    const popZ = it.pop > 0 ? Math.sin((0.5 - it.pop) / 0.5 * Math.PI) * 0.4 : 0;
+    switch (it.kind) {
+      case 'chest': out.push({ x: it.x, y: it.y, h: 0.42, img: it.open ? SPR.chestOpen : SPR.chest }); break;
+      case 'coins': out.push({ x: it.x, y: it.y, z: popZ, h: 0.14, img: SPR.coins }); break;
+      case 'potion': out.push({ x: it.x, y: it.y, z: 0.03 + bob + popZ, h: 0.26, img: SPR.potion }); break;
+      case 'bolts': out.push({ x: it.x, y: it.y, z: popZ, h: 0.16, img: SPR.bolts }); break;
+      case 'lobbers': out.push({ x: it.x, y: it.y, z: popZ, h: 0.26, img: SPR.lobbers }); break;
+      case 'box': out.push({ x: it.x, y: it.y, z: 0.12 + bob + popZ, h: 0.34, img: SPR.box[it.box], bright: true }); break;
+    }
+  }
+  for (const m of G.mobs) {
+    const fr = SPR[m.d.sprite];
+    let img;
+    if (m.dead) img = fr[3];
+    else if (m.atkT > 0 || m.charging > 0) img = fr[2];
+    else if (m.state === 'chase') img = fr[((m.anim * (m.d.speed * 2.2)) | 0) % 2];
+    else img = fr[m.d.fly ? ((m.anim * 4) | 0) % 2 : 0];
+    const z = m.dead ? 0 : (m.d.z || 0) + (m.d.fly ? Math.sin(m.anim * 3) * 0.06 : 0);
+    out.push({ x: m.x, y: m.y, z, h: m.dead ? m.d.h * 0.7 : m.d.h, img, flash: m.flash, bright: !m.dead && m.d.bright, mirror: m.mirror });
+  }
+  const D = G.donut;
+  if (D) {
+    const f = D.castT > 0 ? 3 : D.moving ? ((D.anim | 0) % 2) : 0;
+    out.push({ x: D.x, y: D.y, h: 0.36, img: SPR.donut[f] });
+  }
+  for (const p of G.projs) {
+    const fr = SPR[p.kind];
+    out.push({ x: p.x, y: p.y, z: p.z - 0.1, h: p.kind === 'lobber' ? 0.22 : p.kind === 'bolt' ? 0.1 : 0.2, img: fr[((t * 12) | 0) % fr.length], bright: p.kind !== 'rock' && p.kind !== 'lobber' });
+  }
+  for (const p of G.parts) {
+    if (p.anim) {
+      const fr = SPR[p.anim], k = 1 - p.life / p.maxLife;
+      out.push({ x: p.x, y: p.y, z: p.z - p.h * 0.35, h: p.h, img: fr[Math.min(fr.length - 1, (k * fr.length) | 0)], bright: true });
+    } else out.push({ x: p.x, y: p.y, z: p.z, h: p.h, img: SPR[p.img], bright: p.bright });
+  }
+  return out;
+}
+
+</script>
+<script>
+'use strict';
+// ---------------------------------------------------------------------------
+// HUD, message feed, achievement banners, and all menu screens (title,
+// floor intro, pause, character sheet, safe-room shop & loot boxes, map,
+// death, floor summary, victory).
+// ---------------------------------------------------------------------------
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const UI = {
+  settings: { sens: 1, invert: false, sfx: 0.7, music: 0.35 },
+  achQueue: [], achShowing: false, bossRef: null, lastPrompt: '',
+
+  init() {
+    try { Object.assign(this.settings, JSON.parse(localStorage.getItem('crawl-carl-settings') || '{}')); } catch (e) { /* defaults */ }
+    Sound.setSfx(this.settings.sfx); Sound.setMusic(this.settings.music);
+    this.mini = $('minimap').getContext('2d');
+  },
+  saveSettings() { try { localStorage.setItem('crawl-carl-settings', JSON.stringify(this.settings)); } catch (e) { /* ignore */ } },
+
+  // ------------------------------------------------------------- HUD
+  updateHud() {
+    const P = G.player; if (!P) return;
+    const mh = maxHp(P), F = FLOORS[G.floor];
+    $('hp-fill').style.width = clamp(P.hp / mh * 100, 0, 100) + '%';
+    $('hp-text').textContent = `${Math.ceil(Math.max(0, P.hp))} / ${Math.round(mh)}`;
+    $('xp-fill').style.width = clamp(P.xp / xpNeed(P.level) * 100, 0, 100) + '%';
+    $('lvl').textContent = P.level;
+    $('points').hidden = P.points <= 0;
+    $('points').textContent = `+${P.points} stat pts [TAB]`;
+    $('floor-name').textContent = `Floor ${G.floor + 1} · ${F.name}`;
+    const t = Math.max(0, G.timeLeft), m = Math.floor(t / 60), s = Math.floor(t % 60);
+    $('timer').textContent = `${m}:${String(s).padStart(2, '0')}`;
+    $('timer').classList.toggle('urgent', t < 60);
+    $('viewers').textContent = fmt(P.viewers);
+    $('gold').textContent = fmt(P.gold);
+    const W = WEAPONS.find(w => w.id === P.weapon);
+    $('weapon-name').textContent = P.weapon === 'fists' ? GAUNTLETS[P.gauntlet].name : W.name;
+    $('ammo').textContent = W.ammo ? `${P.ammo[W.ammo]} ${W.ammo === 'bolts' ? 'bolts' : 'jugs'}` : '∞';
+    $('potions').textContent = P.potions;
+    $('boxes').textContent = P.boxes.length;
+    const slots = $('slots');
+    slots.innerHTML = WEAPONS.map(w => `<span class="slot ${P.weapons[w.id] ? '' : 'locked'} ${P.weapon === w.id ? 'on' : ''}">${w.key}</span>`).join('');
+    $('kick-cd').style.setProperty('--p', clamp(1 - Math.max(0, P.kickCd) / 2.2, 0, 1));
+    $('ult-cd').style.setProperty('--p', clamp(1 - Math.max(0, P.donutUltCd) / 22, 0, 1));
+    $('ult-cd').classList.toggle('ready', P.donutUltCd <= 0);
+    $('kick-cd').classList.toggle('ready', P.kickCd <= 0);
+    $('hurt').style.opacity = P.hurtT > 0 ? P.hurtT * 2 : (P.hp < mh * 0.25 ? 0.25 + Math.sin(G.time * 5) * 0.1 : 0);
+    // interaction prompt
+    const it = G.state === 'playing' ? findInteract() : null;
+    const label = it ? `<b>E</b> ${esc(it.label)}` : '';
+    if (label !== this.lastPrompt) { $('prompt').innerHTML = label; $('prompt').hidden = !label; this.lastPrompt = label; }
+    const safe = G.map && G.map.zone[G.map.idx(P.x | 0, P.y | 0)] === Z_SAFE;
+    $('safe-badge').hidden = !safe;
+    // boss bar
+    if (this.bossRef && !this.bossRef.dead) $('boss-fill').style.width = (this.bossRef.hp / this.bossRef.maxHp * 100) + '%';
+    this.drawMinimap();
+  },
+
+  drawMinimap() {
+    const M = G.map, P = G.player, ctx = this.mini; if (!M) return;
+    const S = 132, R = 11, cell = S / (R * 2);
+    ctx.fillStyle = '#0a080cdd'; ctx.fillRect(0, 0, S, S);
+    const ox = P.x - R, oy = P.y - R;
+    for (let y = Math.floor(oy); y < oy + R * 2 + 1; y++) for (let x = Math.floor(ox); x < ox + R * 2 + 1; x++) {
+      if (!M.inside(x, y)) continue;
+      const i = M.idx(x, y);
+      if (!M.seen[i]) continue;
+      const t = M.tiles[i];
+      ctx.fillStyle = t === T_EMPTY ? (M.zone[i] === Z_SAFE ? '#2a5a34' : M.zone[i] === Z_BOSS ? '#5a2424' : '#3a3440')
+        : (t === T_DOOR || t === T_BOSSDOOR) ? (M.door[i] > 0.8 ? '#6a5030' : '#c08040') : '#8a8290';
+      ctx.fillRect((x - ox) * cell, (y - oy) * cell, cell + 0.5, cell + 0.5);
+    }
+    const dot = (x, y, c, r = 2.5) => { ctx.fillStyle = c; ctx.beginPath(); ctx.arc((x - ox) * cell, (y - oy) * cell, r, 0, 7); ctx.fill(); };
+    if (M.seen[M.idx(M.stairs.x | 0, M.stairs.y | 0)]) dot(M.stairs.x, M.stairs.y, G.bossDead ? '#50d0ff' : '#ff4040', 3.5);
+    dot(M.mordecai.x, M.mordecai.y, '#60ff90');
+    for (const m of G.mobs) if (!m.dead && m.state === 'chase' && Math.hypot(m.x - P.x, m.y - P.y) < R) dot(m.x, m.y, m.d.boss ? '#ff2020' : '#ff7050', m.d.boss ? 3.5 : 2);
+    dot(G.donut.x, G.donut.y, '#ffc0f0', 2);
+    // player arrow
+    ctx.save(); ctx.translate(R * cell, R * cell); ctx.rotate(P.a);
+    ctx.fillStyle = '#ffe070'; ctx.beginPath(); ctx.moveTo(6, 0); ctx.lineTo(-4, -4); ctx.lineTo(-2, 0); ctx.lineTo(-4, 4); ctx.fill();
+    ctx.restore();
+  },
+
+  log(text, cls) {
+    const feed = $('log');
+    const el = document.createElement('div');
+    el.className = 'msg ' + cls;
+    const who = cls === 'donut' ? 'DONUT' : cls === 'boss' ? 'BOSS' : 'SYSTEM';
+    el.innerHTML = `<span class="who">${who}</span> ${esc(text)}`;
+    feed.appendChild(el);
+    while (feed.children.length > 4) feed.removeChild(feed.firstChild);
+    setTimeout(() => el.classList.add('fade'), 7000);
+    setTimeout(() => el.remove(), 8500);
+  },
+
+  achievement(a) {
+    this.achQueue.push(a);
+    if (!this.achShowing) this.nextAch();
+  },
+  nextAch() {
+    const a = this.achQueue.shift();
+    if (!a) { this.achShowing = false; return; }
+    this.achShowing = true;
+    const box = $('achv');
+    box.innerHTML = `<div class="achv-kicker">New Achievement!</div><div class="achv-title">${esc(a.title)}</div><div class="achv-text">${esc(a.text)}</div>${a.box ? `<div class="achv-reward" style="color:${BOX_TYPES[a.box].color}">Reward: ${BOX_TYPES[a.box].name}</div>` : ''}`;
+    box.classList.remove('show'); void box.offsetWidth; box.classList.add('show');
+    setTimeout(() => { box.classList.remove('show'); setTimeout(() => this.nextAch(), 400); }, 5000);
+  },
+
+  levelUp(lvl) {
+    const el = $('levelup');
+    el.textContent = `LEVEL ${lvl}`;
+    el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+  },
+
+  hurt() { /* vignette is driven from updateHud via P.hurtT */ },
+
+  bossIntro(m) {
+    this.bossRef = m;
+    $('boss-name').textContent = m.d.name;
+    $('bossbar').hidden = false;
+  },
+  bossBar(m) { if (!m) { $('bossbar').hidden = true; this.bossRef = null; } },
+
+  // ------------------------------------------------------------- screens
+  screen(html, cls = '') {
+    const s = $('screen');
+    s.className = 'screen ' + cls;
+    s.innerHTML = html;
+    s.hidden = false;
+    $('hud').classList.toggle('dim', true);
+  },
+  hideScreen() {
+    $('screen').hidden = true;
+    $('screen').innerHTML = '';
+    $('hud').classList.toggle('dim', false);
+  },
+
+  showTitle() {
+    G.state = 'title';
+    const save = loadSave();
+    this.screen(`
+      <div class="title-wrap">
+        <div class="title-kicker">A Dungeon Crawler Carl fan game</div>
+        <h1 class="title-logo">CRAWL<span>the world dungeon</span></h1>
+        <p class="title-blurb">Earth got demolished. You're in boxer shorts. Your ex-girlfriend's cat can talk now and she's a princess. Punch your way down five floors before each one collapses, while the whole galaxy watches.</p>
+        <div class="menu">
+          ${save ? `<button class="btn primary" data-act="continue">Continue · Floor ${save.floor + 1}</button>` : ''}
+          <button class="btn ${save ? '' : 'primary'}" data-act="new">New Crawl</button>
+          <button class="btn" data-act="help">How to Play</button>
+          <button class="btn" data-act="settings">Settings</button>
+        </div>
+        <p class="pc-note">Made for PC: keyboard and mouse required.</p>
+      </div>`, 'title');
+  },
+
+  showHelp(back) {
+    this.screen(`
+      <div class="panel help">
+        <h2>How to Crawl</h2>
+        <div class="help-grid">
+          <div><kbd>W A S D</kbd> Move &nbsp; <kbd>Shift</kbd> Sprint</div>
+          <div><kbd>Mouse</kbd> Look &nbsp; <kbd>Click</kbd> Attack</div>
+          <div><kbd>Right-click</kbd> or <kbd>F</kbd> Kick (knockback + stun)</div>
+          <div><kbd>R</kbd> Donut's Magic Missile Barrage</div>
+          <div><kbd>1–4</kbd> / <kbd>Wheel</kbd> Switch weapon</div>
+          <div><kbd>E</kbd> Open doors, chests, talk, descend</div>
+          <div><kbd>Q</kbd> Drink healing potion</div>
+          <div><kbd>Tab</kbd> Character sheet &amp; stats</div>
+          <div><kbd>M</kbd> Dungeon map &nbsp; <kbd>Esc</kbd> Pause</div>
+        </div>
+        <h3>The Rules of the Show</h3>
+        <ul>
+          <li>Each floor has a <b>collapse timer</b>. Reach the stairwell before it hits zero.</li>
+          <li>The stairwell is sealed until you kill the <b>floor boss</b> guarding it.</li>
+          <li>You start every floor in a <b>Safe Room</b>. Monsters can't enter, you heal fast, and <b>Mordecai</b> sells gear and opens your loot boxes.</li>
+          <li>Achievements earn <b>loot boxes</b>. Boxes only open in a Safe Room.</li>
+          <li>Level up to earn stat points: <b>STR</b> melee, <b>CON</b> health, <b>DEX</b> ranged/speed/crits, <b>CHA</b> shop prices and viewers.</li>
+          <li><b>Hob-Lobbers</b> explode. You are not immune. Throw them far; look up to lob them farther.</li>
+          <li><b>Princess Donut</b> fights on her own. She will also comment on your choices.</li>
+        </ul>
+        <button class="btn primary" data-act="${back}">Back</button>
+      </div>`);
+  },
+
+  showSettings(back) {
+    const s = this.settings;
+    this.screen(`
+      <div class="panel settings">
+        <h2>Settings</h2>
+        <label for="set-sens">Mouse sensitivity <output id="o-sens">${s.sens.toFixed(1)}</output></label>
+        <input id="set-sens" type="range" min="0.2" max="3" step="0.1" value="${s.sens}">
+        <label for="set-sfx">Sound effects <output id="o-sfx">${Math.round(s.sfx * 100)}</output></label>
+        <input id="set-sfx" type="range" min="0" max="1" step="0.05" value="${s.sfx}">
+        <label for="set-music">Music <output id="o-music">${Math.round(s.music * 100)}</output></label>
+        <input id="set-music" type="range" min="0" max="1" step="0.05" value="${s.music}">
+        <label class="check"><input id="set-invert" type="checkbox" ${s.invert ? 'checked' : ''}> Invert vertical look</label>
+        <button class="btn primary" data-act="${back}">Back</button>
+      </div>`);
+    const bind = (id, key, out, f) => $(id).addEventListener('input', e => {
+      s[key] = parseFloat(e.target.value); $(out).textContent = f(s[key]);
+      Sound.setSfx(s.sfx); Sound.setMusic(s.music); this.saveSettings();
+    });
+    bind('set-sens', 'sens', 'o-sens', v => v.toFixed(1));
+    bind('set-sfx', 'sfx', 'o-sfx', v => Math.round(v * 100));
+    bind('set-music', 'music', 'o-music', v => Math.round(v * 100));
+    $('set-invert').addEventListener('change', e => { s.invert = e.target.checked; this.saveSettings(); });
+  },
+
+  showFloorIntro(f) {
+    const F = FLOORS[f];
+    this.screen(`
+      <div class="panel intro">
+        <div class="intro-floor">Floor ${f + 1} of ${FLOORS.length}</div>
+        <h2 class="intro-name">${esc(F.name)}</h2>
+        <p class="intro-text">${esc(F.intro)}</p>
+        <div class="intro-facts">
+          <div><span>Collapse timer</span><b>${Math.floor(F.time / 60)}:00</b></div>
+          <div><span>Floor boss</span><b>${esc(MOBS[F.boss].name)}</b></div>
+          <div><span>Residents</span><b>${[...new Set(F.pool)].map(k => MOBS[k].name).join(', ')}</b></div>
+        </div>
+        <button class="btn primary big" data-act="begin">Enter the Floor</button>
+        <p class="hint">Click to capture the mouse. Esc to pause.</p>
+      </div>`, 'intro');
+  },
+
+  showPause() {
+    this.screen(`
+      <div class="panel pause">
+        <h2>Paused</h2>
+        <p class="sub">The timer is paused too. The audience is not.</p>
+        <div class="menu">
+          <button class="btn primary" data-act="resume">Resume</button>
+          <button class="btn" data-act="sheet">Character Sheet</button>
+          <button class="btn" data-act="help-pause">How to Play</button>
+          <button class="btn" data-act="settings-pause">Settings</button>
+          <button class="btn danger" data-act="quit">Quit to Title</button>
+        </div>
+        <p class="hint">Progress saves at the start of each floor.</p>
+      </div>`);
+  },
+
+  showSheet() {
+    const P = G.player, mh = maxHp(P);
+    const statRow = (k, label, help) => `
+      <div class="stat">
+        <div class="stat-name">${label}<small>${help}</small></div>
+        <div class="stat-val">${P.stats[k]}</div>
+        <button class="btn tiny" data-stat="${k}" ${P.points ? '' : 'disabled'} aria-label="Raise ${label}">+</button>
+      </div>`;
+    const ach = Object.entries(ACHIEVEMENTS).map(([id, a]) => `<li class="${P.achievements[id] ? 'got' : ''}">${P.achievements[id] ? '★' : '☆'} ${esc(a.title)}</li>`).join('');
+    const weaponRows = WEAPONS.map(w => {
+      const dmg = w.id === 'lobber' ? weaponDamage(P, 'lobber') : weaponDamage(P, w.id);
+      return `<tr class="${P.weapons[w.id] ? '' : 'locked'}"><td>${w.key}</td><td>${esc(w.id === 'fists' ? GAUNTLETS[P.gauntlet].name : w.name)}</td><td>${P.weapons[w.id] ? Math.round(dmg) : '—'}</td><td>${P.weapons[w.id] ? (1 / weaponCooldown(P, w.id)).toFixed(1) + '/s' : 'not owned'}</td></tr>`;
+    }).join('');
+    this.screen(`
+      <div class="panel sheet">
+        <div class="sheet-head">
+          <div><h2>Carl</h2><div class="sub">Human · Level ${P.level} Crawler · ${fmt(P.viewers)} viewers</div></div>
+          <div class="sheet-points ${P.points ? 'has' : ''}">${P.points} unspent point${P.points === 1 ? '' : 's'}</div>
+        </div>
+        <div class="sheet-grid">
+          <section>
+            <h3>Attributes</h3>
+            ${statRow('str', 'Strength', 'Fists, club, kick damage')}
+            ${statRow('con', 'Constitution', '+10 max health each')}
+            ${statRow('dex', 'Dexterity', 'Crossbow, lobbers, speed, crits')}
+            ${statRow('cha', 'Charisma', 'Shop discounts, viewer gains')}
+            <div class="derived">
+              <div><span>Health</span><b>${Math.ceil(P.hp)} / ${Math.round(mh)}</b></div>
+              <div><span>XP</span><b>${P.xp} / ${xpNeed(P.level)}</b></div>
+              <div><span>Crit chance</span><b>${Math.round((0.05 + P.stats.dex * 0.006) * 100)}%</b></div>
+              <div><span>Shop prices</span><b>${Math.round(shopDiscount(P) * 100)}%</b></div>
+              <div><span>Kick damage</span><b>${Math.round(weaponDamage(P, 'kick'))}</b></div>
+              <div><span>Donut's missile</span><b>${Math.round(6 + P.level * 2.4 + G.floor * 3)}</b></div>
+            </div>
+          </section>
+          <section>
+            <h3>Arsenal</h3>
+            <table class="weapons"><thead><tr><th>Key</th><th>Weapon</th><th>Dmg</th><th>Speed</th></tr></thead><tbody>${weaponRows}</tbody></table>
+            <h3>Inventory</h3>
+            <div class="inv">
+              <div><span>Gold</span><b>${fmt(P.gold)}</b></div>
+              <div><span>Healing potions</span><b>${P.potions}</b></div>
+              <div><span>Bolts</span><b>${P.ammo.bolts}</b></div>
+              <div><span>Hob-Lobbers</span><b>${P.ammo.lobbers}</b></div>
+              <div><span>Unopened boxes</span><b>${P.boxes.length}</b></div>
+              <div><span>Kills</span><b>${P.kills}</b></div>
+            </div>
+          </section>
+          <section>
+            <h3>Achievements · ${Object.keys(P.achievements).length}/${Object.keys(ACHIEVEMENTS).length}</h3>
+            <ul class="ach-list">${ach}</ul>
+          </section>
+        </div>
+        <button class="btn primary" data-act="close">Close [Tab]</button>
+      </div>`, 'sheet-screen');
+  },
+
+  showMap() {
+    this.screen(`<div class="panel mapview"><h2>Floor ${G.floor + 1} Map</h2><canvas id="bigmap" width="560" height="560"></canvas>
+      <div class="legend"><span><i style="background:#ffe070"></i>You</span><span><i style="background:#60ff90"></i>Safe room</span><span><i style="background:#ff4040"></i>Stairwell (sealed)</span><span><i style="background:#50d0ff"></i>Stairwell (open)</span><span><i style="background:#c08040"></i>Door</span></div>
+      <button class="btn primary" data-act="close">Close [M]</button></div>`);
+    const c = $('bigmap'), ctx = c.getContext('2d'), M = G.map, P = G.player;
+    const cell = Math.floor(560 / Math.max(M.W, M.H));
+    ctx.fillStyle = '#0a080c'; ctx.fillRect(0, 0, 560, 560);
+    for (let y = 0; y < M.H; y++) for (let x = 0; x < M.W; x++) {
+      const i = M.idx(x, y); if (!M.seen[i]) continue;
+      const t = M.tiles[i];
+      ctx.fillStyle = t === T_EMPTY ? (M.zone[i] === Z_SAFE ? '#2a5a34' : M.zone[i] === Z_BOSS ? '#5a2424' : '#3a3440') : (t === T_DOOR || t === T_BOSSDOOR) ? '#c08040' : '#8a8290';
+      ctx.fillRect(x * cell, y * cell, cell, cell);
+    }
+    const dot = (x, y, col, r) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x * cell, y * cell, r, 0, 7); ctx.fill(); };
+    if (M.seen[M.idx(M.stairs.x | 0, M.stairs.y | 0)]) dot(M.stairs.x, M.stairs.y, G.bossDead ? '#50d0ff' : '#ff4040', 5);
+    dot(M.mordecai.x, M.mordecai.y, '#60ff90', 4);
+    ctx.save(); ctx.translate(P.x * cell, P.y * cell); ctx.rotate(P.a); ctx.fillStyle = '#ffe070';
+    ctx.beginPath(); ctx.moveTo(8, 0); ctx.lineTo(-5, -5); ctx.lineTo(-2, 0); ctx.lineTo(-5, 5); ctx.fill(); ctx.restore();
+  },
+
+  // --------------------------------------------------------- safe room
+  shopTab: 'shop', lastOpened: null,
+  openShop() {
+    G.state = 'shop';
+    document.exitPointerLock && document.exitPointerLock();
+    this.mordecaiLine = pick(MORDECAI_LINES);
+    this.lastOpened = null;
+    this.renderShop();
+  },
+  shopPrice(item) {
+    const P = G.player;
+    let price = item.price;
+    if (item.id === 'gauntlet') price += item.scale * P.gauntletsBought;
+    if (item.id === 'tonic') price += item.scale * P.tonicsBought;
+    return Math.round(price * shopDiscount(P));
+  },
+  renderShop() {
+    const P = G.player;
+    const rows = SHOP.map(item => {
+      let disabled = false, note = '';
+      if (item.once && P.weapons[item.once]) { disabled = true; note = 'Owned'; }
+      if (item.needs && !P.weapons[item.needs]) { disabled = true; note = 'Need crossbow'; }
+      if (item.id === 'gauntlet' && P.gauntlet >= GAUNTLETS.length - 1) { disabled = true; note = 'Maxed'; }
+      const price = this.shopPrice(item);
+      const name = item.id === 'gauntlet' && P.gauntlet < GAUNTLETS.length - 1 ? GAUNTLETS[P.gauntlet + 1].name : item.name;
+      return `<div class="shop-row">
+        <div class="shop-info"><div class="shop-name">${esc(name)}</div><div class="shop-desc">${esc(item.desc)}</div></div>
+        <button class="btn buy" data-buy="${item.id}" ${disabled || P.gold < price ? 'disabled' : ''}>${note || price + 'g'}</button>
+      </div>`;
+    }).join('');
+    const counts = {};
+    P.boxes.forEach(b => counts[b] = (counts[b] || 0) + 1);
+    const boxes = Object.keys(counts).length ? Object.entries(counts).map(([b, n]) => `
+      <div class="box-row" style="--c:${BOX_TYPES[b].color}">
+        <div class="box-icon"></div><div class="shop-info"><div class="shop-name">${BOX_TYPES[b].name}</div><div class="shop-desc">× ${n}</div></div>
+        <button class="btn buy" data-open="${b}">Open</button>
+      </div>`).join('') : '<p class="empty">No boxes. Earn achievements and kill bosses to get some.</p>';
+    const opened = this.lastOpened ? `<div class="opened ${this.lastOpened.fresh ? 'fresh' : ''}" style="--c:${BOX_TYPES[this.lastOpened.type].color}"><div class="opened-title">${BOX_TYPES[this.lastOpened.type].name}</div><ul>${this.lastOpened.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul></div>` : '';
+    this.screen(`
+      <div class="panel shop">
+        <div class="shop-head">
+          <div class="mordecai-say"><b>Mordecai:</b> “${esc(this.mordecaiLine)}”</div>
+          <div class="wallet">${fmt(P.gold)}<small>gold</small></div>
+        </div>
+        <div class="shop-grid">
+          <section><h3>Buy</h3>${rows}</section>
+          <section><h3>Loot Boxes</h3>${opened}${boxes}</section>
+        </div>
+        <button class="btn primary" data-act="close-shop">Back to the Dungeon [Esc]</button>
+      </div>`, 'shop-screen');
+  },
+  buy(id) {
+    const P = G.player, item = SHOP.find(s => s.id === id), price = this.shopPrice(item);
+    if (P.gold < price) { Sound.play('deny'); return; }
+    P.gold -= price; P.goldSpent += price;
+    switch (id) {
+      case 'potion': P.potions++; break;
+      case 'bolts': P.ammo.bolts += 12; break;
+      case 'lobbers': P.ammo.lobbers += 2; break;
+      case 'gauntlet': P.gauntlet++; P.gauntletsBought++; break;
+      case 'club': P.weapons.club = true; break;
+      case 'crossbow': P.weapons.crossbow = true; P.ammo.bolts += 12; break;
+      case 'tonic': P.points++; P.tonicsBought++; break;
+    }
+    Sound.play('buy');
+    if (P.goldSpent >= 300) unlock('shopper');
+    this.renderShop();
+  },
+  openBox(type) {
+    const P = G.player;
+    const i = P.boxes.indexOf(type); if (i < 0) return;
+    P.boxes.splice(i, 1);
+    const got = [], f = G.floor;
+    const gold = n => { n = Math.round(n); P.gold += n; got.push(`${n} gold`); };
+    const potions = n => { P.potions += n; got.push(`${n} Healing Potion${n > 1 ? 's' : ''}`); };
+    const lobbers = n => { P.ammo.lobbers += n; got.push(`${n} Hob-Lobber${n > 1 ? 's' : ''}`); };
+    const bolts = n => { if (P.weapons.crossbow) { P.ammo.bolts += n; got.push(`${n} crossbow bolts`); } else gold(n * 2); };
+    const gauntlet = () => { if (P.gauntlet < GAUNTLETS.length - 1) { P.gauntlet++; got.push(`${GAUNTLETS[P.gauntlet].name} (fist damage ×${GAUNTLETS[P.gauntlet].mult})`); return true; } return false; };
+    const point = n => { P.points += n; got.push(`${n} stat point${n > 1 ? 's' : ''}`); };
+    switch (type) {
+      case 'bronze': {
+        const r = Math.random();
+        if (r < 0.35) gold(rand(20, 45) * (1 + f * 0.5)); else if (r < 0.6) potions(2); else if (r < 0.8) lobbers(2); else bolts(12);
+        break;
+      }
+      case 'silver':
+        gold(rand(50, 100) * (1 + f * 0.5));
+        if (!P.weapons.crossbow) { P.weapons.crossbow = true; P.ammo.bolts += 15; got.push('Rusty Crossbow (+15 bolts) — press 3'); }
+        else if (!P.weapons.club) { P.weapons.club = true; got.push('Nail-Studded Club — press 2'); }
+        else pick([() => potions(3), () => lobbers(3), () => bolts(20)])();
+        break;
+      case 'gold':
+        point(1); gold(rand(100, 180) * (1 + f * 0.5));
+        if (!gauntlet()) { potions(2); lobbers(3); }
+        break;
+      case 'boss':
+        point(2); gold(150 * (f + 1)); potions(2); lobbers(3);
+        if (!P.weapons.club) { P.weapons.club = true; got.push('Nail-Studded Club — press 2'); } else gauntlet() || bolts(15);
+        break;
+      case 'fan': {
+        const r = Math.random();
+        if (r < 0.3) { P.stats.cha++; got.push('A single worn sock (+1 Charisma). The fans are weird.'); }
+        else if (r < 0.55) { gold(120 * (1 + f * 0.5)); got.push('...from selling a signed photo of your feet'); }
+        else if (r < 0.8) { potions(3); got.push('(fan-made, probably fine)'); }
+        else { lobbers(4); got.push('A Hob-Lobber care package with a heartfelt note'); }
+        break;
+      }
+    }
+    this.lastOpened = { type, items: got, fresh: true };
+    Sound.play('box');
+    this.renderShop();
+    this.lastOpened.fresh = false;
+  },
+  closeShop() {
+    this.hideScreen();
+    G.state = 'playing';
+    Main.lock();
+  },
+
+  // ---------------------------------------------------------- end states
+  showDeath(msg) {
+    document.exitPointerLock && document.exitPointerLock();
+    const P = G.player;
+    this.screen(`
+      <div class="panel death">
+        <div class="death-kicker">Crawler Down</div>
+        <h2>You Died</h2>
+        <p class="death-msg">${esc(msg)}</p>
+        <div class="intro-facts">
+          <div><span>Floor</span><b>${G.floor + 1}</b></div>
+          <div><span>Level</span><b>${P.level}</b></div>
+          <div><span>Kills</span><b>${P.kills}</b></div>
+          <div><span>Viewers</span><b>${fmt(P.viewers)}</b></div>
+        </div>
+        <div class="menu">
+          <button class="btn primary" data-act="retry">Retry Floor ${G.floor + 1}</button>
+          <button class="btn" data-act="quit">Quit to Title</button>
+        </div>
+        <p class="hint">Retrying restarts this floor with the gear you had when you entered it.</p>
+      </div>`, 'death-screen');
+  },
+
+  showFloorSummary(s) {
+    document.exitPointerLock && document.exitPointerLock();
+    const m = Math.floor(s.time / 60), sec = Math.floor(s.time % 60);
+    this.screen(`
+      <div class="panel intro">
+        <div class="intro-floor">Floor ${s.floor + 1} Cleared</div>
+        <h2 class="intro-name">You Survived. For Now.</h2>
+        <p class="intro-text">The stairwell hums. Floor ${s.floor + 1} collapses behind you with everyone still on it. The ratings are excellent.</p>
+        <div class="intro-facts">
+          <div><span>Time</span><b>${m}:${String(sec).padStart(2, '0')}</b></div>
+          <div><span>Kills</span><b>${s.kills}</b></div>
+          <div><span>Gold found</span><b>${fmt(s.gold)}</b></div>
+          <div><span>New viewers</span><b>+${fmt(s.viewers)}</b></div>
+        </div>
+        <button class="btn primary big" data-act="next-floor">Descend to Floor ${s.floor + 2}</button>
+      </div>`, 'intro');
+  },
+
+  showVictory() {
+    document.exitPointerLock && document.exitPointerLock();
+    const P = G.player;
+    const m = Math.floor(P.totalTime / 60);
+    this.screen(`
+      <div class="panel victory">
+        <div class="intro-floor">Season Finale</div>
+        <h2 class="intro-name">The Showrunner Is Cancelled</h2>
+        <p class="intro-text">You punched your way through five floors in your underwear, and the galaxy loved every second. Donut has already signed three sponsorship deals. The dungeon goes deeper, but that's next season.</p>
+        <div class="intro-facts">
+          <div><span>Final level</span><b>${P.level}</b></div>
+          <div><span>Total kills</span><b>${P.kills}</b></div>
+          <div><span>Viewers</span><b>${fmt(P.viewers)}</b></div>
+          <div><span>Time in dungeon</span><b>${m} min</b></div>
+          <div><span>Achievements</span><b>${Object.keys(P.achievements).length}/${Object.keys(ACHIEVEMENTS).length}</b></div>
+          <div><span>Deaths</span><b>${P.deaths}</b></div>
+        </div>
+        <button class="btn primary big" data-act="quit">Back to Title</button>
+      </div>`, 'victory-screen');
+  },
+};
+
+</script>
+<script>
+'use strict';
+// ---------------------------------------------------------------------------
+// Boot, input handling, pointer lock, and the main loop.
+// ---------------------------------------------------------------------------
+
+const Main = {
+  canvas: null, last: 0, locked: false,
+
+  boot() {
+    this.canvas = $('view');
+    Render.init(this.canvas);
+    buildSprites();
+    UI.init();
+    // A dungeon behind the title screen so the menu has something to sit on.
+    G.player = newPlayer();
+    G.floor = 0;
+    G.map = new Dungeon(0, 12345);
+    Render.setTheme(buildTheme('stone', 1000), FLOORS[0].fog);
+    G.player.x = G.map.start.x; G.player.y = G.map.start.y;
+    for (const d of G.map.spawns.decor) G.decor.push({ kind: d.kind, x: d.x, y: d.y, ph: Math.random() * 3 });
+    G.decor.push({ kind: 'mordecai', x: G.map.mordecai.x, y: G.map.mordecai.y });
+    G.donut = { x: G.player.x + 1, y: G.player.y + 0.5, cd: 0, anim: 0, castT: 0, quipT: 99, moving: false };
+    UI.showTitle();
+    this.bindInput();
+    window.addEventListener('resize', () => Render.resize());
+    requestAnimationFrame(t => this.loop(t));
+  },
+
+  lock() {
+    const c = this.canvas;
+    if (document.pointerLockElement === c) return;
+    try {
+      const r = c.requestPointerLock && c.requestPointerLock();
+      if (r && r.catch) r.catch(() => {});
+    } catch (e) { /* pointer lock unavailable: arrow keys still turn */ }
+  },
+
+  bindInput() {
+    const K = G.input.keys;
+    document.addEventListener('pointerlockchange', () => {
+      this.locked = document.pointerLockElement === this.canvas;
+      $('click-hint').hidden = this.locked || G.state !== 'playing';
+      if (!this.locked && G.state === 'playing') this.pause();
+    });
+    document.addEventListener('mousemove', e => {
+      if (!this.locked || G.state !== 'playing') return;
+      G.input.mdx += clamp(e.movementX, -200, 200);
+      G.input.mdy += clamp(e.movementY, -200, 200);
+    });
+    this.canvas.addEventListener('mousedown', e => {
+      Sound.init();
+      if (G.state !== 'playing') return;
+      if (!this.locked) { this.lock(); return; }
+      if (e.button === 0) { G.input.mouseDown = true; playerAttack(); }
+      if (e.button === 2) playerKick();
+    });
+    $('click-hint').addEventListener('mousedown', () => { Sound.init(); this.lock(); });
+    document.addEventListener('mouseup', e => { if (e.button === 0) G.input.mouseDown = false; });
+    document.addEventListener('contextmenu', e => { if (G.state === 'playing') e.preventDefault(); });
+    document.addEventListener('wheel', e => {
+      if (G.state !== 'playing') return;
+      cycleWeapon(e.deltaY > 0 ? 1 : -1);
+    }, { passive: true });
+
+    document.addEventListener('keydown', e => {
+      Sound.init();
+      const code = e.code;
+      if (code === 'Tab' || (G.state === 'playing' && ['Space', 'ArrowUp', 'ArrowDown'].includes(code))) e.preventDefault();
+      if (e.repeat && ['Tab', 'KeyM', 'Escape', 'KeyE', 'KeyQ'].includes(code)) return;
+      K[code] = true;
+      switch (G.state) {
+        case 'playing':
+          if (code === 'KeyE' || code === 'Space') interact();
+          else if (code === 'KeyQ') drinkPotion();
+          else if (code === 'KeyF') playerKick();
+          else if (code === 'KeyR') donutUlt();
+          else if (code >= 'Digit1' && code <= 'Digit4') switchWeapon(WEAPONS[+code.slice(5) - 1].id);
+          else if (code === 'Tab' || code === 'KeyC') { G.state = 'sheet'; document.exitPointerLock(); UI.showSheet(); }
+          else if (code === 'KeyM') { G.state = 'map'; document.exitPointerLock(); UI.showMap(); }
+          else if (code === 'Escape' || code === 'KeyP') this.pause();
+          break;
+        case 'sheet':
+          if (code === 'Tab' || code === 'KeyC' || code === 'Escape') this.resume();
+          break;
+        case 'map':
+          if (code === 'KeyM' || code === 'Escape') this.resume();
+          break;
+        case 'shop':
+          if (code === 'Escape' || code === 'KeyE') UI.closeShop();
+          break;
+        case 'paused':
+          if (code === 'Escape' || code === 'KeyP') this.resume();
+          break;
+        case 'intro':
+          if (code === 'Enter' || code === 'Space') this.begin();
+          break;
+      }
+    });
+    document.addEventListener('keyup', e => { K[e.code] = false; });
+    window.addEventListener('blur', () => { for (const k in K) K[k] = false; G.input.mouseDown = false; });
+
+    // all menu buttons are delegated from the screen container
+    $('screen').addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b || b.disabled) return;
+      Sound.init(); Sound.play('click');
+      if (b.dataset.buy) return UI.buy(b.dataset.buy);
+      if (b.dataset.open) return UI.openBox(b.dataset.open);
+      if (b.dataset.stat) {
+        const P = G.player;
+        if (P.points > 0) {
+          P.points--; P.stats[b.dataset.stat]++;
+          if (b.dataset.stat === 'con') P.hp += 10;
+          UI.showSheet();
+        }
+        return;
+      }
+      switch (b.dataset.act) {
+        case 'new': startNewGame(); break;
+        case 'continue': continueGame(); break;
+        case 'help': UI.showHelp('title'); break;
+        case 'settings': UI.showSettings('title'); break;
+        case 'title': UI.showTitle(); break;
+        case 'begin': this.begin(); break;
+        case 'resume': case 'close': this.resume(); break;
+        case 'sheet': G.state = 'sheet'; UI.showSheet(); break;
+        case 'help-pause': UI.showHelp('back-pause'); break;
+        case 'settings-pause': UI.showSettings('back-pause'); break;
+        case 'back-pause': UI.showPause(); break;
+        case 'close-shop': UI.closeShop(); break;
+        case 'quit': saveIfAlive(); UI.showTitle(); break;
+        case 'retry': { const d = G.player.deaths; continueGame(); G.player.deaths = d; break; }
+        case 'next-floor': enterFloor(G.floor + 1, false); break;
+      }
+    });
+  },
+
+  begin() {
+    UI.hideScreen();
+    G.state = 'playing';
+    systemSay(FLOORS[G.floor].intro, 'sys');
+    this.lock();
+  },
+  pause() {
+    if (G.state !== 'playing') return;
+    G.state = 'paused';
+    G.input.mouseDown = false;
+    if (document.pointerLockElement) document.exitPointerLock();
+    UI.showPause();
+  },
+  resume() {
+    UI.hideScreen();
+    G.state = 'playing';
+    this.lock();
+  },
+
+  loop(t) {
+    const dt = Math.min(0.05, (t - this.last) / 1000 || 0);
+    this.last = t;
+    try {
+      if (G.state === 'playing') update(dt);
+      else if (G.state === 'title') { G.player.a += dt * 0.08; G.time += dt; }
+      else if (G.state === 'intro') { G.time += dt; }
+      if (G.map) {
+        Render.frame(G, gatherSprites());
+        Render.drawTexts(G.texts);
+        if (G.state !== 'title') Render.drawWeapon(G.player, G.time);
+      }
+      if (G.state !== 'title') UI.updateHud();
+      $('hud').hidden = G.state === 'title';
+      $('click-hint').hidden = this.locked || G.state !== 'playing';
+    } catch (err) {
+      console.error(err);
+    }
+    requestAnimationFrame(t2 => this.loop(t2));
+  },
+};
+
+function saveIfAlive() { /* progress is saved on floor entry; nothing to do mid-floor */ }
+
+window.addEventListener('load', () => Main.boot());
+
+</script>
+
+</body>
+</html>
