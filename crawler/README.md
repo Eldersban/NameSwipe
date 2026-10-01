@@ -33,6 +33,9 @@ Open `build/crawl.html` in Chrome, Edge, or Firefox. Click to capture the mouse.
 - 19 achievements with System AI commentary and loot box prizes.
 - Princess Donut follows you and casts Magic Missile on her own.
 - Progress saves at the start of each floor.
+- Colored per-pixel lighting with soft corner shadows, moving lights from
+  spells and explosions, bloom glow, and a Graphics quality setting
+  (Low to Ultra) for slower machines.
 
 ## Development
 

@@ -147,6 +147,8 @@ kbd { font-family: var(--f-sys); font-size: 17px; background: var(--panel-2); bo
 .settings output { color: var(--gold); font-family: var(--f-sys); font-size: 20px; }
 .settings input[type=range] { width: 100%; accent-color: var(--gold); }
 .settings .check { justify-content: flex-start; gap: 10px; }
+.settings select { font: 600 15px var(--f-ui); color: var(--text); background: var(--panel-2); border: 2px solid var(--line); padding: 8px 10px; }
+#vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 75% 70% at 50% 48%, transparent 55%, #00000099 100%); }
 
 .panel.sheet, .panel.shop { width: min(1040px, 100%); }
 .sheet-head, .shop-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -210,6 +212,7 @@ kbd { font-family: var(--f-sys); font-size: 17px; background: var(--panel-2); bo
 
 <div id="game">
   <canvas id="view"></canvas>
+  <div id="vignette"></div>
   <div id="hud" hidden>
     <div id="hurt"></div>
     <div class="hud-tl">

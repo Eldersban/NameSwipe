@@ -7,31 +7,31 @@ const FLOORS = [
   {
     name: 'The Stone Maze', theme: 'stone', time: 720,
     pool: ['rat', 'rat', 'goblin'], count: 26, boss: 'ratking',
-    fog: [6, 5, 8], ambient: 1.0,
+    fog: [6, 5, 8], amb: [0.2, 0.19, 0.24],
     intro: 'Welcome to Floor One. It is made of rocks and regret. Find the stairwell before the floor collapses. There is a boss. There is always a boss.',
   },
   {
     name: 'The Goblin Warrens', theme: 'moss', time: 720,
     pool: ['rat', 'goblin', 'goblin', 'slinger'], count: 32, boss: 'matriarch',
-    fog: [4, 9, 5], ambient: 0.95,
+    fog: [4, 9, 5], amb: [0.16, 0.22, 0.15],
     intro: 'Floor Two. The goblins here have formed a union. Their demands are your organs.',
   },
   {
     name: 'The Ossuary', theme: 'bone', time: 660,
     pool: ['goblin', 'slinger', 'skeleton', 'skeleton'], count: 36, boss: 'bonewright',
-    fog: [8, 8, 12], ambient: 0.9,
+    fog: [8, 8, 12], amb: [0.17, 0.19, 0.27],
     intro: 'Floor Three. Everything down here used to be a crawler. Try not to join the decor.',
   },
   {
     name: 'The Furnace', theme: 'furnace', time: 660,
     pool: ['skeleton', 'slinger', 'brute', 'wisp', 'wisp'], count: 40, boss: 'hellhound',
-    fog: [22, 5, 2], ambient: 0.9,
+    fog: [22, 5, 2], amb: [0.3, 0.13, 0.08],
     intro: 'Floor Four. It is hot. The sponsors requested it be hotter. It has been made hotter.',
   },
   {
     name: 'The Studio', theme: 'studio', time: 600,
     pool: ['brute', 'wisp', 'skeleton', 'goblin', 'slinger'], count: 44, boss: 'showrunner',
-    fog: [10, 3, 16], ambient: 1.0,
+    fog: [10, 3, 16], amb: [0.22, 0.14, 0.28],
     intro: 'Floor Five. You have reached the production floor. The Showrunner would like a word. Several, actually. All of them violent.',
   },
 ];

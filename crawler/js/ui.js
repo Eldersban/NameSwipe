@@ -9,7 +9,7 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 const UI = {
-  settings: { sens: 1, invert: false, sfx: 0.7, music: 0.35 },
+  settings: { sens: 1, invert: false, sfx: 0.7, music: 0.35, quality: 'high', bloom: true },
   achQueue: [], achShowing: false, bossRef: null, lastPrompt: '',
 
   init() {
@@ -196,6 +196,11 @@ const UI = {
         <input id="set-sfx" type="range" min="0" max="1" step="0.05" value="${s.sfx}">
         <label for="set-music">Music <output id="o-music">${Math.round(s.music * 100)}</output></label>
         <input id="set-music" type="range" min="0" max="1" step="0.05" value="${s.music}">
+        <label for="set-quality">Graphics quality</label>
+        <select id="set-quality">
+          ${[['low', 'Low (fastest)'], ['medium', 'Medium'], ['high', 'High'], ['ultra', 'Ultra (sharpest)']].map(([v, l]) => `<option value="${v}" ${s.quality === v ? 'selected' : ''}>${l}</option>`).join('')}
+        </select>
+        <label class="check"><input id="set-bloom" type="checkbox" ${s.bloom ? 'checked' : ''}> Glow effects (bloom)</label>
         <label class="check"><input id="set-invert" type="checkbox" ${s.invert ? 'checked' : ''}> Invert vertical look</label>
         <button class="btn primary" data-act="${back}">Back</button>
       </div>`);
@@ -207,6 +212,8 @@ const UI = {
     bind('set-sfx', 'sfx', 'o-sfx', v => Math.round(v * 100));
     bind('set-music', 'music', 'o-music', v => Math.round(v * 100));
     $('set-invert').addEventListener('change', e => { s.invert = e.target.checked; this.saveSettings(); });
+    $('set-quality').addEventListener('change', e => { s.quality = e.target.value; this.saveSettings(); Render.resize(); });
+    $('set-bloom').addEventListener('change', e => { s.bloom = e.target.checked; this.saveSettings(); Render.resize(); });
   },
 
   showFloorIntro(f) {

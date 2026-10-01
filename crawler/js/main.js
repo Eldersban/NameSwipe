@@ -11,13 +11,14 @@ const Main = {
     Render.init(this.canvas);
     buildSprites();
     UI.init();
+    Render.resize();
     // A dungeon behind the title screen so the menu has something to sit on.
     G.player = newPlayer();
     G.floor = 0;
     G.map = new Dungeon(0, 12345);
     Render.setTheme(buildTheme('stone', 1000), FLOORS[0].fog);
     G.player.x = G.map.start.x; G.player.y = G.map.start.y;
-    for (const d of G.map.spawns.decor) G.decor.push({ kind: d.kind, x: d.x, y: d.y, ph: Math.random() * 3 });
+    for (const d of G.map.spawns.decor) G.decor.push({ kind: d.kind, x: d.x, y: d.y, tint: d.tint, ph: Math.random() * 3 });
     G.decor.push({ kind: 'mordecai', x: G.map.mordecai.x, y: G.map.mordecai.y });
     G.donut = { x: G.player.x + 1, y: G.player.y + 0.5, cd: 0, anim: 0, castT: 0, quipT: 99, moving: false };
     UI.showTitle();
@@ -161,9 +162,10 @@ const Main = {
       else if (G.state === 'title') { G.player.a += dt * 0.08; G.time += dt; }
       else if (G.state === 'intro') { G.time += dt; }
       if (G.map) {
-        Render.frame(G, gatherSprites());
+        Render.frame(G, gatherSprites(), gatherLights());
+        Render.postProcess();
+        if (G.state !== 'title') Render.drawWeapon(G.player, G.time, G.map);
         Render.drawTexts(G.texts);
-        if (G.state !== 'title') Render.drawWeapon(G.player, G.time);
       }
       if (G.state !== 'title') UI.updateHud();
       $('hud').hidden = G.state === 'title';

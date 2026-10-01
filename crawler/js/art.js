@@ -16,7 +16,57 @@ function mulberry32(a) {
 const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
 const lerp = (a, b, t) => a + (b - a) * t;
 
-function cv(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+// All art is authored in "logical" pixels and painted at ART_SCALE times that
+// resolution, so textures come out 128x128 and sprites get smooth, detailed edges.
+const ART_SCALE = 2;
+function cv(w, h) {
+  const c = document.createElement('canvas');
+  c.width = w * ART_SCALE; c.height = h * ART_SCALE;
+  c.getContext('2d').setTransform(ART_SCALE, 0, 0, ART_SCALE, 0, 0);
+  return c;
+}
+
+// Fake relief: light every texel from the top-left using its brightness as a
+// height map, so mortar lines, cracks and bricks read as carved surfaces.
+function relief(c, strength = 1.6) {
+  const x = c.getContext('2d'), w = c.width, h = c.height;
+  const id = x.getImageData(0, 0, w, h), d = id.data;
+  const L = new Float32Array(w * h);
+  for (let i = 0; i < w * h; i++) L[i] = d[i * 4] * 0.3 + d[i * 4 + 1] * 0.55 + d[i * 4 + 2] * 0.15;
+  const out = new Uint8ClampedArray(d);
+  for (let y = 0; y < h; y++) for (let xx = 0; xx < w; xx++) {
+    const a = L[((y + h - 1) % h) * w + (xx + w - 1) % w], b = L[((y + 1) % h) * w + (xx + 1) % w];
+    const k = (a - b) * strength;
+    const i = (y * w + xx) * 4;
+    out[i] = d[i] - k; out[i + 1] = d[i + 1] - k; out[i + 2] = d[i + 2] - k;
+  }
+  id.data.set(out); x.putImageData(id, 0, 0);
+  return c;
+}
+
+// Give a sprite definition: a dark outline, darkened inner edges, and soft
+// top-down shading so characters stop looking like flat cut-outs.
+function enhanceSprite(c) {
+  const x = c.getContext('2d'), w = c.width, h = c.height;
+  const id = x.getImageData(0, 0, w, h), d = id.data;
+  const solid = i => d[i * 4 + 3] >= 110;
+  const out = new Uint8ClampedArray(d);
+  for (let y = 0; y < h; y++) for (let xx = 0; xx < w; xx++) {
+    const i = y * w + xx, o = i * 4;
+    const n = (xx > 0 && solid(i - 1) ? 1 : 0) + (xx < w - 1 && solid(i + 1) ? 1 : 0) + (y > 0 && solid(i - w) ? 1 : 0) + (y < h - 1 && solid(i + w) ? 1 : 0);
+    if (!solid(i)) {
+      if (n) { out[o] = 12; out[o + 1] = 8; out[o + 2] = 14; out[o + 3] = 255; }
+      continue;
+    }
+    const edge = n < 4 ? 0.72 : 1;
+    const shade = (1.12 - 0.34 * y / h) * edge;
+    // a little rim light where the sprite's top edge meets air
+    const rim = y > 1 && !solid(i - w * 2) ? 28 : 0;
+    out[o] = d[o] * shade + rim; out[o + 1] = d[o + 1] * shade + rim; out[o + 2] = d[o + 2] * shade + rim;
+  }
+  id.data.set(out); x.putImageData(id, 0, 0);
+  return c;
+}
 
 // Convert a canvas into {w,h,data} with ABGR pixels. Transparent pixels = 0.
 function toTex(c) {
@@ -110,13 +160,13 @@ function boneWall(seed) {
   p.rect(0, 0, 64, 64, '#2a2622');
   for (let i = 0; i < 60; i++) { // packed bones
     const x = rng() * 64, y = rng() * 64, a = rng() * Math.PI, l = 6 + rng() * 10;
-    const dx = Math.cos(a) * l / 2, dy = Math.sin(a) * l / 2, col = rgb(150 + rng() * 60, 140 + rng() * 55, 110 + rng() * 40);
+    const dx = Math.cos(a) * l / 2, dy = Math.sin(a) * l / 2, col = rgb(105 + rng() * 50, 98 + rng() * 45, 78 + rng() * 32);
     p.line(x - dx, y - dy, x + dx, y + dy, col, 2.5);
     p.circ(x - dx, y - dy, 2, col).circ(x + dx, y + dy, 2, col);
   }
   for (let r = 0; r < 2; r++) for (let i = 0; i < 2; i++) { // skulls
     const x = 16 + i * 32 + (r % 2) * 8, y = 16 + r * 32;
-    p.ell(x, y, 8, 7, '#d8ceb0').rect(x - 5, y + 3, 10, 6, '#d8ceb0');
+    p.ell(x, y, 8, 7, '#a89e84').rect(x - 5, y + 3, 10, 6, '#a89e84');
     p.circ(x - 3, y - 1, 2.5, '#1a1612').circ(x + 3, y - 1, 2.5, '#1a1612');
     p.poly([x, y + 2, x - 1.5, y + 5, x + 1.5, y + 5], '#1a1612');
     for (let t = -4; t <= 4; t += 2) p.rect(x + t - 0.5, y + 6, 1, 3, '#3a342c');
@@ -310,7 +360,7 @@ function buildTheme(theme, seed) {
   T.door = doorTex(seed + 7, false);
   T.bossDoor = doorTex(seed + 8, true);
   const out = {};
-  for (const k in T) out[k] = toTex(T[k]);
+  for (const k in T) out[k] = toTex(relief(T[k], k === 'ceil' ? 1.0 : 1.5));
   return out;
 }
 
@@ -318,7 +368,7 @@ function buildTheme(theme, seed) {
 
 // Lay a standing sprite on its side with a blood pool: the corpse frame.
 function corpseOf(frame, bloodCol = '#6a0808') {
-  const w = frame.width, h = frame.height;
+  const w = frame.width / ART_SCALE, h = frame.height / ART_SCALE;
   const c = cv(w, h), x = c.getContext('2d');
   x.fillStyle = bloodCol; x.beginPath(); x.ellipse(w / 2, h - 3, w * 0.45, 3, 0, 0, Math.PI * 2); x.fill();
   x.save(); x.translate(w / 2, h - 2); x.rotate(-Math.PI / 2); x.scale(0.55, 1);
@@ -565,18 +615,35 @@ function drawStairs(open, f) {
   if (open) {
     p.ell(32, 40, 18 + f, 20, 'rgba(80,200,255,0.35)');
   } else {
-    for (let i = 0; i < 10; i++) p.line(8, 14 + i * 5 + f, 56, 16 + i * 5 - f, 'rgba(255,40,40,0.8)', 1.5);
-    p.rect(8, 12, 48, 48, 'rgba(255,0,0,0.18)');
+    // crackling force-field: a thin diagonal lattice with a brighter rim
+    for (let i = -6; i < 10; i++) {
+      p.line(8 + i * 6 + f, 14, 8 + i * 6 + 20 + f, 58, '#a01818', 0.8);
+      p.line(56 - i * 6 - f, 14, 36 - i * 6 - f, 58, '#a01818', 0.8);
+    }
+    p.ctx.clearRect(0, 0, 8, 64); p.ctx.clearRect(56, 0, 8, 64); p.ctx.clearRect(0, 60, 64, 4);
+    p.rect(6, 12, 6, 48, '#5a5a66').rect(52, 12, 6, 48, '#5a5a66').rect(4, 8, 56, 6, '#6a6a78');
+    p.text('EXIT', 32, 5, '#40ff80', 'bold 8px monospace');
+    p.rect(12, 13, 40, 1.2, '#ff5040').rect(12, 58, 40, 1.2, '#ff5040');
   }
   return c;
 }
-function drawBrazier(f) {
+const FLAME_COLORS = {
+  fire: ['#ff6a10', '#ffd040', 'rgba(255,140,40,0.25)'],
+  hot: ['#ff3a08', '#ffb030', 'rgba(255,80,20,0.25)'],
+  ghost: ['#30d890', '#c0ffe0', 'rgba(80,255,180,0.22)'],
+  pink: ['#ff30b0', '#ffc0ec', 'rgba(255,60,200,0.22)'],
+  cyan: ['#20b8ff', '#c0f4ff', 'rgba(60,200,255,0.22)'],
+};
+function drawBrazier(f, tint = 'fire') {
+  const [outer, inner, halo] = FLAME_COLORS[tint];
   const c = cv(24, 48), p = P(c.getContext('2d'));
-  p.rect(10, 22, 4, 26, '#3a3230').rect(4, 44, 16, 4, '#3a3230');
-  p.poly([2, 18, 22, 18, 18, 26, 6, 26], '#4a4240');
+  p.circ(12, 12, 11, halo);
+  p.rect(10, 22, 4, 26, '#3a3230').rect(11, 22, 1, 26, '#5a504c').rect(4, 44, 16, 4, '#3a3230');
+  p.poly([2, 18, 22, 18, 18, 26, 6, 26], '#4a4240').rect(2, 18, 20, 1.5, '#6a605c');
   const h = [0, 3, 1][f];
-  p.poly([4, 18, 8, 4 + h, 12, 12, 15, 1 + (2 - h), 20, 18], '#ff6a10');
-  p.poly([7, 18, 10, 8 + h, 13, 14, 16, 10 - h, 17, 18], '#ffd040');
+  p.poly([4, 18, 8, 4 + h, 12, 12, 15, 1 + (2 - h), 20, 18], outer);
+  p.poly([7, 18, 10, 8 + h, 13, 14, 16, 10 - h, 17, 18], inner);
+  p.ell(12, 17, 4, 2, '#fff8e0');
   return c;
 }
 function drawBones() { const c = cv(40, 16), p = P(c.getContext('2d')); p.line(4, 12, 20, 10, '#d0c8b0', 2.5).line(16, 14, 30, 8, '#d0c8b0', 2.5); p.ell(30, 10, 5, 4.5, '#d8d0b8').circ(28, 9, 1.2, '#222').circ(32, 9, 1.2, '#222'); return c; }
@@ -609,7 +676,7 @@ function drawDot(col, r = 3) { const c = cv(r * 2, r * 2), p = P(c.getContext('2
 const SPR = {};
 function buildSprites() {
   const anim = (fn, n = 3, extra) => {
-    const frames = []; for (let i = 0; i < n; i++) frames.push(fn(i));
+    const frames = []; for (let i = 0; i < n; i++) frames.push(enhanceSprite(fn(i)));
     frames.push(corpseOf(frames[0], extra));
     return frames.map(toTex);
   };
@@ -624,22 +691,23 @@ function buildSprites() {
   SPR.wisp = anim(drawWisp, 3, '#3a1a08');
   SPR.hellhound = anim(drawHound);
   SPR.showrunner = anim(drawShowrunner, 3, '#101830');
-  SPR.donut = [0, 1, 2, 3].map(f => toTex(drawDonut(f)));
-  SPR.mordecai = toTex(drawMordecai());
-  SPR.coins = toTex(drawCoins());
-  SPR.potion = toTex(drawPotion());
-  SPR.bolts = toTex(drawBoltsItem());
-  SPR.lobbers = toTex(drawJug(false));
-  SPR.chest = toTex(drawChest(false));
-  SPR.chestOpen = toTex(drawChest(true));
+  SPR.donut = [0, 1, 2, 3].map(f => toTex(enhanceSprite(drawDonut(f))));
+  SPR.mordecai = toTex(enhanceSprite(drawMordecai()));
+  SPR.coins = toTex(enhanceSprite(drawCoins()));
+  SPR.potion = toTex(enhanceSprite(drawPotion()));
+  SPR.bolts = toTex(enhanceSprite(drawBoltsItem()));
+  SPR.lobbers = toTex(enhanceSprite(drawJug(false)));
+  SPR.chest = toTex(enhanceSprite(drawChest(false)));
+  SPR.chestOpen = toTex(enhanceSprite(drawChest(true)));
   SPR.box = {};
-  for (const k in BOX_TYPES) SPR.box[k] = toTex(drawBox(BOX_TYPES[k].color));
+  for (const k in BOX_TYPES) SPR.box[k] = toTex(enhanceSprite(drawBox(BOX_TYPES[k].color)));
   SPR.stairsLocked = [0, 1, 2].map(f => toTex(drawStairs(false, f)));
   SPR.stairsOpen = [0, 1, 2].map(f => toTex(drawStairs(true, f * 2)));
-  SPR.brazier = [0, 1, 2].map(f => toTex(drawBrazier(f)));
-  SPR.bones = toTex(drawBones());
-  SPR.barrel = toTex(drawBarrel());
-  SPR.camera = toTex(drawCamera());
+  SPR.brazier = {};
+  for (const k in FLAME_COLORS) SPR.brazier[k] = [0, 1, 2].map(f => toTex(drawBrazier(f, k)));
+  SPR.bones = toTex(enhanceSprite(drawBones()));
+  SPR.barrel = toTex(enhanceSprite(drawBarrel()));
+  SPR.camera = toTex(enhanceSprite(drawCamera()));
   SPR.rock = [toTex(drawRock())];
   SPR.fireball = [0, 1].map(f => toTex(drawFireball(f)));
   SPR.missile = [0, 1].map(f => toTex(drawMissile(f)));
@@ -655,4 +723,5 @@ function buildSprites() {
   SPR.pink = toTex(drawDot('#ff70e0', 2));
   SPR.ember = toTex(drawDot('#ff7020', 2));
   SPR.cyan = toTex(drawDot('#50e0ff', 2));
+  SPR.mote = toTex(drawDot('#9a9080', 1));
 }

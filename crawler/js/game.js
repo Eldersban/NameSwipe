@@ -87,7 +87,7 @@ function enterFloor(f, fresh) {
   P.x = M.start.x; P.y = M.start.y; P.a = Math.atan2(M.bossRoom.cy - M.safeRoom.cy, M.bossRoom.cx - M.safeRoom.cx); P.pitch = 0;
   P.potionsUsedFloor = 0;
   G.mobs = []; G.items = []; G.projs = []; G.parts = []; G.decor = []; G.texts = [];
-  G.boss = null; G.bossDead = false; G.bossSeen = false;
+  G.boss = null; G.bossDead = false; G.bossSeen = false; G.motes = null;
   G.timeLeft = F.time; G.warned = false; G.time = 0;
   G.floorStats = { kills: 0, gold: 0, viewers: P.viewers, start: performance.now() };
 
@@ -95,7 +95,7 @@ function enterFloor(f, fresh) {
   G.boss = spawnMob(M.spawns.boss.type, M.spawns.boss.x, M.spawns.boss.y);
   for (const c of M.spawns.chests) G.items.push({ kind: 'chest', x: c.x, y: c.y, open: false });
   for (const it of M.spawns.items) G.items.push({ kind: it.kind, x: it.x, y: it.y, amount: itemAmount(it.kind) });
-  for (const d of M.spawns.decor) G.decor.push({ kind: d.kind, x: d.x, y: d.y, ph: Math.random() * 3 });
+  for (const d of M.spawns.decor) G.decor.push({ kind: d.kind, x: d.x, y: d.y, tint: d.tint, ph: Math.random() * 3 });
   G.decor.push({ kind: 'mordecai', x: M.mordecai.x, y: M.mordecai.y });
   G.decor.push({ kind: 'stairs', x: M.stairs.x, y: M.stairs.y });
 
@@ -523,7 +523,7 @@ function playerAttack() {
       G.shake = Math.max(G.shake, 0.25);
     }
   } else if (w === 'crossbow') {
-    P.ammo.bolts--;
+    P.ammo.bolts--; P.muzzle = 0.12;
     Sound.play('crossbow');
     G.projs.push({ x: P.x + dirX * 0.3, y: P.y + dirY * 0.3, z: 0.45, vx: dirX * 22, vy: dirY * 22, kind: 'bolt', owner: 'player', dmg: weaponDamage(P, w), life: 2, r: 0.12 });
   } else if (w === 'lobber') {
@@ -846,7 +846,7 @@ function updatePlayer(dt) {
   }
   P.bobY = Math.abs(Math.sin(P.bob)) * 2;
 
-  P.cd -= dt; P.kickCd -= dt; P.donutUltCd -= dt;
+  P.cd -= dt; P.kickCd -= dt; P.donutUltCd -= dt; P.muzzle = Math.max(0, (P.muzzle || 0) - dt);
   P.attackAnim = Math.max(0, P.attackAnim - dt / Math.max(0.2, weaponCooldown(P, P.weapon)));
   P.kickAnim = Math.max(0, P.kickAnim - dt * 2.8);
   P.hurtT -= dt;
@@ -901,6 +901,7 @@ function update(dt) {
   updateDonut(dt);
   updateProjs(dt);
   updateParts(dt);
+  updateMotes(dt);
   pickupItems();
 
   // music intensity follows the fight
@@ -911,11 +912,58 @@ function update(dt) {
 }
 
 // Collect everything visible into the renderer's sprite list.
+// Floating dust (or embers on the Furnace floor) drifting around Carl. They
+// pick up whatever light is nearby, which sells the atmosphere.
+function updateMotes(dt) {
+  const P = G.player, ember = FLOORS[G.floor].theme === 'furnace';
+  if (!G.motes) G.motes = [];
+  while (G.motes.length < 45) {
+    const a = Math.random() * Math.PI * 2, r = 0.6 + Math.random() * 5.5;
+    G.motes.push({ x: P.x + Math.cos(a) * r, y: P.y + Math.sin(a) * r, z: Math.random(), vx: rand(-0.08, 0.08), vy: rand(-0.08, 0.08), vz: ember ? rand(0.1, 0.35) : rand(-0.04, 0.04), ph: Math.random() * 6 });
+  }
+  for (const m of G.motes) {
+    m.ph += dt;
+    m.x += (m.vx + Math.sin(m.ph * 0.7) * 0.05) * dt; m.y += (m.vy + Math.cos(m.ph * 0.6) * 0.05) * dt; m.z += m.vz * dt;
+    if (m.z > 1) m.z -= 1; if (m.z < 0) m.z += 1;
+    const dx = m.x - P.x, dy = m.y - P.y;
+    if (dx * dx + dy * dy > 42 || G.map.solid(m.x, m.y)) { const a = Math.random() * Math.PI * 2, r = 1 + Math.random() * 5; m.x = P.x + Math.cos(a) * r; m.y = P.y + Math.sin(a) * r; }
+  }
+}
+
+// Moving light sources for this frame: projectiles, explosions, glowing
+// monsters, Donut's spells, the open stairwell, and brazier flicker.
+function gatherLights() {
+  const L = [], P = G.player, t = G.time;
+  for (const p of G.projs) {
+    if (p.kind === 'fireball') L.push({ x: p.x, y: p.y, r: 3.2, i: 1.0, c: [1, 0.5, 0.15] });
+    else if (p.kind === 'missile') L.push({ x: p.x, y: p.y, r: 2.6, i: 0.9, c: [1, 0.35, 0.9] });
+    else if (p.kind === 'static') L.push({ x: p.x, y: p.y, r: 2.6, i: 0.8, c: [0.3, 0.85, 1] });
+    else if (p.kind === 'bone') L.push({ x: p.x, y: p.y, r: 2, i: 0.5, c: [0.4, 1, 0.75] });
+    else if (p.kind === 'lobber') L.push({ x: p.x, y: p.y, r: 1.8, i: 0.5 + Math.random() * 0.3, c: [1, 0.8, 0.4] });
+  }
+  for (const p of G.parts) if (p.anim === 'explosion') { const k = p.life / p.maxLife; L.push({ x: p.x, y: p.y, r: 7, i: 2.6 * k, c: [1, 0.6, 0.25] }); }
+  for (const m of G.mobs) {
+    if (m.dead || !m.d.bright) continue;
+    L.push({ x: m.x, y: m.y, r: m.d.boss ? 5 : 3.2, i: 0.75 + Math.sin(t * 11 + m.x) * 0.1, c: m.type === 'showrunner' ? [0.35, 0.8, 1] : [1, 0.45, 0.15] });
+  }
+  if (G.donut && G.donut.castT > 0) L.push({ x: G.donut.x, y: G.donut.y, r: 2.5, i: G.donut.castT * 2, c: [1, 0.4, 0.9] });
+  if (G.bossDead && G.map.stairs) L.push({ x: G.map.stairs.x, y: G.map.stairs.y, r: 5, i: 0.45 + Math.sin(t * 3) * 0.15, c: [0.3, 0.7, 1] });
+  if (P.muzzle > 0) L.push({ x: P.x + Math.cos(P.a) * 0.6, y: P.y + Math.sin(P.a) * 0.6, r: 3, i: P.muzzle * 4, c: [1, 0.85, 0.6] });
+  for (const d of G.decor) {
+    if (d.kind !== 'brazier') continue;
+    const dx = d.x - P.x, dy = d.y - P.y;
+    if (dx * dx + dy * dy > 220) continue;
+    const f = (Math.sin(t * 9 + d.ph * 7) + Math.sin(t * 14.3 + d.ph * 3)) * 0.09;
+    L.push({ x: d.x, y: d.y, r: 4, i: f, c: [1, 0.7, 0.4] });
+  }
+  return L;
+}
+
 function gatherSprites() {
   const out = [], t = G.time;
   for (const d of G.decor) {
     switch (d.kind) {
-      case 'brazier': out.push({ x: d.x, y: d.y, h: 0.7, img: SPR.brazier[((t * 8 + d.ph * 3) | 0) % 3], bright: true }); break;
+      case 'brazier': out.push({ x: d.x, y: d.y, h: 0.7, img: SPR.brazier[d.tint || 'fire'][((t * 8 + d.ph * 3) | 0) % 3], bright: true }); break;
       case 'bones': out.push({ x: d.x, y: d.y, h: 0.16, img: SPR.bones }); break;
       case 'barrel': out.push({ x: d.x, y: d.y, h: 0.55, img: SPR.barrel }); break;
       case 'camera': out.push({ x: d.x, y: d.y, h: 0.75, img: SPR.camera }); break;
@@ -959,6 +1007,10 @@ function gatherSprites() {
       const fr = SPR[p.anim], k = 1 - p.life / p.maxLife;
       out.push({ x: p.x, y: p.y, z: p.z - p.h * 0.35, h: p.h, img: fr[Math.min(fr.length - 1, (k * fr.length) | 0)], bright: true });
     } else out.push({ x: p.x, y: p.y, z: p.z, h: p.h, img: SPR[p.img], bright: p.bright });
+  }
+  if (G.motes) {
+    const ember = FLOORS[G.floor].theme === 'furnace';
+    for (const m of G.motes) out.push({ x: m.x, y: m.y, z: m.z, h: ember ? 0.03 : 0.012, img: ember ? SPR.ember : SPR.mote, bright: ember });
   }
   return out;
 }
